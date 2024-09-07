@@ -205,6 +205,76 @@ public partial class @PlayerControlMap: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 }
             ]
+        },
+        {
+            ""name"": ""Menus"",
+            ""id"": ""62a1fe31-6753-4c1d-a9d3-b99d3d08a0f5"",
+            ""actions"": [
+                {
+                    ""name"": ""Progress"",
+                    ""type"": ""Button"",
+                    ""id"": ""859ce1c6-5e84-491b-b380-05bee79080ab"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MoveBack"",
+                    ""type"": ""Button"",
+                    ""id"": ""072d3584-28ae-4dc6-9cde-7659bdef63dc"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""c737c5e7-885c-4d15-82c6-429f6fd811fc"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Progress"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6140d4ff-f48c-4149-b931-ae897417b529"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Progress"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""416aa359-231a-421b-a8ca-7d69e4053185"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveBack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e34d2d0a-987b-45a1-8781-466adac4adfd"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveBack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -217,6 +287,10 @@ public partial class @PlayerControlMap: IInputActionCollection2, IDisposable
         m_PlayerControls_Click = m_PlayerControls.FindAction("Click", throwIfNotFound: true);
         m_PlayerControls_MousePos = m_PlayerControls.FindAction("MousePos", throwIfNotFound: true);
         m_PlayerControls_MoveCamera = m_PlayerControls.FindAction("MoveCamera", throwIfNotFound: true);
+        // Menus
+        m_Menus = asset.FindActionMap("Menus", throwIfNotFound: true);
+        m_Menus_Progress = m_Menus.FindAction("Progress", throwIfNotFound: true);
+        m_Menus_MoveBack = m_Menus.FindAction("MoveBack", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -360,6 +434,60 @@ public partial class @PlayerControlMap: IInputActionCollection2, IDisposable
         }
     }
     public PlayerControlsActions @PlayerControls => new PlayerControlsActions(this);
+
+    // Menus
+    private readonly InputActionMap m_Menus;
+    private List<IMenusActions> m_MenusActionsCallbackInterfaces = new List<IMenusActions>();
+    private readonly InputAction m_Menus_Progress;
+    private readonly InputAction m_Menus_MoveBack;
+    public struct MenusActions
+    {
+        private @PlayerControlMap m_Wrapper;
+        public MenusActions(@PlayerControlMap wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Progress => m_Wrapper.m_Menus_Progress;
+        public InputAction @MoveBack => m_Wrapper.m_Menus_MoveBack;
+        public InputActionMap Get() { return m_Wrapper.m_Menus; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(MenusActions set) { return set.Get(); }
+        public void AddCallbacks(IMenusActions instance)
+        {
+            if (instance == null || m_Wrapper.m_MenusActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_MenusActionsCallbackInterfaces.Add(instance);
+            @Progress.started += instance.OnProgress;
+            @Progress.performed += instance.OnProgress;
+            @Progress.canceled += instance.OnProgress;
+            @MoveBack.started += instance.OnMoveBack;
+            @MoveBack.performed += instance.OnMoveBack;
+            @MoveBack.canceled += instance.OnMoveBack;
+        }
+
+        private void UnregisterCallbacks(IMenusActions instance)
+        {
+            @Progress.started -= instance.OnProgress;
+            @Progress.performed -= instance.OnProgress;
+            @Progress.canceled -= instance.OnProgress;
+            @MoveBack.started -= instance.OnMoveBack;
+            @MoveBack.performed -= instance.OnMoveBack;
+            @MoveBack.canceled -= instance.OnMoveBack;
+        }
+
+        public void RemoveCallbacks(IMenusActions instance)
+        {
+            if (m_Wrapper.m_MenusActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IMenusActions instance)
+        {
+            foreach (var item in m_Wrapper.m_MenusActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_MenusActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public MenusActions @Menus => new MenusActions(this);
     public interface IPlayerControlsActions
     {
         void OnPause(InputAction.CallbackContext context);
@@ -368,5 +496,10 @@ public partial class @PlayerControlMap: IInputActionCollection2, IDisposable
         void OnClick(InputAction.CallbackContext context);
         void OnMousePos(InputAction.CallbackContext context);
         void OnMoveCamera(InputAction.CallbackContext context);
+    }
+    public interface IMenusActions
+    {
+        void OnProgress(InputAction.CallbackContext context);
+        void OnMoveBack(InputAction.CallbackContext context);
     }
 }
