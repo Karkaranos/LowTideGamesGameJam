@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEditor;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 public class PlayerInputBehavior : MonoBehaviour
 {
@@ -9,7 +10,6 @@ public class PlayerInputBehavior : MonoBehaviour
     [SerializeField] PlayerInput playerInput;
     InputAction pause;
     InputAction click;
-    InputAction mPos;
 
     Vector2 mPosVector;
     [SerializeField] private Sprite tf2Coconut;
@@ -19,10 +19,11 @@ public class PlayerInputBehavior : MonoBehaviour
     [SerializeField] private float maxMouseSpeed;
 
     [Header("Camera Variables")]
+    [Tooltip("Uses normal indexes. First painting is at index 1, second painting is at index 2, etc.")]
+    [SerializeField] private int startingPaintingIndex;
     [SerializeField] private Camera mainCamera;
     [SerializeField] private float cameraAccelerationSpeed;
-    [SerializeField] private float cameraDecelerationSpeed;
-    [SerializeField] private GameObject leftCameraBoarder, rightCameraBoarder;
+    [SerializeField] private GameObject[] paintingPositions;
 
     GameManager gameManager;
     private InputAction moveCamera;
@@ -31,35 +32,38 @@ public class PlayerInputBehavior : MonoBehaviour
     private InputAction nothingToSeeHere;
 
     private Vector2 mousePosition;
-    private float cameraSpeed;
     private float fadeTimeThatAffectsNothing = .3f;
     private int numFadeStepsThatAffectsNothing = 10;
     private float transparencyThatAffectsNothing = .15f;
     private float timerThatAffectsNothing = 3;
-    
+    private bool isCameraMoving;
+    private int currentPaintingIndex;
 
     #endregion
     // Start is called before the first frame update
     void Start()
     {
+        //Gets game manager
         gameManager = GameManager.Instance;
+
+        //Binds actions to keys
         playerInput.currentActionMap.Enable();
         pause = playerInput.currentActionMap.FindAction("Pause");
         nothingToSeeHere = playerInput.currentActionMap.FindAction("NothingToSee");
         click = playerInput.currentActionMap.FindAction("Click");
-        mPos = playerInput.currentActionMap.FindAction("MousePos");
-
         moveCamera = playerInput.currentActionMap.FindAction("MoveCamera");
 
+        //Binds actions to methods
         pause.performed += Pause_performed;
-        nothingToSeeHere.performed += contx => StartCoroutine(NothingToSeeHere_performed());
         click.performed += Click_performed;
+        moveCamera.started += MoveCamera_Started;
 
-        //DO NOT MESS WITH THIS IF STATEMENT
-        if(tf2Coconut == null)
-        {
-            Application.Quit();
-        }
+        nothingToSeeHere.performed += contx => StartCoroutine(NothingToSeeHere_performed());
+
+        //Initializes Camera variables
+        isCameraMoving = false;
+        currentPaintingIndex = startingPaintingIndex - 1;
+        mainCamera.transform.position = paintingPositions[currentPaintingIndex].transform.position;
     }
 
     public void FixedUpdate()
@@ -81,11 +85,11 @@ public class PlayerInputBehavior : MonoBehaviour
     /// </summary>
     private void HandleLightMovement()
     {
-        //Moves light to mouse position
+        //Gets mouse position
         mousePosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
 
+        //Moves light to mouse position
         lightObject.position = Vector2.MoveTowards(lightObject.position, mousePosition, maxMouseSpeed);
-        //transform.position = mousePosition;
     }
 
     /// <summary>
@@ -93,12 +97,30 @@ public class PlayerInputBehavior : MonoBehaviour
     /// </summary>
     private void HandleCameraMovement()
     {
-        //Moves the camera right if a right input is detected
-        if (moveCamera.ReadValue<float>() > 0)
-            mainCamera.transform.position = Vector3.MoveTowards(mainCamera.transform.position, rightCameraBoarder.transform.position, cameraAccelerationSpeed);
-        //Moves the camera left if a left input is detected
-        else if (moveCamera.ReadValue<float>() < 0)
-            mainCamera.transform.position = Vector3.MoveTowards(mainCamera.transform.position, leftCameraBoarder.transform.position, cameraAccelerationSpeed);
+        //If camera move input has been detected
+        if (isCameraMoving)
+        {
+            //Set to false
+            isCameraMoving = false;
+
+            //Retreives Input
+            
+            //If Move Camera Right input is detected and camera is not on right most painting, increase painting index
+            if (moveCamera.ReadValue<float>() > 0 && currentPaintingIndex < paintingPositions.Length - 1)
+            {
+                currentPaintingIndex++;
+            }
+
+            //If Move Camera Left input is detected and camera is not on left most painting, decrease painting index
+            else if (moveCamera.ReadValue<float>() < 0 && currentPaintingIndex > 0)
+            {
+                currentPaintingIndex--;
+            }
+        }
+
+        //Moves camera to current painting index
+        mainCamera.transform.position = Vector3.MoveTowards(mainCamera.transform.position,
+            paintingPositions[currentPaintingIndex].transform.position, cameraAccelerationSpeed * Time.deltaTime * gameManager.expectedFrameRate);
     }
 
     private void Click_performed(InputAction.CallbackContext obj)
@@ -160,6 +182,14 @@ public class PlayerInputBehavior : MonoBehaviour
     }
 
     /// <summary>
+    /// If move camera input is detected, this method is called automatically
+    /// </summary>
+    private void MoveCamera_Started(InputAction.CallbackContext obj)
+    {
+        isCameraMoving = true;
+    }
+
+    /// <summary>
     /// Creates Gizmos for debugging
     /// </summary>
     public void OnDrawGizmos()
@@ -170,10 +200,11 @@ public class PlayerInputBehavior : MonoBehaviour
         float height = 2 * mainCamera.orthographicSize;
         float width = height * mainCamera.aspect;
 
-        //Creates an outline of range the camera can see at both the edges
-        Gizmos.DrawWireCube(leftCameraBoarder.transform.position, new Vector2(width, height));
-        Gizmos.DrawWireCube(rightCameraBoarder.transform.position, new Vector2(width, height));
-
-        
+        //Creates an outline of the range the camera can see at each position
+        int arrayLength = paintingPositions.Length;
+        for (int i = 0; i < arrayLength; i++)
+        {
+            Gizmos.DrawWireCube(paintingPositions[i].transform.position, new Vector2(width, height));
+        }
     }
 }
