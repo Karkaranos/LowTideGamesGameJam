@@ -45,12 +45,13 @@ public class GameManager : MonoBehaviour
     [SerializeField, Range(0, 10), Tooltip("Camera shake intensity")] private int shakeIntensity;
     [SerializeField, Range(0, 10), Tooltip("Camera shake speed")] private int shakeSpeed;
     private Camera mainCam;
-    private int numTimerSteps;
+    private int numTimerSteps = 100;
 
     private void Start()
     {
         health = maxHealth;
         mainCam = Camera.main;
+        StartCoroutine(TakeDamage(FindObjectOfType<PaintingManager>().Paintings[0]));
     }
     public void IncreaseScore()
     {
@@ -69,7 +70,7 @@ public class GameManager : MonoBehaviour
             sr.sprite = portraitApparation;
         }
         sr.gameObject.transform.position = painting.PaintingObj.transform.position;
-        Color c = new Color(1, 1, 1, 1);
+        Color c = new Color(1, 1, 1, 1.0f);
         sr.color = c;
         StartCoroutine(CameraShake());
         yield return new WaitForSeconds(timeBeforeApparationFades);
@@ -77,6 +78,7 @@ public class GameManager : MonoBehaviour
         {
             c.a -= (1 / apparationFadeTime) * (apparationFadeTime / numTimerSteps);
             sr.color = c;
+            yield return new WaitForSeconds(apparationFadeTime / numTimerSteps);
         }
         sr.color = new Color(1, 1, 1, 0);
         sr.gameObject.transform.position = new Vector3(0, 10, 0);
