@@ -6,6 +6,8 @@ public class PaintingManager : MonoBehaviour
 {
     [SerializeField] Painting[] paintings;
     [SerializeField, ReadOnly] int currPaintingNum;
+
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -16,12 +18,6 @@ public class PaintingManager : MonoBehaviour
                 StartCoroutine(a.StartApparation());
             }
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public Apparation RetrieveApparationInstance(string name)
@@ -38,4 +34,6 @@ public class PaintingManager : MonoBehaviour
         }
         return null;
     }
+
+
 }

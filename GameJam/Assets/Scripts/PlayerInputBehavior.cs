@@ -36,6 +36,8 @@ public class PlayerInputBehavior : MonoBehaviour
     private int numFadeStepsThatAffectsNothing = 10;
     private float transparencyThatAffectsNothing = .15f;
     private float timerThatAffectsNothing = 3;
+
+    private bool isPaused = false;
     
 
     #endregion
@@ -154,9 +156,17 @@ public class PlayerInputBehavior : MonoBehaviour
 
     private void Pause_performed(InputAction.CallbackContext obj)
     {
-        //Open pause menu
-        //Temp feedback
-        EditorApplication.isPaused = !EditorApplication.isPaused;
+        if(!isPaused)
+        {
+            isPaused = true;
+            Time.timeScale = 0;
+        }
+        else
+        {
+            isPaused = false;
+            Time.timeScale = 1;
+        }
+        
     }
 
     /// <summary>
