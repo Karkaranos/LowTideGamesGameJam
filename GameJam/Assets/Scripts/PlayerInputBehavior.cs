@@ -133,4 +133,22 @@ public class PlayerInputBehavior : MonoBehaviour
         //Temp feedback
         EditorApplication.isPaused = !EditorApplication.isPaused;
     }
+
+    /// <summary>
+    /// Creates Gizmos for debugging
+    /// </summary>
+    public void OnDrawGizmos()
+    {
+        Gizmos.color = Color.blue;
+
+        //Gets width and height of the camera
+        float height = 2 * mainCamera.orthographicSize;
+        float width = height * mainCamera.aspect;
+
+        //Creates an outline of range the camera can see at both the edges
+        Gizmos.DrawWireCube(leftCameraBoarder.transform.position, new Vector2(width, height));
+        Gizmos.DrawWireCube(rightCameraBoarder.transform.position, new Vector2(width, height));
+
+        
+    }
 }
