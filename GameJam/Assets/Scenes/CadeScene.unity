@@ -260,18 +260,21 @@ MonoBehaviour:
       currentApparationProgress: 0
       apparation: {fileID: 21300000, guid: 4994dfe0f7089004583021adf15e4398, type: 3}
       hasBeenCaught: 0
+      newFadeIn: 0
     - apparationObject: {fileID: 1982736940}
       timeUntilStart: 20
       apparatingCompletionTime: 3
       currentApparationProgress: 0
       apparation: {fileID: 21300000, guid: 6256bb35fec158f40b9ee9cdb1053cb8, type: 3}
       hasBeenCaught: 0
+      newFadeIn: 1
     - apparationObject: {fileID: 1318509243}
       timeUntilStart: 25
       apparatingCompletionTime: 15
       currentApparationProgress: 0
       apparation: {fileID: 21300000, guid: f1cc3951399cef345ba072ecfd61adff, type: 3}
       hasBeenCaught: 0
+      newFadeIn: 1
   currPaintingNum: 0
 --- !u!1 &413208282
 GameObject:
