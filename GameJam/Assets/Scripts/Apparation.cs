@@ -6,12 +6,13 @@ using UnityEngine;
 public class Apparation
 {
     [SerializeField, Tooltip("The object being apparated")] GameObject apparationObject;
+    private Sprite startingSprite;
     [SerializeField, Tooltip("How long in seconds until the apparation starts")] float timeUntilStart;
     [SerializeField, Tooltip("How long the apparation takes to complete")] float apparatingCompletionTime;
     [SerializeField, Range(0, 100), Tooltip("How far along the apparation is as a percent"), ReadOnly]  float currentApparationProgress;
     [SerializeField, Tooltip("The sprite it changes to")] Sprite apparation;
     [SerializeField, ReadOnly] bool hasBeenCaught;
-    [SerializeField, Tooltip("True if the new fades in, false if the old fades out")] bool newFadeIn = true;
+    [SerializeField, Tooltip("True if apparation is larger than original or same size; false if apparation is smaller than original")] bool newFadeIn = true;
     bool hasApparated = false;
     bool isApparating = false;
     private int steps = 100;
@@ -35,7 +36,7 @@ public class Apparation
             newSprite.transform.parent = ApparationObject.transform;
             newSprite.transform.localPosition = Vector3.zero;
             sr = newSprite.AddComponent<SpriteRenderer>();
-            sr.sortingOrder = 1;
+            sr.sortingOrder = 5;
             Color c = new Color(1, 1, 1, 0);
             Sr.color = c;
             Sr.sprite = apparation;
@@ -57,15 +58,15 @@ public class Apparation
         }
         else
         {
-            
             GameObject newSprite = new GameObject();
             newSprite.transform.parent = ApparationObject.transform;
             newSprite.transform.localPosition = Vector3.zero;
             sr = newSprite.AddComponent<SpriteRenderer>();
-            sr.sortingOrder = 1;
+            sr.sortingOrder = 5;
             Color c = new Color(1, 1, 1, 1);
             Sr.color = c;
             Sr.sprite = apparation;
+
             yield return new WaitForSeconds(timeUntilStart);
             isApparating = true;
             for (int i = 0; i < steps; i++)
@@ -89,11 +90,9 @@ public class Apparation
 
     public void Caught()
     {
-        if(isApparating)
-        {
-            Debug.Log("Stopped!");
-        }
         isApparating = false;
         hasBeenCaught = true;
     }
+
+
 }
