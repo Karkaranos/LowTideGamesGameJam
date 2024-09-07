@@ -4,8 +4,50 @@
         {
             "name": "Player",
             "id": "cd64cf9a-025e-4f2a-8488-4f42bf68e35f",
-            "actions": [],
-            "bindings": []
+            "actions": [
+                {
+                    "name": "Mouse",
+                    "type": "Value",
+                    "id": "10f8a62e-5741-44f6-a2cb-5722807e9383",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Click",
+                    "type": "Value",
+                    "id": "d28f713c-b5ac-4248-a8d8-1055ee27c655",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "890db17b-6866-478b-9d75-69d5df9ad30e",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Mouse",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1b0989ea-f898-44b3-accf-e44a3bc56c79",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         },
         {
             "name": "UI",
