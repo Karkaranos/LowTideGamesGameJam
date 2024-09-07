@@ -212,7 +212,6 @@ public class PlayerInputBehavior : MonoBehaviour
                 }
             }
             currentCooldown -= Time.deltaTime;
-            print(currentCooldown);
         } else
         {
             flashlight.intensity = originalIntensity;

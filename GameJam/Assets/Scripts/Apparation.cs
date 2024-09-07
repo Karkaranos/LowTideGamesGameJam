@@ -36,7 +36,7 @@ public class Apparation
             newSprite.transform.parent = ApparationObject.transform;
             newSprite.transform.localPosition = Vector3.zero;
             sr = newSprite.AddComponent<SpriteRenderer>();
-            sr.sortingOrder = 1;
+            sr.sortingOrder = 5;
             Color c = new Color(1, 1, 1, 0);
             Sr.color = c;
             Sr.sprite = apparation;
@@ -58,18 +58,15 @@ public class Apparation
         }
         else
         {
-            Sprite t = startingSprite;
-            startingSprite = apparation;
-            apparation = t;
-            apparationObject.GetComponent<SpriteRenderer>().sprite = startingSprite;
             GameObject newSprite = new GameObject();
             newSprite.transform.parent = ApparationObject.transform;
             newSprite.transform.localPosition = Vector3.zero;
             sr = newSprite.AddComponent<SpriteRenderer>();
-            sr.sortingOrder = 1;
+            sr.sortingOrder = 5;
             Color c = new Color(1, 1, 1, 1);
             Sr.color = c;
             Sr.sprite = apparation;
+
             yield return new WaitForSeconds(timeUntilStart);
             isApparating = true;
             for (int i = 0; i < steps; i++)
