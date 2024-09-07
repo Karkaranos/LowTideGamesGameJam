@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using UnityEngine.InputSystem;
@@ -7,26 +6,47 @@ using UnityEngine.InputSystem;
 public class PlayerInputBehavior : MonoBehaviour
 {
     #region Variables
-    [SerializeField] PlayerInput playerInput;
-    InputAction pause;
-    InputAction click;
+    [SerializeField] private PlayerInput playerInput;
+    [SerializeField] private Sprite tf2Coconut;
+
+    [Header("Flashlight Variable")]
+    [SerializeField] private Transform lightObject;
+    [SerializeField] private float maxMouseSpeed;
+
+    [Header("Camera Variables")]
+    [SerializeField] private Camera mainCamera;
+    [SerializeField] private float cameraAccelerationSpeed;
+    [SerializeField] private float cameraDecelerationSpeed;
+    [SerializeField] private GameObject leftCameraBoarder, rightCameraBoarder;
+
+    GameManager gameManager;
+
+    private InputAction pause;
+    private InputAction click;
+    private InputAction moveCamera;
 
     //These affect nothing. Leave them alone. 
-    InputAction nothingToSeeHere;
+    private InputAction nothingToSeeHere;
+
+    private Vector2 mousePosition;
+    private float cameraSpeed;
     private float fadeTimeThatAffectsNothing = .3f;
     private int numFadeStepsThatAffectsNothing = 10;
     private float transparencyThatAffectsNothing = .15f;
     private float timerThatAffectsNothing = 3;
-    [SerializeField] Sprite tf2Coconut;
+    
 
     #endregion
     // Start is called before the first frame update
     void Start()
     {
+        gameManager = GameManager.Instance;
         playerInput.currentActionMap.Enable();
         pause = playerInput.currentActionMap.FindAction("Pause");
         nothingToSeeHere = playerInput.currentActionMap.FindAction("NothingToSee");
         click = playerInput.currentActionMap.FindAction("Click");
+
+        moveCamera = playerInput.currentActionMap.FindAction("MoveCamera");
 
         pause.performed += Pause_performed;
         nothingToSeeHere.performed += contx => StartCoroutine(NothingToSeeHere_performed());
@@ -39,6 +59,13 @@ public class PlayerInputBehavior : MonoBehaviour
         }
     }
 
+    public void FixedUpdate()
+    {
+        HandleLightMovement();
+        HandleCameraMovement();
+        
+    }
+
     private void OnDisable()
     {
         pause.performed -= Pause_performed;
@@ -46,9 +73,34 @@ public class PlayerInputBehavior : MonoBehaviour
         click.performed -= Click_performed;
     }
 
+    /// <summary>
+    /// Handles the movement of the light source via the mouse movements
+    /// </summary>
+    private void HandleLightMovement()
+    {
+        //Moves light to mouse position
+        mousePosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+
+        lightObject.position = Vector2.MoveTowards(lightObject.position, mousePosition, maxMouseSpeed);
+        //transform.position = mousePosition;
+    }
+
+    /// <summary>
+    /// Handles the camera movement via specified inputs
+    /// </summary>
+    private void HandleCameraMovement()
+    {
+        //Moves the camera right if a right input is detected
+        if (moveCamera.ReadValue<float>() > 0)
+            mainCamera.transform.position = Vector3.MoveTowards(mainCamera.transform.position, rightCameraBoarder.transform.position, cameraAccelerationSpeed);
+        //Moves the camera left if a left input is detected
+        else if (moveCamera.ReadValue<float>() < 0)
+            mainCamera.transform.position = Vector3.MoveTowards(mainCamera.transform.position, leftCameraBoarder.transform.position, cameraAccelerationSpeed);
+    }
+
     private void Click_performed(InputAction.CallbackContext obj)
     {
-        throw new System.NotImplementedException();
+        //TODO
     }
 
     /// <summary>
@@ -80,11 +132,5 @@ public class PlayerInputBehavior : MonoBehaviour
         //Open pause menu
         //Temp feedback
         EditorApplication.isPaused = !EditorApplication.isPaused;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
