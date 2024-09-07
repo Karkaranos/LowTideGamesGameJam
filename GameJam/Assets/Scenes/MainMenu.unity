@@ -240,6 +240,7 @@ GameObject:
   - component: {fileID: 91784000}
   - component: {fileID: 91784004}
   - component: {fileID: 91784003}
+  - component: {fileID: 91784005}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -336,6 +337,11 @@ MonoBehaviour:
   CreditsCanvas: {fileID: 46874023}
   MainMenuCanvas: {fileID: 1966153117}
   TutorialCanvas: {fileID: 1693257377}
+  TutorialPages: []
+  TutorialIcon: {fileID: 0}
+  Title: {fileID: 0}
+  Body: {fileID: 0}
+  playerInput: {fileID: 91784005}
 --- !u!114 &91784004
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -380,6 +386,36 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+--- !u!114 &91784005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 91783999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 7f50d02d3a837d442b2541b22ba77127, type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: 62a1fe31-6753-4c1d-a9d3-b99d3d08a0f5
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1 &412648925
 GameObject:
   m_ObjectHideFlags: 0

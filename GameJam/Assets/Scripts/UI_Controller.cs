@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.InputSystem;
 
 public class UI_Controller : MonoBehaviour
 {
@@ -14,6 +15,17 @@ public class UI_Controller : MonoBehaviour
     public Image TutorialIcon;
     public TMP_Text Title;
     public TMP_Text Body;
+
+    public PlayerInput playerInput;
+    private InputAction navigateForward;
+    private InputAction navigateBackwards;
+
+    private void Start()
+    {
+        playerInput.currentActionMap.Enable();
+        navigateForward = playerInput.currentActionMap.FindAction("Progress");
+        navigateBackwards = playerInput.currentActionMap.FindAction("MoveBack");
+    }
 
     public void CreditButtonPress() 
     {
