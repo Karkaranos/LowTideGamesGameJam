@@ -168,61 +168,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   paintings:
   - apparations:
-    - apparationObject: {fileID: 0}
-      timeUntilStart: 0
-      apparatingTime: 0
+    - apparationObject: {fileID: 1186330556}
+      timeUntilStart: 1
+      apparatingCompletionTime: 5
       currentApparationProgress: 0
-      apparation: {fileID: 0}
+      apparation: {fileID: 21300000, guid: 4994dfe0f7089004583021adf15e4398, type: 3}
       hasBeenCaught: 0
-    - apparationObject: {fileID: 0}
-      timeUntilStart: 0
-      apparatingTime: 0
+    - apparationObject: {fileID: 1982736940}
+      timeUntilStart: 20
+      apparatingCompletionTime: 3
       currentApparationProgress: 0
-      apparation: {fileID: 0}
+      apparation: {fileID: 21300000, guid: 6256bb35fec158f40b9ee9cdb1053cb8, type: 3}
       hasBeenCaught: 0
-    - apparationObject: {fileID: 0}
-      timeUntilStart: 0
-      apparatingTime: 0
+    - apparationObject: {fileID: 1318509243}
+      timeUntilStart: 25
+      apparatingCompletionTime: 15
       currentApparationProgress: 0
-      apparation: {fileID: 0}
-      hasBeenCaught: 0
-  - apparations:
-    - apparationObject: {fileID: 0}
-      timeUntilStart: 0
-      apparatingTime: 0
-      currentApparationProgress: 0
-      apparation: {fileID: 0}
-      hasBeenCaught: 0
-    - apparationObject: {fileID: 0}
-      timeUntilStart: 0
-      apparatingTime: 0
-      currentApparationProgress: 0
-      apparation: {fileID: 0}
-      hasBeenCaught: 0
-    - apparationObject: {fileID: 0}
-      timeUntilStart: 0
-      apparatingTime: 0
-      currentApparationProgress: 0
-      apparation: {fileID: 0}
-      hasBeenCaught: 0
-  - apparations:
-    - apparationObject: {fileID: 0}
-      timeUntilStart: 0
-      apparatingTime: 0
-      currentApparationProgress: 0
-      apparation: {fileID: 0}
-      hasBeenCaught: 0
-    - apparationObject: {fileID: 0}
-      timeUntilStart: 0
-      apparatingTime: 0
-      currentApparationProgress: 0
-      apparation: {fileID: 0}
-      hasBeenCaught: 0
-    - apparationObject: {fileID: 0}
-      timeUntilStart: 0
-      apparatingTime: 0
-      currentApparationProgress: 0
-      apparation: {fileID: 0}
+      apparation: {fileID: 21300000, guid: f1cc3951399cef345ba072ecfd61adff, type: 3}
       hasBeenCaught: 0
 --- !u!1 &1186330556
 GameObject:
@@ -297,7 +259,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e4c390d5b9434e5439e24a628c6ab776, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -468,7 +430,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 3625043607559282579, guid: 045b15ec09bba42448d89db77fa6f20a, type: 3}
+  m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -721,7 +683,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 715b573b8b70c474eb3aeee30bb78d63, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

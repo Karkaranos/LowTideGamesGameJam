@@ -48,7 +48,7 @@ public class PlayerInputBehavior : MonoBehaviour
 
     private void Click_performed(InputAction.CallbackContext obj)
     {
-        throw new System.NotImplementedException();
+        
     }
 
     /// <summary>
