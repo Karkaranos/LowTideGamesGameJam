@@ -22,4 +22,19 @@ public class PaintingManager : MonoBehaviour
     {
         
     }
+
+    public Apparation RetrieveApparationInstance(string name)
+    {
+        foreach(Painting p in paintings)
+        {
+            foreach(Apparation a in p.Apparations)
+            {
+                if(a.ApparationObject.name == name)
+                {
+                    return a;
+                }
+            }
+        }
+        return null;
+    }
 }

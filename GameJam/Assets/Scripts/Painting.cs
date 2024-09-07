@@ -6,6 +6,7 @@ using UnityEngine;
 public class Painting
 {
     [SerializeField] Apparation[] apparations;
+    int completeApparationCount;
 
     public Apparation[] Apparations { get => apparations;}
 }

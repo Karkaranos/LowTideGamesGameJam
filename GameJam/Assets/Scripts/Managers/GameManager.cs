@@ -20,8 +20,15 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
+    [SerializeField] int score;
+
     void Start()
     {
         
+    }
+
+    public void IncreaseScore()
+    {
+        score++;
     }
 }
