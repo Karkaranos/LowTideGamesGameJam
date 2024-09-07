@@ -70,7 +70,10 @@ public class PlayerInputBehavior : MonoBehaviour
     public void FixedUpdate()
     {
         HandleLightMovement();
-        HandleCameraMovement();
+        if(!FindObjectOfType<GameManager>().CamIsShaking)
+        {
+            HandleCameraMovement();
+        }
         
     }
 

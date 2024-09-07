@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
             instance = value;
         }
     }
+
     #endregion
 
     [SerializeField] public int expectedFrameRate = 60;
@@ -41,16 +42,15 @@ public class GameManager : MonoBehaviour
     [SerializeField, Tooltip("How long the camera shakes for")] private float camShakeTime;
 
     [Header("Camera Controls")]
-    [HideInInspector] public bool CamIsShaking = false;
+     public bool CamIsShaking = false;
     [SerializeField, Range(0, 10), Tooltip("Camera shake intensity")] private int shakeIntensity;
     [SerializeField, Range(0, 10), Tooltip("Camera shake speed")] private int shakeSpeed;
-    private Camera mainCam;
+    [SerializeField] private Camera mainCam;
     private int numTimerSteps = 100;
 
     private void Start()
     {
         health = maxHealth;
-        mainCam = Camera.main;
         StartCoroutine(TakeDamage(FindObjectOfType<PaintingManager>().Paintings[0]));
     }
     public void IncreaseScore()
@@ -86,23 +86,27 @@ public class GameManager : MonoBehaviour
 
     IEnumerator CameraShake()
     {
+        print("Started");
         yield return new WaitForSeconds(timeBeforeCamShake);
         health--;
         if(health <= 0)
         {
             EndGame();
         }
-
-        damageImage.sprite = damageVisuals[(maxHealth - health)];
+        CamIsShaking = true;
+        //damageImage.sprite = damageVisuals[(maxHealth - health)];
 
         float timer = camShakeTime;
         while(timer < camShakeTime)
         {
-            mainCam.transform.localPosition = new Vector3(Mathf.PerlinNoise(0,Time.time * shakeSpeed) * 2 -1,
+            mainCam.transform.position = new Vector3(Mathf.PerlinNoise(0,Time.time * shakeSpeed) * 2 -1,
                     Mathf.PerlinNoise(1, Time.time * shakeSpeed) * 2 - 1,
                     Mathf.PerlinNoise(2, Time.time * shakeSpeed) * 2 - 1) * .5f;
             timer += Time.deltaTime;
+            yield return new WaitForSeconds(Time.deltaTime);
+            print("A");
         }
+        CamIsShaking = false;
 
     }
 
