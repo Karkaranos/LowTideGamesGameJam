@@ -53,6 +53,15 @@ public partial class @PlayerControlMap: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Click"",
+                    ""type"": ""Button"",
+                    ""id"": ""b1b1d9fb-6b21-4250-ac81-a308aa93f2bc"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -88,6 +97,17 @@ public partial class @PlayerControlMap: IInputActionCollection2, IDisposable
                     ""action"": ""Mouse"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e768ccd7-865e-41f0-a4b4-5af7f652a099"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Click"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -99,6 +119,7 @@ public partial class @PlayerControlMap: IInputActionCollection2, IDisposable
         m_PlayerControls_Pause = m_PlayerControls.FindAction("Pause", throwIfNotFound: true);
         m_PlayerControls_NothingToSee = m_PlayerControls.FindAction("NothingToSee", throwIfNotFound: true);
         m_PlayerControls_Mouse = m_PlayerControls.FindAction("Mouse", throwIfNotFound: true);
+        m_PlayerControls_Click = m_PlayerControls.FindAction("Click", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -163,6 +184,7 @@ public partial class @PlayerControlMap: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerControls_Pause;
     private readonly InputAction m_PlayerControls_NothingToSee;
     private readonly InputAction m_PlayerControls_Mouse;
+    private readonly InputAction m_PlayerControls_Click;
     public struct PlayerControlsActions
     {
         private @PlayerControlMap m_Wrapper;
@@ -170,6 +192,7 @@ public partial class @PlayerControlMap: IInputActionCollection2, IDisposable
         public InputAction @Pause => m_Wrapper.m_PlayerControls_Pause;
         public InputAction @NothingToSee => m_Wrapper.m_PlayerControls_NothingToSee;
         public InputAction @Mouse => m_Wrapper.m_PlayerControls_Mouse;
+        public InputAction @Click => m_Wrapper.m_PlayerControls_Click;
         public InputActionMap Get() { return m_Wrapper.m_PlayerControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -188,6 +211,9 @@ public partial class @PlayerControlMap: IInputActionCollection2, IDisposable
             @Mouse.started += instance.OnMouse;
             @Mouse.performed += instance.OnMouse;
             @Mouse.canceled += instance.OnMouse;
+            @Click.started += instance.OnClick;
+            @Click.performed += instance.OnClick;
+            @Click.canceled += instance.OnClick;
         }
 
         private void UnregisterCallbacks(IPlayerControlsActions instance)
@@ -201,6 +227,9 @@ public partial class @PlayerControlMap: IInputActionCollection2, IDisposable
             @Mouse.started -= instance.OnMouse;
             @Mouse.performed -= instance.OnMouse;
             @Mouse.canceled -= instance.OnMouse;
+            @Click.started -= instance.OnClick;
+            @Click.performed -= instance.OnClick;
+            @Click.canceled -= instance.OnClick;
         }
 
         public void RemoveCallbacks(IPlayerControlsActions instance)
@@ -223,5 +252,6 @@ public partial class @PlayerControlMap: IInputActionCollection2, IDisposable
         void OnPause(InputAction.CallbackContext context);
         void OnNothingToSee(InputAction.CallbackContext context);
         void OnMouse(InputAction.CallbackContext context);
+        void OnClick(InputAction.CallbackContext context);
     }
 }

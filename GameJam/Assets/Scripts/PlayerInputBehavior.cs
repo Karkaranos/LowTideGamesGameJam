@@ -9,6 +9,7 @@ public class PlayerInputBehavior : MonoBehaviour
     #region Variables
     [SerializeField] PlayerInput playerInput;
     InputAction pause;
+    InputAction click;
 
     //These affect nothing. Leave them alone. 
     InputAction nothingToSeeHere;
@@ -25,15 +26,29 @@ public class PlayerInputBehavior : MonoBehaviour
         playerInput.currentActionMap.Enable();
         pause = playerInput.currentActionMap.FindAction("Pause");
         nothingToSeeHere = playerInput.currentActionMap.FindAction("NothingToSee");
+        click = playerInput.currentActionMap.FindAction("Click");
 
         pause.performed += Pause_performed;
         nothingToSeeHere.performed += contx => StartCoroutine(NothingToSeeHere_performed());
+        click.performed += Click_performed;
 
         //DO NOT MESS WITH THIS IF STATEMENT
         if(tf2Coconut == null)
         {
             Application.Quit();
         }
+    }
+
+    private void OnDisable()
+    {
+        pause.performed -= Pause_performed;
+        nothingToSeeHere.performed -= contx => StartCoroutine(NothingToSeeHere_performed());
+        click.performed -= Click_performed;
+    }
+
+    private void Click_performed(InputAction.CallbackContext obj)
+    {
+        throw new System.NotImplementedException();
     }
 
     /// <summary>
