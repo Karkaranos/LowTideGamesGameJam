@@ -5,10 +5,15 @@ using UnityEngine;
 public class PaintingManager : MonoBehaviour
 {
     [SerializeField] Painting[] paintings;
+    [SerializeField, ReadOnly] int currPaintingNum;
+
+    public Painting[] Paintings { get => paintings; set => paintings = value; }
+
+
     // Start is called before the first frame update
     void Start()
     {
-        foreach(Painting p in paintings)
+        foreach(Painting p in Paintings)
         {
             foreach(Apparation a in p.Apparations)
             {
@@ -17,15 +22,9 @@ public class PaintingManager : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public Apparation RetrieveApparationInstance(string name)
     {
-        foreach(Painting p in paintings)
+        foreach(Painting p in Paintings)
         {
             foreach(Apparation a in p.Apparations)
             {
@@ -37,4 +36,6 @@ public class PaintingManager : MonoBehaviour
         }
         return null;
     }
+
+
 }
