@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
     #endregion
 
     [SerializeField] int score;
+    [SerializeField, ReadOnly] int health;
 
     void Start()
     {

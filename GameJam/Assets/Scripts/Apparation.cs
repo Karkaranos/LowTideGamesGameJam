@@ -8,9 +8,9 @@ public class Apparation
     [SerializeField, Tooltip("The object being apparated")] GameObject apparationObject;
     [SerializeField, Tooltip("How long in seconds until the apparation starts")] float timeUntilStart;
     [SerializeField, Tooltip("How long the apparation takes to complete")] float apparatingCompletionTime;
-    [SerializeField, Range(0, 100), Tooltip("How far along the apparation is as a percent")]  float currentApparationProgress;
+    [SerializeField, Range(0, 100), Tooltip("How far along the apparation is as a percent"), ReadOnly]  float currentApparationProgress;
     [SerializeField, Tooltip("The sprite it changes to")] Sprite apparation;
-    [SerializeField] bool hasBeenCaught;
+    [SerializeField, ReadOnly] bool hasBeenCaught;
     bool hasApparated = false;
     bool isApparating = false;
     private int steps = 100;
@@ -48,7 +48,7 @@ public class Apparation
             {
                 break;
             }
-            currentApparationProgress = i / 100;
+            currentApparationProgress = i+1;
             yield return new WaitForSeconds(apparatingCompletionTime / steps);
         }
         isApparating = false;

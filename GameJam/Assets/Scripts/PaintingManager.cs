@@ -5,6 +5,7 @@ using UnityEngine;
 public class PaintingManager : MonoBehaviour
 {
     [SerializeField] Painting[] paintings;
+    [SerializeField, ReadOnly] int currPaintingNum;
     // Start is called before the first frame update
     void Start()
     {
