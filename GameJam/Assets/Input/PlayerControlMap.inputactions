@@ -1,0 +1,54 @@
+{
+    "name": "PlayerControlMap",
+    "maps": [
+        {
+            "name": "PlayerControls",
+            "id": "0ba98600-9d6f-47e6-a07d-6ca589625ce0",
+            "actions": [
+                {
+                    "name": "Pause",
+                    "type": "Button",
+                    "id": "2e9a1cad-747a-44a2-a56d-81e67c9ce389",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "NothingToSee",
+                    "type": "Button",
+                    "id": "36d4ed03-9f15-40e6-9a1a-7fe4681c3ee7",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "4c2ce2d2-a860-4afb-8d10-cfbbc5051768",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cf17707c-d0ff-4fcf-be7d-3326789878ff",
+                    "path": "<Keyboard>/c",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "NothingToSee",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
