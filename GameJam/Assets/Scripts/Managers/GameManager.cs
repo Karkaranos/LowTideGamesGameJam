@@ -1,3 +1,4 @@
+
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
@@ -51,7 +52,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         health = maxHealth;
-        StartCoroutine(TakeDamage(FindObjectOfType<PaintingManager>().Paintings[0]));
+        
     }
     public void IncreaseScore()
     {
