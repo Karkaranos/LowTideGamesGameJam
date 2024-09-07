@@ -71,6 +71,15 @@ public partial class @PlayerControlMap: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""MoveCamera"",
+                    ""type"": ""Value"",
+                    ""id"": ""008d75e7-92ef-4802-a558-0d2d0f6380ff"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -128,6 +137,72 @@ public partial class @PlayerControlMap: IInputActionCollection2, IDisposable
                     ""action"": ""MousePos"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""A/D"",
+                    ""id"": ""df081e28-c071-4254-b0be-31fdbb7f5b84"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveCamera"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""aad31996-cd0e-4c8f-ba21-2ac03e029927"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveCamera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""5e537d18-b894-4f62-a90a-f8aa0196d4a4"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveCamera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""ArrowKeys"",
+                    ""id"": ""4d60a72d-c23e-4f00-a2cd-6ecb39c06198"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveCamera"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""2964d344-929f-4306-bbd9-7e64950e6b2b"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveCamera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""2193bdb2-c9b3-49c9-ab94-3f2a380eaf5b"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveCamera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -141,6 +216,7 @@ public partial class @PlayerControlMap: IInputActionCollection2, IDisposable
         m_PlayerControls_Mouse = m_PlayerControls.FindAction("Mouse", throwIfNotFound: true);
         m_PlayerControls_Click = m_PlayerControls.FindAction("Click", throwIfNotFound: true);
         m_PlayerControls_MousePos = m_PlayerControls.FindAction("MousePos", throwIfNotFound: true);
+        m_PlayerControls_MoveCamera = m_PlayerControls.FindAction("MoveCamera", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -207,6 +283,7 @@ public partial class @PlayerControlMap: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerControls_Mouse;
     private readonly InputAction m_PlayerControls_Click;
     private readonly InputAction m_PlayerControls_MousePos;
+    private readonly InputAction m_PlayerControls_MoveCamera;
     public struct PlayerControlsActions
     {
         private @PlayerControlMap m_Wrapper;
@@ -216,6 +293,7 @@ public partial class @PlayerControlMap: IInputActionCollection2, IDisposable
         public InputAction @Mouse => m_Wrapper.m_PlayerControls_Mouse;
         public InputAction @Click => m_Wrapper.m_PlayerControls_Click;
         public InputAction @MousePos => m_Wrapper.m_PlayerControls_MousePos;
+        public InputAction @MoveCamera => m_Wrapper.m_PlayerControls_MoveCamera;
         public InputActionMap Get() { return m_Wrapper.m_PlayerControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -240,6 +318,9 @@ public partial class @PlayerControlMap: IInputActionCollection2, IDisposable
             @MousePos.started += instance.OnMousePos;
             @MousePos.performed += instance.OnMousePos;
             @MousePos.canceled += instance.OnMousePos;
+            @MoveCamera.started += instance.OnMoveCamera;
+            @MoveCamera.performed += instance.OnMoveCamera;
+            @MoveCamera.canceled += instance.OnMoveCamera;
         }
 
         private void UnregisterCallbacks(IPlayerControlsActions instance)
@@ -259,6 +340,9 @@ public partial class @PlayerControlMap: IInputActionCollection2, IDisposable
             @MousePos.started -= instance.OnMousePos;
             @MousePos.performed -= instance.OnMousePos;
             @MousePos.canceled -= instance.OnMousePos;
+            @MoveCamera.started -= instance.OnMoveCamera;
+            @MoveCamera.performed -= instance.OnMoveCamera;
+            @MoveCamera.canceled -= instance.OnMoveCamera;
         }
 
         public void RemoveCallbacks(IPlayerControlsActions instance)
@@ -283,5 +367,6 @@ public partial class @PlayerControlMap: IInputActionCollection2, IDisposable
         void OnMouse(InputAction.CallbackContext context);
         void OnClick(InputAction.CallbackContext context);
         void OnMousePos(InputAction.CallbackContext context);
+        void OnMoveCamera(InputAction.CallbackContext context);
     }
 }
