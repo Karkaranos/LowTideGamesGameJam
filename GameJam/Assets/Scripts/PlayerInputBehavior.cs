@@ -3,6 +3,8 @@ using UnityEngine;
 using UnityEditor;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
+using UnityEngine.Rendering.Universal;
+using Unity.VisualScripting;
 
 public class PlayerInputBehavior : MonoBehaviour
 {
@@ -12,11 +14,19 @@ public class PlayerInputBehavior : MonoBehaviour
     InputAction click;
 
     Vector2 mPosVector;
+    [SerializeField] float spearItCooldDown;
+
+    [Header("Sprites")]
+    [SerializeField] GameObject punctureGameObject;
     [SerializeField] private Sprite tf2Coconut;
 
     [Header("Flashlight Variable")]
-    [SerializeField] private Transform lightObject;
+    [SerializeField] private GameObject lightObject;
+    private Light2D flashlight;
     [SerializeField] private float maxMouseSpeed;
+    [SerializeField] private float lightFlickerReduction;
+    [SerializeField] private int framesBetweenFlicker;
+    [SerializeField] private int flickerPauseTime;
 
     [Header("Camera Variables")]
     [Tooltip("Uses normal indexes. First painting is at index 1, second painting is at index 2, etc.")]
@@ -39,6 +49,15 @@ public class PlayerInputBehavior : MonoBehaviour
     private bool isPaused = false;
     private bool isCameraMoving;
     private int currentPaintingIndex;
+
+    //Time Variables
+    private float time;
+    private float lastClickTime;
+
+    //Flicker Variables
+    private int flickerFrame;
+    private int flickerPause;
+    private int flickerCounter;
 
     #endregion
     // Start is called before the first frame update
@@ -65,16 +84,28 @@ public class PlayerInputBehavior : MonoBehaviour
         isCameraMoving = false;
         currentPaintingIndex = startingPaintingIndex - 1;
         mainCamera.transform.position = paintingPositions[currentPaintingIndex].transform.position;
+
+        flashlight = lightObject.GetComponent<Light2D>();
+
+        //Initialzes time variables
+        time = 0;
+        lastClickTime = 0;
+
+        //Initializes flicker variables
+        flickerFrame = framesBetweenFlicker;
+        flickerPause = 0;
+        flickerCounter = 0;
     }
 
     public void FixedUpdate()
     {
+        time += Time.fixedDeltaTime;
         HandleLightMovement();
         if(!FindObjectOfType<GameManager>().CamIsShaking)
         {
             HandleCameraMovement();
         }
-        
+        HandleLightFlicker();
     }
 
     private void OnDisable()
@@ -93,7 +124,7 @@ public class PlayerInputBehavior : MonoBehaviour
         mousePosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
 
         //Moves light to mouse position
-        lightObject.position = Vector2.MoveTowards(lightObject.position, mousePosition, maxMouseSpeed);
+        lightObject.transform.position = Vector2.MoveTowards(lightObject.transform.position, mousePosition, maxMouseSpeed);
     }
 
     /// <summary>
@@ -127,31 +158,84 @@ public class PlayerInputBehavior : MonoBehaviour
             paintingPositions[currentPaintingIndex].transform.position, cameraAccelerationSpeed * Time.deltaTime * gameManager.expectedFrameRate);
     }
 
-    private void Click_performed(InputAction.CallbackContext obj)
+    /// <summary>
+    /// Handles the flickering of the light
+    /// </summary>
+    private void HandleLightFlicker()
     {
-        RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector3.zero);
-        if(hit.collider != null)
+        //If Spear-It attack is on cooldown
+        if (time <= lastClickTime + spearItCooldDown && lastClickTime != 0)
         {
-            print(hit.transform.gameObject.name);
-            if(hit.transform.gameObject.tag == "Apparation")
+            //If flicker count is at 3, pause for a moment then resume
+            if (flickerCounter < 3)
             {
-                Apparation aRef = FindObjectOfType<PaintingManager>().RetrieveApparationInstance(hit.transform.gameObject.name);
-                if(aRef!=null && aRef.IsApparating && !aRef.HasBeenCaught)
+                //If light is not normal, make it normal if set amount of time has passed
+                if (flashlight.intensity != 1 && flickerFrame >= framesBetweenFlicker)
                 {
-                    StopCoroutine(aRef.StartApparation());
-                    aRef.Caught();
-                    Destroy(aRef.Sr.gameObject);   //Returns apparation to normal
-                    FindObjectOfType<GameManager>().IncreaseScore();
-                    //Stab animation
-                    //Goop
+                    flashlight.intensity = 1;
+                    flickerFrame = 0;
                 }
-                else if (aRef!=null && aRef.HasApparated)
+                //If light is normal, make it not normal if set amount of time has passed
+                else if (flashlight.intensity == 1 && flickerFrame >= framesBetweenFlicker)
                 {
-                    //Lose points
+                    float lightIntensity = Random.Range(lightFlickerReduction - .5f, lightFlickerReduction + 0.51f);
+                    flashlight.intensity = lightIntensity;
+                    flickerFrame = 0;
+                    flickerCounter++;
+                }
+                else
+                    flickerFrame++;
+            } else
+            {
+                flashlight.intensity = 1;
+                if (flickerPause < flickerPauseTime)
+                {
+                    flickerPause++;
+                } else
+                {
+                    flickerCounter = 0;
+                    flickerPause = 0;
                 }
             }
+            
+        } else
+        {
+            flashlight.intensity = 1;
         }
-        //TODO
+    }
+
+    private void Click_performed(InputAction.CallbackContext obj)
+    {
+        //Cannot attack if cooldown is active or if player has not clicked yet (only relevant at beginning of the game)
+        if (time >= lastClickTime + spearItCooldDown || lastClickTime == 0)
+        {
+            lastClickTime = time;
+
+            Instantiate(punctureGameObject, mousePosition, Quaternion.identity);
+            RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector3.zero);
+            if (hit.collider != null)
+            {
+                print(hit.transform.gameObject.name);
+                if (hit.transform.gameObject.tag == "Apparation")
+                {
+                    Apparation aRef = FindObjectOfType<PaintingManager>().RetrieveApparationInstance(hit.transform.gameObject.name);
+                    if (aRef != null && aRef.IsApparating && !aRef.HasBeenCaught)
+                    {
+                        StopCoroutine(aRef.StartApparation());
+                        aRef.Caught();
+                        Instantiate(punctureGameObject, aRef.Sr.gameObject.transform.position, Quaternion.identity);
+                        Destroy(aRef.Sr.gameObject);   //Returns apparation to normal
+                        FindObjectOfType<GameManager>().IncreaseScore();
+                        //Stab animation
+                    }
+                    else if (aRef != null && aRef.HasApparated)
+                    {
+                        //Lose points
+                    }
+                }
+            }
+            //TODO
+        }
     }
 
     /// <summary>
