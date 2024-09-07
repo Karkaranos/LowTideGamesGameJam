@@ -403,6 +403,8 @@ MonoBehaviour:
   lightFlickerReduction: 0.3
   framesBetweenFlicker: 5
   flickerPauseTime: 20
+  negativeRandomModifier: 0.5
+  positiveRandomModifier: 0.41
   startingPaintingIndex: 1
   mainCamera: {fileID: 921612998}
   cameraAccelerationSpeed: 1

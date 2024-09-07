@@ -24,9 +24,13 @@ public class PlayerInputBehavior : MonoBehaviour
     [SerializeField] private GameObject lightObject;
     private Light2D flashlight;
     [SerializeField] private float maxMouseSpeed;
+
+    [Header("Flashlight Flickering")]
     [SerializeField] private float lightFlickerReduction;
     [SerializeField] private int framesBetweenFlicker;
     [SerializeField] private int flickerPauseTime;
+    [SerializeField] private float negativeRandomModifier;
+    [SerializeField] private float positiveRandomModifier;
 
     [Header("Camera Variables")]
     [Tooltip("Uses normal indexes. First painting is at index 1, second painting is at index 2, etc.")]
@@ -55,6 +59,7 @@ public class PlayerInputBehavior : MonoBehaviour
     private float lastClickTime;
 
     //Flicker Variables
+    private float originalIntensity;
     private int flickerFrame;
     private int flickerPause;
     private int flickerCounter;
@@ -85,6 +90,8 @@ public class PlayerInputBehavior : MonoBehaviour
         currentPaintingIndex = startingPaintingIndex - 1;
         mainCamera.transform.position = paintingPositions[currentPaintingIndex].transform.position;
 
+        lightObject.transform.position = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+
         flashlight = lightObject.GetComponent<Light2D>();
 
         //Initialzes time variables
@@ -92,9 +99,11 @@ public class PlayerInputBehavior : MonoBehaviour
         lastClickTime = 0;
 
         //Initializes flicker variables
+        originalIntensity = flashlight.intensity;
         flickerFrame = framesBetweenFlicker;
         flickerPause = 0;
         flickerCounter = 0;
+
     }
 
     public void FixedUpdate()
@@ -170,15 +179,15 @@ public class PlayerInputBehavior : MonoBehaviour
             if (flickerCounter < 3)
             {
                 //If light is not normal, make it normal if set amount of time has passed
-                if (flashlight.intensity != 1 && flickerFrame >= framesBetweenFlicker)
+                if (flashlight.intensity != originalIntensity && flickerFrame >= framesBetweenFlicker)
                 {
-                    flashlight.intensity = 1;
+                    flashlight.intensity = originalIntensity;
                     flickerFrame = 0;
                 }
                 //If light is normal, make it not normal if set amount of time has passed
-                else if (flashlight.intensity == 1 && flickerFrame >= framesBetweenFlicker)
+                else if (flashlight.intensity == originalIntensity && flickerFrame >= framesBetweenFlicker)
                 {
-                    float lightIntensity = Random.Range(lightFlickerReduction - .5f, lightFlickerReduction + 0.51f);
+                    float lightIntensity = Random.Range(lightFlickerReduction - negativeRandomModifier, lightFlickerReduction + positiveRandomModifier);
                     flashlight.intensity = lightIntensity;
                     flickerFrame = 0;
                     flickerCounter++;
@@ -187,7 +196,7 @@ public class PlayerInputBehavior : MonoBehaviour
                     flickerFrame++;
             } else
             {
-                flashlight.intensity = 1;
+                flashlight.intensity = originalIntensity;
                 if (flickerPause < flickerPauseTime)
                 {
                     flickerPause++;
@@ -200,7 +209,7 @@ public class PlayerInputBehavior : MonoBehaviour
             
         } else
         {
-            flashlight.intensity = 1;
+            flashlight.intensity = originalIntensity;
         }
     }
 
