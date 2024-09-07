@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
         }
     }
     #endregion
-
+    [SerializeField] public int expectedFrameRate = 60;
     [SerializeField] int score;
 
     void Start()
