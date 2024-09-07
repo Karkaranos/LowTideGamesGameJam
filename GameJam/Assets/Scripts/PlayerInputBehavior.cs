@@ -12,7 +12,6 @@ public class PlayerInputBehavior : MonoBehaviour
     InputAction mPos;
 
     Vector2 mPosVector;
-    [SerializeField] private PlayerInput playerInput;
     [SerializeField] private Sprite tf2Coconut;
 
     [Header("Flashlight Variable")]
@@ -26,9 +25,6 @@ public class PlayerInputBehavior : MonoBehaviour
     [SerializeField] private GameObject leftCameraBoarder, rightCameraBoarder;
 
     GameManager gameManager;
-
-    private InputAction pause;
-    private InputAction click;
     private InputAction moveCamera;
 
     //These affect nothing. Leave them alone. 
@@ -107,7 +103,7 @@ public class PlayerInputBehavior : MonoBehaviour
 
     private void Click_performed(InputAction.CallbackContext obj)
     {
-        RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(mPosVector), Vector3.zero);
+        RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector3.zero);
         if(hit.collider != null)
         {
             print(hit.transform.gameObject.name);
@@ -179,9 +175,5 @@ public class PlayerInputBehavior : MonoBehaviour
         Gizmos.DrawWireCube(rightCameraBoarder.transform.position, new Vector2(width, height));
 
         
-    }
-
-    private void Update() { 
-        mPosVector = mPos.ReadValue<Vector2>();
     }
 }
