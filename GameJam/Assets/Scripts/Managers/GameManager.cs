@@ -86,7 +86,6 @@ public class GameManager : MonoBehaviour
 
     IEnumerator CameraShake()
     {
-        print("Started");
         yield return new WaitForSeconds(timeBeforeCamShake);
         health--;
         if(health <= 0)
@@ -96,15 +95,14 @@ public class GameManager : MonoBehaviour
         CamIsShaking = true;
         //damageImage.sprite = damageVisuals[(maxHealth - health)];
 
-        float timer = camShakeTime;
-        while(timer < camShakeTime)
+        float timer = 0;
+        while (timer < camShakeTime)
         {
-            mainCam.transform.position = new Vector3(Mathf.PerlinNoise(0,Time.time * shakeSpeed) * 2 -1,
+            mainCam.transform.position = new Vector3(Mathf.PerlinNoise(0, Time.time * shakeSpeed) * 2 - 1,
                     Mathf.PerlinNoise(1, Time.time * shakeSpeed) * 2 - 1,
-                    Mathf.PerlinNoise(2, Time.time * shakeSpeed) * 2 - 1) * .5f;
+                    -10);
             timer += Time.deltaTime;
             yield return new WaitForSeconds(Time.deltaTime);
-            print("A");
         }
         CamIsShaking = false;
 
