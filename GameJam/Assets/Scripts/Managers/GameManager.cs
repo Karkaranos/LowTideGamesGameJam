@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject uncaughtApparationObj;
     [SerializeField] private Sprite landscapeApparation;
     [SerializeField] private Sprite portraitApparation;
-    [SerializeField, Tooltip("UI Canvas Image for damage")] Image damageImage;
+    //[SerializeField, Tooltip("UI Canvas Image for damage")] Image damageImage;
     [SerializeField] private Sprite[] damageVisuals;
 
     [Header("Time References")]
@@ -46,8 +46,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Camera Controls")]
      public bool CamIsShaking = false;
-    [SerializeField, Range(0, 10), Tooltip("Camera shake intensity")] private int shakeIntensity;
-    [SerializeField, Range(0, 10), Tooltip("Camera shake speed")] private int shakeSpeed;
+    [SerializeField, Range(0, 5), Tooltip("Camera shake speed")] private float shakeIntensity;
     [SerializeField] private Camera mainCam;
     private int numTimerSteps = 100;
 
@@ -66,6 +65,13 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float negativeRandomModifier;
     [SerializeField] private float positiveRandomModifier;
 
+    [Header("Sound")]
+    [Tooltip("In Percentage, per frame. For example, 5 = 5% chance of any creepy extra happening in a given frame"), Range(0, 100)]
+    [SerializeField] private float frequencyOfCreepyExtra;
+    [SerializeField] private int timeToWaitToChanceSound;
+    [SerializeField] private int collectionModifier;
+
+
     private bool transitionToDay;
     private int transitionFrames;
 
@@ -76,32 +82,42 @@ public class GameManager : MonoBehaviour
     private int flickerCounter;
 
     private float time;
+    private float soundTimer;
     private float timeWon;
+    public bool won {  get; private set; }
+
+    AudioManager audioManager;
     private void Start()
     {
+        audioManager = AudioManager.Instance;
         transitionToDay = false;
         flickerFrame = 0;
         flickerPause = 0;
         flickerCounter = 0;
         time = 0;
+        soundTimer = 0;
         timeWon = 0;
+        won = false;
         originalIntensity = flashLight.intensity;
         health = maxHealth;
         transitionFrames = 0;
-        score = 9;
-        IncreaseScore();
         
     }
     public void IncreaseScore()
     {
         score++;
         if (score >= scoreNeededToWin)
+        {
+            audioManager.Stop("Creepy Ambience");
             WinGame();
+        }
     }
 
     public IEnumerator TakeDamage(Painting painting)
     {
+        yield return new WaitForSeconds(1f);
         print("Roar!");
+        audioManager.Play("Take Damage");
         SpriteRenderer sr = uncaughtApparationObj.GetComponent<SpriteRenderer>();
         if(painting.Type == Painting.PaintingType.LANDSCAPE)
         {
@@ -118,6 +134,8 @@ public class GameManager : MonoBehaviour
         painting.DamagePointsDealt += painting.NumApparationsComplete - painting.NumApparationsCaught;
         if (health <= 0)
         {
+            audioManager.Stop("Creepy Ambience");
+            audioManager.Play("Death");
             EndGame();
         }
         print("New health: " + health);
@@ -139,12 +157,12 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(timeBeforeCamShake);
         CamIsShaking = true;
         //damageImage.sprite = damageVisuals[(maxHealth - health)];
-
+        Vector3 camPos = mainCam.transform.position;
         float timer = 0;
         while (timer < camShakeTime)
         {
-            mainCam.transform.position = new Vector3(Mathf.PerlinNoise(0, Time.time * shakeSpeed) * 2 - 1,
-                    Mathf.PerlinNoise(1, Time.time * shakeSpeed) * 2 - 1,
+            mainCam.transform.position = new Vector3((Mathf.PerlinNoise(0, Time.time * shakeIntensity) * 2 - 1) + camPos.x,
+                    Mathf.PerlinNoise(1, Time.time * shakeIntensity) * 2 - 1,
                     -10);
             timer += Time.deltaTime;
             yield return new WaitForSeconds(Time.deltaTime);
@@ -156,7 +174,43 @@ public class GameManager : MonoBehaviour
     private void FixedUpdate()
     {
         time += Time.fixedDeltaTime;
+        soundTimer += Time.fixedDeltaTime;
 
+        //Sound
+        //For every point you get, increase the frequency of potentially getting creepy extra
+        if (soundTimer >= timeToWaitToChanceSound - ( score * collectionModifier ) )
+        {
+            soundTimer = 0;
+            float randomChance = Random.Range(0, 100);
+
+            //Chance check
+            if (randomChance < frequencyOfCreepyExtra)
+            {
+                int randomClip = Random.Range(0, 4);
+
+                switch (randomClip)
+                {
+                    case 0:
+                        audioManager.Play("Creepy Extra 1");
+                        break;
+                    case 1:
+                        audioManager.Play("Creepy Extra 2");
+                        break;
+                    case 2:
+                        audioManager.Play("Creepy Extra 3");
+                        break;
+                    case 3:
+                        audioManager.Play("Creepy Extra 4");
+                        break;
+                    default:
+                        print("ERROR: FAILED TO GET RANDOM SOUND");
+                        break;
+                }
+            }
+        }
+
+
+        //Victory End Flickering
         if (time <= flickerLength + timeWon)
         {
             //If flicker count is at 3, pause for a moment then resume
@@ -213,12 +267,16 @@ public class GameManager : MonoBehaviour
 
     void WinGame()
     {
+        audioManager.Play("Victory Jingle");
+        won = true;
+        //globalLight.color = new Color();
         timeWon = time;
         transitionToDay = true;
     }
 
     void EndGame()
     {
+        audioManager.Play("Loss Jingle");
         Debug.Log("Animation here. You died tho");
     }
 }

@@ -39,6 +39,7 @@ public class PlayerInputBehavior : MonoBehaviour
     [SerializeField] private GameObject[] paintingPositions;
 
     GameManager gameManager;
+    AudioManager audioManager;
     private InputAction moveCamera;
 
     //These affect nothing. Leave them alone. 
@@ -70,6 +71,7 @@ public class PlayerInputBehavior : MonoBehaviour
     {
         //Gets game manager
         gameManager = GameManager.Instance;
+        audioManager = AudioManager.Instance;
 
         //Binds actions to keys
         playerInput.currentActionMap.Enable();
@@ -147,6 +149,7 @@ public class PlayerInputBehavior : MonoBehaviour
         //If camera move input has been detected
         if (isCameraMoving)
         {
+            audioManager.Play("Switch Paintings");
             //Set to false
             isCameraMoving = false;
 
@@ -182,43 +185,50 @@ public class PlayerInputBehavior : MonoBehaviour
     /// </summary>
     private void HandleLightFlicker()
     {
-        //If Spear-It attack is on cooldown
-        if (time <= lastClickTime + spearItCooldDown && lastClickTime != 0)
+        if (!gameManager.won)
         {
-            //If flicker count is at 3, pause for a moment then resume
-            if (flickerCounter < maxFlickers)
+            //If Spear-It attack is on cooldown
+            if (time <= lastClickTime + spearItCooldDown && lastClickTime != 0)
             {
-                //If light is not normal, make it normal if set amount of time has passed
-                if (flashlight.intensity != originalIntensity && flickerFrame >= framesBetweenFlicker)
+                audioManager.Play("Flashlight Flicker");
+                //If flicker count is at 3, pause for a moment then resume
+                if (flickerCounter < maxFlickers)
                 {
-                    flashlight.intensity = originalIntensity;
-                    flickerFrame = 0;
-                }
-                //If light is normal, make it not normal if set amount of time has passed
-                else if (flashlight.intensity == originalIntensity && flickerFrame >= framesBetweenFlicker)
-                {
-                    float lightIntensity = Random.Range(lightFlickerReduction - negativeRandomModifier, lightFlickerReduction + positiveRandomModifier);
-                    flashlight.intensity = lightIntensity;
-                    flickerFrame = 0;
-                    flickerCounter++;
+                    //If light is not normal, make it normal if set amount of time has passed
+                    if (flashlight.intensity != originalIntensity && flickerFrame >= framesBetweenFlicker)
+                    {
+                        flashlight.intensity = originalIntensity;
+                        flickerFrame = 0;
+                    }
+                    //If light is normal, make it not normal if set amount of time has passed
+                    else if (flashlight.intensity == originalIntensity && flickerFrame >= framesBetweenFlicker)
+                    {
+                        float lightIntensity = Random.Range(lightFlickerReduction - negativeRandomModifier, lightFlickerReduction + positiveRandomModifier);
+                        flashlight.intensity = lightIntensity;
+                        flickerFrame = 0;
+                        flickerCounter++;
+                    }
+                    else
+                        flickerFrame++;
                 }
                 else
-                    flickerFrame++;
-            } else
-            {
-                flashlight.intensity = originalIntensity;
-                if (flickerPause < flickerPauseTime)
                 {
-                    flickerPause++;
-                } else
-                {
-                    flickerCounter = 0;
-                    flickerPause = 0;
+                    flashlight.intensity = originalIntensity;
+                    if (flickerPause < flickerPauseTime)
+                    {
+                        flickerPause++;
+                    }
+                    else
+                    {
+                        flickerCounter = 0;
+                        flickerPause = 0;
+                    }
                 }
             }
-        } else
-        {
-            flashlight.intensity = originalIntensity;
+            else
+            {
+                flashlight.intensity = originalIntensity;
+            }
         }
     }
 
@@ -227,6 +237,7 @@ public class PlayerInputBehavior : MonoBehaviour
         //Cannot attack if cooldown is active or if player has not clicked yet (only relevant at beginning of the game)
         if (time >= lastClickTime + spearItCooldDown || lastClickTime == 0)
         {
+            audioManager.Play("Stab Spear");
             flickerCounter = 0;
             flickerPause = 0;
             RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(mPosVector), Vector3.zero);
@@ -238,6 +249,7 @@ public class PlayerInputBehavior : MonoBehaviour
                 print(hit.transform.gameObject.name);
                 if (hit.transform.gameObject.tag == "Apparation")
                 {
+                    audioManager.Play("Extract Ghost");
                     print("Entered");
                     Apparation aRef = FindObjectOfType<PaintingManager>().RetrieveApparationInstance(hit.transform.gameObject.name, hit.transform.gameObject);
                     if (aRef != null && aRef.IsApparating && !aRef.HasBeenCaught)
@@ -336,9 +348,13 @@ public class PlayerInputBehavior : MonoBehaviour
             if (hit.transform.gameObject.tag == "Painting")
             {
                 Painting p = FindObjectOfType<PaintingManager>().RetrievePaintingInstance(hit.transform.gameObject);
-                if (p.NumApparationsCaught < p.NumApparationsComplete)
+                if (p.NumApparationsCaught < p.NumApparationsComplete && !p.FullSpookTriggered)
                 {
                     StartCoroutine(FindObjectOfType<GameManager>().TakeDamage(p));
+                    if(p.NumApparationsCaught + p.NumApparationsComplete >=p.Apparations.Length)
+                    {
+                        p.FullSpookTriggered = true;
+                    }
                 }
             }
         }

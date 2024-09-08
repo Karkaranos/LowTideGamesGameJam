@@ -12,6 +12,8 @@ public class Painting
     private int numApparationsComplete;
     private int numApparationsCaught;
     private int damagePointsDealt;
+
+    public bool FullSpookTriggered = false;
     public enum PaintingType
     {
             LANDSCAPE, PORTRAIT
