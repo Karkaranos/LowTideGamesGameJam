@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -136,6 +134,11 @@ public class UI_Controller : MonoBehaviour
     {
         audioManager.Play("UI Click");
         SceneManager.LoadScene("GalleryScene");
+    }
+
+    public void LeaveGallery()
+    {
+        SceneManager.LoadScene("MainMenu");
     }
 
     public void Quit()
