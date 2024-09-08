@@ -91,6 +91,8 @@ public class GameManager : MonoBehaviour
     public bool won {  get; private set; }
 
     AudioManager audioManager;
+
+    public bool isScaring = false;
     private void Start()
     {
         audioManager = AudioManager.Instance;
@@ -118,6 +120,7 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator TakeDamage(Painting painting)
     {
+        isScaring = true;
         //yield return new WaitForSeconds(1f);
         audioManager.Play("Take Damage");
         SpriteRenderer sr = uncaughtApparationObj.GetComponent<SpriteRenderer>();
@@ -153,6 +156,7 @@ public class GameManager : MonoBehaviour
             sr.color = new Color(1, 1, 1, 0);
             sr.gameObject.transform.position = new Vector3(0, 10, 0);
         }
+        isScaring = false;
     }
 
     IEnumerator CameraShake()
