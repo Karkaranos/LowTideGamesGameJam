@@ -1,8 +1,7 @@
 using System.Collections;
 using UnityEngine;
-using UnityEditor;
 using UnityEngine.InputSystem;
-using UnityEngine.UIElements;
+using UnityEngine.Rendering.Universal;
 
 public class PlayerInputBehavior : MonoBehaviour
 {
@@ -10,13 +9,27 @@ public class PlayerInputBehavior : MonoBehaviour
     [SerializeField] PlayerInput playerInput;
     InputAction pause;
     InputAction click;
+    InputAction mPos;
 
     Vector2 mPosVector;
+    [SerializeField] float spearItCooldDown;
+
+    [Header("Sprites")]
+    [SerializeField] GameObject punctureGameObject;
     [SerializeField] private Sprite tf2Coconut;
 
     [Header("Flashlight Variable")]
-    [SerializeField] private Transform lightObject;
+    [SerializeField] private GameObject lightObject;
+    private Light2D flashlight;
     [SerializeField] private float maxMouseSpeed;
+
+    [Header("Flashlight Flickering")]
+    [SerializeField] private int maxFlickers;
+    [SerializeField] private float lightFlickerReduction;
+    [SerializeField] private int framesBetweenFlicker;
+    [SerializeField] private int flickerPauseTime;
+    [SerializeField] private float negativeRandomModifier;
+    [SerializeField] private float positiveRandomModifier;
 
     [Header("Camera Variables")]
     [Tooltip("Uses normal indexes. First painting is at index 1, second painting is at index 2, etc.")]
@@ -40,6 +53,17 @@ public class PlayerInputBehavior : MonoBehaviour
     private bool isCameraMoving;
     private int currentPaintingIndex;
 
+    //Time Variables
+    private float time;
+    private float lastClickTime;
+
+    //Flicker Variables
+    private float originalIntensity;
+    private int flickerFrame;
+    private int flickerPause;
+    private int flickerCounter;
+    public GameObject spawnCirc;
+
     #endregion
     // Start is called before the first frame update
     void Start()
@@ -53,6 +77,7 @@ public class PlayerInputBehavior : MonoBehaviour
         nothingToSeeHere = playerInput.currentActionMap.FindAction("NothingToSee");
         click = playerInput.currentActionMap.FindAction("Click");
         moveCamera = playerInput.currentActionMap.FindAction("MoveCamera");
+        mPos = playerInput.currentActionMap.FindAction("MousePos");
 
         //Binds actions to methods
         pause.performed += Pause_performed;
@@ -65,16 +90,33 @@ public class PlayerInputBehavior : MonoBehaviour
         isCameraMoving = false;
         currentPaintingIndex = startingPaintingIndex - 1;
         mainCamera.transform.position = paintingPositions[currentPaintingIndex].transform.position;
+
+        lightObject.transform.position = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+
+        flashlight = lightObject.GetComponent<Light2D>();
+
+        //Initialzes time variables
+        time = 0;
+        lastClickTime = 0;
+
+        //Initializes flicker variables
+        originalIntensity = flashlight.intensity;
+        flickerFrame = framesBetweenFlicker;
+        flickerPause = 0;
+        flickerCounter = 0;
+
     }
 
     public void FixedUpdate()
     {
+        time += Time.fixedDeltaTime;
         HandleLightMovement();
-        if(!FindObjectOfType<GameManager>().CamIsShaking)
+        if(!FindObjectOfType<GameManager>().CamIsShaking && !FindObjectOfType<PaintingManager>().PaintingCameraOverride)
         {
             HandleCameraMovement();
         }
-        
+        HandleLightFlicker();
+        mPosVector = mPos.ReadValue<Vector2>();
     }
 
     private void OnDisable()
@@ -91,9 +133,10 @@ public class PlayerInputBehavior : MonoBehaviour
     {
         //Gets mouse position
         mousePosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+        CheckForFinishedApparations();
 
         //Moves light to mouse position
-        lightObject.position = Vector2.MoveTowards(lightObject.position, mousePosition, maxMouseSpeed);
+        lightObject.transform.position = Vector2.MoveTowards(lightObject.transform.position, mousePosition, maxMouseSpeed);
     }
 
     /// <summary>
@@ -127,31 +170,101 @@ public class PlayerInputBehavior : MonoBehaviour
             paintingPositions[currentPaintingIndex].transform.position, cameraAccelerationSpeed * Time.deltaTime * gameManager.expectedFrameRate);
     }
 
-    private void Click_performed(InputAction.CallbackContext obj)
+    public void CameraMovementOverride(int index)
     {
-        RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector3.zero);
-        if(hit.collider != null)
+        currentPaintingIndex = index;
+        mainCamera.transform.position = Vector3.MoveTowards(mainCamera.transform.position,
+           paintingPositions[index].transform.position, cameraAccelerationSpeed * Time.deltaTime * gameManager.expectedFrameRate);
+    }
+
+    /// <summary>
+    /// Handles the flickering of the light
+    /// </summary>
+    private void HandleLightFlicker()
+    {
+        if (!gameManager.won)
         {
-            print(hit.transform.gameObject.name);
-            if(hit.transform.gameObject.tag == "Apparation")
+            //If Spear-It attack is on cooldown
+            if (time <= lastClickTime + spearItCooldDown && lastClickTime != 0)
             {
-                Apparation aRef = FindObjectOfType<PaintingManager>().RetrieveApparationInstance(hit.transform.gameObject.name);
-                if(aRef!=null && aRef.IsApparating && !aRef.HasBeenCaught)
+                //If flicker count is at 3, pause for a moment then resume
+                if (flickerCounter < maxFlickers)
                 {
-                    StopCoroutine(aRef.StartApparation());
-                    aRef.Caught();
-                    Destroy(aRef.Sr.gameObject);   //Returns apparation to normal
-                    FindObjectOfType<GameManager>().IncreaseScore();
-                    //Stab animation
-                    //Goop
+                    //If light is not normal, make it normal if set amount of time has passed
+                    if (flashlight.intensity != originalIntensity && flickerFrame >= framesBetweenFlicker)
+                    {
+                        flashlight.intensity = originalIntensity;
+                        flickerFrame = 0;
+                    }
+                    //If light is normal, make it not normal if set amount of time has passed
+                    else if (flashlight.intensity == originalIntensity && flickerFrame >= framesBetweenFlicker)
+                    {
+                        float lightIntensity = Random.Range(lightFlickerReduction - negativeRandomModifier, lightFlickerReduction + positiveRandomModifier);
+                        flashlight.intensity = lightIntensity;
+                        flickerFrame = 0;
+                        flickerCounter++;
+                    }
+                    else
+                        flickerFrame++;
                 }
-                else if (aRef!=null && aRef.HasApparated)
+                else
                 {
-                    //Lose points
+                    flashlight.intensity = originalIntensity;
+                    if (flickerPause < flickerPauseTime)
+                    {
+                        flickerPause++;
+                    }
+                    else
+                    {
+                        flickerCounter = 0;
+                        flickerPause = 0;
+                    }
                 }
             }
+            else
+            {
+                flashlight.intensity = originalIntensity;
+            }
         }
-        //TODO
+    }
+
+    private void Click_performed(InputAction.CallbackContext obj)
+    {
+        //Cannot attack if cooldown is active or if player has not clicked yet (only relevant at beginning of the game)
+        if (time >= lastClickTime + spearItCooldDown || lastClickTime == 0)
+        {
+            flickerCounter = 0;
+            flickerPause = 0;
+            RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(mPosVector), Vector3.zero);
+            //Debug.DrawRay(mousePosition, Vector3.zero);
+            //print(mPosVector);
+            lastClickTime = time;
+            if (hit.collider != null)
+            {
+                print(hit.transform.gameObject.name);
+                if (hit.transform.gameObject.tag == "Apparation")
+                {
+                    print("Entered");
+                    Apparation aRef = FindObjectOfType<PaintingManager>().RetrieveApparationInstance(hit.transform.gameObject.name, hit.transform.gameObject);
+                    if (aRef != null && aRef.IsApparating && !aRef.HasBeenCaught)
+                    {
+                        StopCoroutine(aRef.StartApparation());
+                        aRef.Caught();
+                        Instantiate(punctureGameObject, aRef.Sr.gameObject.transform.position, Quaternion.identity);
+                        //Destroy(aRef.Sr.gameObject);   //Returns apparation to normal
+                        FindObjectOfType<GameManager>().IncreaseScore();
+                        //Stab animation
+                    }
+                    else if (aRef != null && aRef.HasApparated)
+                    {
+                        //Lose points
+                    }
+                }
+            }
+
+            Instantiate(punctureGameObject, mousePosition, Quaternion.identity);
+            //TODO
+        }
     }
 
     /// <summary>
@@ -217,6 +330,27 @@ public class PlayerInputBehavior : MonoBehaviour
         for (int i = 0; i < arrayLength; i++)
         {
             Gizmos.DrawWireCube(paintingPositions[i].transform.position, new Vector2(width, height));
+        }
+    }
+
+    private void CheckForFinishedApparations()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(mPosVector), Vector3.zero);
+        if (hit.collider != null)
+        {
+            print(hit.transform.gameObject.name);
+            if (hit.transform.gameObject.tag == "Painting")
+            {
+                Painting p = FindObjectOfType<PaintingManager>().RetrievePaintingInstance(hit.transform.gameObject);
+                if (p.NumApparationsCaught < p.NumApparationsComplete && !p.FullSpookTriggered)
+                {
+                    StartCoroutine(FindObjectOfType<GameManager>().TakeDamage(p));
+                    if(p.NumApparationsCaught + p.NumApparationsComplete >=p.Apparations.Length)
+                    {
+                        p.FullSpookTriggered = true;
+                    }
+                }
+            }
         }
     }
 }
