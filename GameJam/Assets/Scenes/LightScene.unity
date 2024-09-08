@@ -883,6 +883,9 @@ MonoBehaviour:
   flickerPauseTime: 20
   negativeRandomModifier: 0.5
   positiveRandomModifier: 0.41
+  frequencyOfCreepyExtra: 0
+  timeToWaitToChanceSound: 0
+  collectionModifier: 0
 --- !u!4 &431560568
 Transform:
   m_ObjectHideFlags: 0
@@ -2417,6 +2420,7 @@ Transform:
   m_Children:
   - {fileID: 431560568}
   - {fileID: 203786983}
+  - {fileID: 1594128904}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1254227937
@@ -2710,6 +2714,213 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2064763057}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1594128903
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1594128904}
+  - component: {fileID: 1594128905}
+  m_Layer: 0
+  m_Name: Audio Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1594128904
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1594128903}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.0017432515, y: 2.1715372, z: 0.6867239}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1244177046}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1594128905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1594128903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 834541705e966e140a25baef0a3f2495, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Sounds:
+  - clip: {fileID: 8300000, guid: abf6569c1c2c2c54a9a243cfe0baadfb, type: 3}
+    name: Switch Paintings
+    volume: 0
+    pitch: 0
+    loop: 0
+    panStereo: 0
+    spacialBlend: 0
+    minDistance: 0
+    maxDistance: 0
+    source: {fileID: 0}
+  - clip: {fileID: 8300000, guid: abf6569c1c2c2c54a9a243cfe0baadfb, type: 3}
+    name: Flashlight Flicker
+    volume: 0
+    pitch: 0
+    loop: 0
+    panStereo: 0
+    spacialBlend: 0
+    minDistance: 0
+    maxDistance: 0
+    source: {fileID: 0}
+  - clip: {fileID: 8300000, guid: abf6569c1c2c2c54a9a243cfe0baadfb, type: 3}
+    name: Stab Spear
+    volume: 0
+    pitch: 0
+    loop: 0
+    panStereo: 0
+    spacialBlend: 0
+    minDistance: 0
+    maxDistance: 0
+    source: {fileID: 0}
+  - clip: {fileID: 8300000, guid: abf6569c1c2c2c54a9a243cfe0baadfb, type: 3}
+    name: Extract Ghost
+    volume: 0
+    pitch: 0
+    loop: 0
+    panStereo: 0
+    spacialBlend: 0
+    minDistance: 0
+    maxDistance: 0
+    source: {fileID: 0}
+  - clip: {fileID: 8300000, guid: abf6569c1c2c2c54a9a243cfe0baadfb, type: 3}
+    name: Take Damage
+    volume: 0
+    pitch: 0
+    loop: 0
+    panStereo: 0
+    spacialBlend: 0
+    minDistance: 0
+    maxDistance: 0
+    source: {fileID: 0}
+  - clip: {fileID: 8300000, guid: abf6569c1c2c2c54a9a243cfe0baadfb, type: 3}
+    name: Death
+    volume: 0
+    pitch: 0
+    loop: 0
+    panStereo: 0
+    spacialBlend: 0
+    minDistance: 0
+    maxDistance: 0
+    source: {fileID: 0}
+  - clip: {fileID: 8300000, guid: abf6569c1c2c2c54a9a243cfe0baadfb, type: 3}
+    name: Creepy Ambience
+    volume: 0
+    pitch: 0
+    loop: 1
+    panStereo: 0
+    spacialBlend: 0
+    minDistance: 0
+    maxDistance: 0
+    source: {fileID: 0}
+  - clip: {fileID: 8300000, guid: abf6569c1c2c2c54a9a243cfe0baadfb, type: 3}
+    name: Menu Music
+    volume: 0
+    pitch: 0.1
+    loop: 1
+    panStereo: 0
+    spacialBlend: 0
+    minDistance: 0
+    maxDistance: 0
+    source: {fileID: 0}
+  - clip: {fileID: 8300000, guid: abf6569c1c2c2c54a9a243cfe0baadfb, type: 3}
+    name: UI Click
+    volume: 0
+    pitch: 0.1
+    loop: 0
+    panStereo: 0
+    spacialBlend: 0
+    minDistance: 0
+    maxDistance: 0
+    source: {fileID: 0}
+  - clip: {fileID: 8300000, guid: abf6569c1c2c2c54a9a243cfe0baadfb, type: 3}
+    name: Victory Jingle
+    volume: 0
+    pitch: 0.1
+    loop: 0
+    panStereo: 0
+    spacialBlend: 0
+    minDistance: 0
+    maxDistance: 0
+    source: {fileID: 0}
+  - clip: {fileID: 8300000, guid: abf6569c1c2c2c54a9a243cfe0baadfb, type: 3}
+    name: Loss Jingle
+    volume: 0
+    pitch: 0.1
+    loop: 0
+    panStereo: 0
+    spacialBlend: 0
+    minDistance: 0
+    maxDistance: 0
+    source: {fileID: 0}
+  - clip: {fileID: 8300000, guid: abf6569c1c2c2c54a9a243cfe0baadfb, type: 3}
+    name: Loss Jingle
+    volume: 0
+    pitch: 0.1
+    loop: 0
+    panStereo: 0
+    spacialBlend: 0
+    minDistance: 0
+    maxDistance: 0
+    source: {fileID: 0}
+  - clip: {fileID: 8300000, guid: abf6569c1c2c2c54a9a243cfe0baadfb, type: 3}
+    name: Creepy Extra 1
+    volume: 0
+    pitch: 0.1
+    loop: 0
+    panStereo: 0
+    spacialBlend: 1
+    minDistance: 0
+    maxDistance: 0
+    source: {fileID: 0}
+  - clip: {fileID: 8300000, guid: abf6569c1c2c2c54a9a243cfe0baadfb, type: 3}
+    name: Creepy Extra 2
+    volume: 0
+    pitch: 0.1
+    loop: 0
+    panStereo: 0
+    spacialBlend: 1
+    minDistance: 0
+    maxDistance: 0
+    source: {fileID: 0}
+  - clip: {fileID: 8300000, guid: abf6569c1c2c2c54a9a243cfe0baadfb, type: 3}
+    name: Creepy Extra 3
+    volume: 0
+    pitch: 0.1
+    loop: 0
+    panStereo: 0
+    spacialBlend: 1
+    minDistance: 0
+    maxDistance: 0
+    source: {fileID: 0}
+  - clip: {fileID: 8300000, guid: abf6569c1c2c2c54a9a243cfe0baadfb, type: 3}
+    name: Creepy Extra 4
+    volume: 0
+    pitch: 0.1
+    loop: 0
+    panStereo: 0
+    spacialBlend: 1
+    minDistance: 0
+    maxDistance: 0
+    source: {fileID: 0}
+  masterMixer: {fileID: 0}
+  musicVolume: 0
 --- !u!1 &1860656108
 GameObject:
   m_ObjectHideFlags: 0
