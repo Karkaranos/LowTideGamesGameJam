@@ -41,24 +41,37 @@ public class Apparation
             Sr.color = c;
             Sr.sprite = apparation;
             isApparating = true;
+            newSprite.tag = "Apparation";
+            newSprite.AddComponent<BoxCollider2D>();
             for (int i = 0; i < steps; i++)
             {
-                c.a += (1 / apparatingCompletionTime) * (apparatingCompletionTime / steps);
-                if (sr != null)
+                if(isApparating)
                 {
-                    Sr.color = c;
+                    c.a += (1 / apparatingCompletionTime) * (apparatingCompletionTime / steps);
+                    if (sr != null)
+                    {
+                        Sr.color = c;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                    currentApparationProgress = i + 1;
+                    yield return new WaitForSeconds(apparatingCompletionTime / steps);
                 }
                 else
                 {
-                    break;
+                    c.a = 0;
+                    sr.color = c;
                 }
-                currentApparationProgress = i + 1;
-                yield return new WaitForSeconds(apparatingCompletionTime / steps);
+
             }
         }
         else
         {
             GameObject newSprite = new GameObject();
+            newSprite.tag = "Apparation";
+            newSprite.AddComponent<BoxCollider2D>();
             newSprite.transform.parent = ApparationObject.transform;
             newSprite.transform.localPosition = Vector3.zero;
             sr = newSprite.AddComponent<SpriteRenderer>();
@@ -71,25 +84,37 @@ public class Apparation
             isApparating = true;
             for (int i = 0; i < steps; i++)
             {
-                c.a -= (1 / apparatingCompletionTime) * (apparatingCompletionTime / steps);
-                if (sr != null)
+                if(isApparating)
                 {
-                    Sr.color = c;
+                    c.a -= (1 / apparatingCompletionTime) * (apparatingCompletionTime / steps);
+                    if (sr != null)
+                    {
+                        Sr.color = c;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                    currentApparationProgress = i + 1;
+                    yield return new WaitForSeconds(apparatingCompletionTime / steps);
                 }
                 else
                 {
-                    break;
+                    c.a = 1;
+                    sr.color = c;
                 }
-                currentApparationProgress = i + 1;
-                yield return new WaitForSeconds(apparatingCompletionTime / steps);
             }
         }
-        isApparating = false;
-        hasApparated = true;
+        if(!hasBeenCaught)
+        {
+            isApparating = false;
+            hasApparated = true;
+        }
     }
 
     public void Caught()
     {
+
         isApparating = false;
         hasBeenCaught = true;
     }

@@ -12,6 +12,7 @@ public class PlayerInputBehavior : MonoBehaviour
     [SerializeField] PlayerInput playerInput;
     InputAction pause;
     InputAction click;
+    InputAction mPos;
 
     Vector2 mPosVector;
     [SerializeField] float spearItCooldDown;
@@ -66,6 +67,7 @@ public class PlayerInputBehavior : MonoBehaviour
     private int flickerCounter;
     private bool canFlicker = false;
     [SerializeField] private int maxFlickers;
+    public GameObject spawnCirc;
 
     #endregion
     // Start is called before the first frame update
@@ -80,6 +82,7 @@ public class PlayerInputBehavior : MonoBehaviour
         nothingToSeeHere = playerInput.currentActionMap.FindAction("NothingToSee");
         click = playerInput.currentActionMap.FindAction("Click");
         moveCamera = playerInput.currentActionMap.FindAction("MoveCamera");
+        mPos = playerInput.currentActionMap.FindAction("MousePos");
 
         //Binds actions to methods
         pause.performed += Pause_performed;
@@ -118,6 +121,7 @@ public class PlayerInputBehavior : MonoBehaviour
             HandleCameraMovement();
         }
         HandleLightFlicker();
+        mPosVector = mPos.ReadValue<Vector2>();
     }
 
     private void OnDisable()
@@ -228,20 +232,22 @@ public class PlayerInputBehavior : MonoBehaviour
             currentCooldown = spearItCooldDown;
             flickerCounter = 0;
             flickerPause = 0;
-            Instantiate(punctureGameObject, mousePosition, Quaternion.identity);
-            RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector3.zero);
+            RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(mPosVector), Vector3.zero);
+            //Debug.DrawRay(mousePosition, Vector3.zero);
+            //print(mPosVector);
             if (hit.collider != null)
             {
                 print(hit.transform.gameObject.name);
                 if (hit.transform.gameObject.tag == "Apparation")
                 {
+                    print("Entered");
                     Apparation aRef = FindObjectOfType<PaintingManager>().RetrieveApparationInstance(hit.transform.gameObject.name);
                     if (aRef != null && aRef.IsApparating && !aRef.HasBeenCaught)
                     {
                         StopCoroutine(aRef.StartApparation());
                         aRef.Caught();
                         Instantiate(punctureGameObject, aRef.Sr.gameObject.transform.position, Quaternion.identity);
-                        Destroy(aRef.Sr.gameObject);   //Returns apparation to normal
+                        //Destroy(aRef.Sr.gameObject);   //Returns apparation to normal
                         FindObjectOfType<GameManager>().IncreaseScore();
                         //Stab animation
                     }
@@ -251,6 +257,8 @@ public class PlayerInputBehavior : MonoBehaviour
                     }
                 }
             }
+
+            Instantiate(punctureGameObject, mousePosition, Quaternion.identity);
             //TODO
         }
     }
