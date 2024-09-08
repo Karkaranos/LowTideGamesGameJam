@@ -22,21 +22,33 @@ public class UI_Controller : MonoBehaviour
     public TMP_Text Title;
     public TMP_Text Body;
     private int CurrentPage;
+    public GameObject Pause;
 
     public PlayerInput playerInput;
     private InputAction navigateForward;
     private InputAction navigateBackwards;
     public GameObject BeginButton;
 
+    public void Resume()
+    {
+        Pause.SetActive(false);
+        Time.timeScale = 1.0f;
+    }
+
+
     private void Start()
     {
         audioManager = AudioManager.Instance;
-        audioManager.Play("Menu Music");
-        playerInput.currentActionMap.Enable();
-        navigateForward = playerInput.currentActionMap.FindAction("Progress");
-        navigateBackwards = playerInput.currentActionMap.FindAction("MoveBack");
-        navigateBackwards.performed += NavigateBackwards_performed;
-        navigateForward.performed += NavigateForward_performed;
+        
+        if(SceneManager.GetActiveScene().name.Contains("Menu"))
+        {
+            audioManager.Play("Menu Music");
+            playerInput.currentActionMap.Enable();
+            navigateForward = playerInput.currentActionMap.FindAction("Progress");
+            navigateBackwards = playerInput.currentActionMap.FindAction("MoveBack");
+            navigateBackwards.performed += NavigateBackwards_performed;
+            navigateForward.performed += NavigateForward_performed;
+        }
     }
 
     private void NavigateForward_performed(InputAction.CallbackContext obj)
@@ -115,16 +127,18 @@ public class UI_Controller : MonoBehaviour
 
     public void BackToMainMenu()
     {
+        audioManager.Play("UI Click");
         CreditsCanvas.SetActive(false);
         MainMenuCanvas.SetActive(true);
         TutorialCanvas.SetActive(false);
     }
 
     public void StartGameTutorial()
-    { 
-    TutorialCanvas.SetActive(true);
-    MainMenuCanvas.SetActive(false);
-    CreditsCanvas.SetActive(false);
+    {
+        audioManager.Play("UI Click");
+        TutorialCanvas.SetActive(true);
+        MainMenuCanvas.SetActive(false);
+        CreditsCanvas.SetActive(false);
 
     CurrentPage = 0;
     DisplayPage();
@@ -138,6 +152,7 @@ public class UI_Controller : MonoBehaviour
 
     public void LeaveGallery()
     {
+        audioManager.Play("UI Click");
         SceneManager.LoadScene("MainMenu");
     }
 
@@ -145,5 +160,11 @@ public class UI_Controller : MonoBehaviour
     {
         audioManager.Play("UI Click");
         Application.Quit();
+    }
+
+    public void ExitGame()
+    {
+        audioManager.Play("UI Click");
+        SceneManager.LoadScene("MainMenu");
     }
 }
