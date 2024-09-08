@@ -1,4 +1,4 @@
-using UnityEditor;
+/*using UnityEditor;
 using UnityEngine;
 
 public class ReadOnlyAttribute : PropertyAttribute { }
@@ -19,5 +19,5 @@ public class ReadOnlyOverrides : PropertyDrawer
         EditorGUI.PropertyField(position, property, label, true);
         GUI.enabled = true;
     }
-}
+}*/
 

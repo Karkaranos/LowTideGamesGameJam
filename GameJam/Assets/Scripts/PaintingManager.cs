@@ -5,7 +5,7 @@ using UnityEngine;
 public class PaintingManager : MonoBehaviour
 {
     [SerializeField] Painting[] paintings;
-    [SerializeField, ReadOnly] int currPaintingNum;
+    [SerializeField, /*ReadOnly*/] int currPaintingNum;
 
     public bool PaintingCameraOverride = false;
     int totalApparations = 0;

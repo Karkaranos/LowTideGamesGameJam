@@ -9,9 +9,9 @@ public class Apparation
     private Sprite startingSprite;
     [SerializeField, Tooltip("How long in seconds until the apparation starts")] float timeUntilStart;
     [SerializeField, Tooltip("How long the apparation takes to complete")] float apparatingCompletionTime;
-    [SerializeField, Range(0, 100), Tooltip("How far along the apparation is as a percent"), ReadOnly]  float currentApparationProgress;
+    [SerializeField, Range(0, 100), Tooltip("How far along the apparation is as a percent"), /*ReadOnly*/]  float currentApparationProgress;
     [ Tooltip("The sprite it changes to")] public Sprite apparation;
-    [SerializeField, ReadOnly] bool hasBeenCaught;
+    [SerializeField, /*ReadOnly*/] bool hasBeenCaught;
     [SerializeField, Tooltip("True if apparation is larger than original or same size; false if apparation is smaller than original")] bool newFadeIn = true;
     [SerializeField, Tooltip("True if old fades out as new fades in")] bool crossfade = false;
     bool hasApparated = false;
