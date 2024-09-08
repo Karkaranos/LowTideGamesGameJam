@@ -71,8 +71,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int timeToWaitToChanceSound;
     [SerializeField] private int collectionModifier;
 
-
-    private bool transitionToDay;
     private int transitionFrames;
 
     //Flicker Variables
@@ -90,7 +88,6 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         audioManager = AudioManager.Instance;
-        transitionToDay = false;
         flickerFrame = 0;
         flickerPause = 0;
         flickerCounter = 0;
@@ -211,50 +208,52 @@ public class GameManager : MonoBehaviour
 
 
         //Victory End Flickering
-        if (time <= flickerLength + timeWon)
+        if (won)
         {
-            //If flicker count is at 3, pause for a moment then resume
-            if (flickerCounter < maxFlickers)
+            if (time <= flickerLength + timeWon)
             {
-                //If light is not normal, make it normal if set amount of time has passed
-                if (flashLight.intensity != originalIntensity && flickerFrame >= framesBetweenFlicker)
+                //If flicker count is at 3, pause for a moment then resume
+                if (flickerCounter < maxFlickers)
                 {
-                    flashLight.intensity = originalIntensity;
-                    flickerFrame = 0;
-                }
-                //If light is normal, make it not normal if set amount of time has passed
-                else if (flashLight.intensity == originalIntensity && flickerFrame >= framesBetweenFlicker)
-                {
-                    float lightIntensity = Random.Range(lightFlickerReduction - negativeRandomModifier, lightFlickerReduction + positiveRandomModifier);
-                    flashLight.intensity = lightIntensity;
-                    flickerFrame = 0;
-                    flickerCounter++;
+                    //If light is not normal, make it normal if set amount of time has passed
+                    if (flashLight.intensity != originalIntensity && flickerFrame >= framesBetweenFlicker)
+                    {
+                        flashLight.intensity = originalIntensity;
+                        flickerFrame = 0;
+                    }
+                    //If light is normal, make it not normal if set amount of time has passed
+                    else if (flashLight.intensity == originalIntensity && flickerFrame >= framesBetweenFlicker)
+                    {
+                        float lightIntensity = Random.Range(lightFlickerReduction - negativeRandomModifier, lightFlickerReduction + positiveRandomModifier);
+                        flashLight.intensity = lightIntensity;
+                        flickerFrame = 0;
+                        flickerCounter++;
+                    }
+                    else
+                        flickerFrame++;
                 }
                 else
-                    flickerFrame++;
+                {
+                    flashLight.intensity = originalIntensity;
+                    if (flickerPause < flickerPauseTime)
+                    {
+                        flickerPause++;
+                    }
+                    else
+                    {
+                        flickerCounter = 0;
+                        flickerPause = 0;
+                    }
+                }
             }
             else
             {
-                flashLight.intensity = originalIntensity;
-                if (flickerPause < flickerPauseTime)
-                {
-                    flickerPause++;
-                }
-                else
-                {
-                    flickerCounter = 0;
-                    flickerPause = 0;
-                }
+                flashLight.enabled = false;
             }
-        }
-        else
-        {
-            flashLight.enabled = false;
-        }
 
-        //Transitions darkness to brightness
-        if (transitionToDay)
-        {
+
+            //Transitions darkness to brightness
+
             if (transitionFrames >= delayforNextDecrease && globalLight.intensity < 1)
             {
                 globalLight.intensity += globalLightIncreaseRate;
@@ -272,7 +271,6 @@ public class GameManager : MonoBehaviour
         FindObjectOfType<Constants>().IsGalleryClickable = true;
         //globalLight.color = new Color();
         timeWon = time;
-        transitionToDay = true;
     }
 
     void EndGame()

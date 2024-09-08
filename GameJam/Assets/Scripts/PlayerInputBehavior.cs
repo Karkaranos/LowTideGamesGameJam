@@ -261,7 +261,7 @@ public class PlayerInputBehavior : MonoBehaviour
                     {
                         StopCoroutine(aRef.StartApparation());
                         aRef.Caught();
-                        Instantiate(punctureGameObject, aRef.Sr.gameObject.transform.position, Quaternion.identity);
+                        Instantiate(punctureGameObject, mousePosition, Quaternion.identity);
                         //Destroy(aRef.Sr.gameObject);   //Returns apparation to normal
                         FindObjectOfType<GameManager>().IncreaseScore();
                         //Stab animation
@@ -272,8 +272,6 @@ public class PlayerInputBehavior : MonoBehaviour
                     }
                 }
             }
-
-            Instantiate(punctureGameObject, mousePosition, Quaternion.identity);
             //TODO
         }
     }
