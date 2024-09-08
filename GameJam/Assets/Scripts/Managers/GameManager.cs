@@ -37,7 +37,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Sprite landscapeApparation;
     [SerializeField] private Sprite portraitApparation;
     //[SerializeField, Tooltip("UI Canvas Image for damage")] Image damageImage;
-    [SerializeField] private Sprite[] damageVisuals;
+    [SerializeField] private GameObject[] damageVisuals;
+    private int dmgTracker;
 
     [Header("Time References")]
     [SerializeField, Tooltip("How long the uncaught apparation is visible for before it fades, in seconds")] private float timeBeforeApparationFades;
@@ -154,6 +155,7 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(timeBeforeCamShake);
         CamIsShaking = true;
         //damageImage.sprite = damageVisuals[(maxHealth - health)];
+        damageVisuals[dmgTracker++].SetActive(true);
         Vector3 camPos = mainCam.transform.position;
         float timer = 0;
         while (timer < camShakeTime)
