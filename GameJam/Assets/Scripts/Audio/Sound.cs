@@ -7,10 +7,7 @@
     Description: Creates the settings for the audio sources added to each sound
     within the AudioManager.
 ******************************************************************************/
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Audio;
 
 [System.Serializable]
 public class Sound

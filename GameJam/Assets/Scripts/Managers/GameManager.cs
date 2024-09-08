@@ -65,6 +65,13 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float negativeRandomModifier;
     [SerializeField] private float positiveRandomModifier;
 
+    [Header("Sound")]
+    [Tooltip("In Percentage, per frame. For example, 5 = 5% chance of any creepy extra happening in a given frame"), Range(0, 100)]
+    [SerializeField] private float frequencyOfCreepyExtra;
+    [SerializeField] private int timeToWaitToChanceSound;
+    [SerializeField] private int collectionModifier;
+
+
     private bool transitionToDay;
     private int transitionFrames;
 
@@ -75,22 +82,25 @@ public class GameManager : MonoBehaviour
     private int flickerCounter;
 
     private float time;
+    private float soundTimer;
     private float timeWon;
     public bool won {  get; private set; }
+
+    AudioManager audioManager;
     private void Start()
     {
+        audioManager = AudioManager.Instance;
         transitionToDay = false;
         flickerFrame = 0;
         flickerPause = 0;
         flickerCounter = 0;
         time = 0;
+        soundTimer = 0;
         timeWon = 0;
         won = false;
         originalIntensity = flashLight.intensity;
         health = maxHealth;
         transitionFrames = 0;
-        score = 9;
-        IncreaseScore();
         
     }
     public void IncreaseScore()
@@ -158,7 +168,43 @@ public class GameManager : MonoBehaviour
     private void FixedUpdate()
     {
         time += Time.fixedDeltaTime;
+        soundTimer += Time.fixedDeltaTime;
 
+        //Sound
+        //For every point you get, increase the frequency of potentially getting creepy extra
+        if (soundTimer >= timeToWaitToChanceSound - ( score * collectionModifier ) )
+        {
+            soundTimer = 0;
+            float randomChance = Random.Range(0, 100);
+
+            //Chance check
+            if (randomChance < frequencyOfCreepyExtra)
+            {
+                int randomClip = Random.Range(0, 4);
+
+                switch (randomClip)
+                {
+                    case 0:
+                        audioManager.Play("Creepy Extra 1");
+                        break;
+                    case 1:
+                        audioManager.Play("Creepy Extra 2");
+                        break;
+                    case 2:
+                        audioManager.Play("Creepy Extra 3");
+                        break;
+                    case 3:
+                        audioManager.Play("Creepy Extra 4");
+                        break;
+                    default:
+                        print("ERROR: FAILED TO GET RANDOM SOUND");
+                        break;
+                }
+            }
+        }
+
+
+        //Victory End Flickering
         if (time <= flickerLength + timeWon)
         {
             //If flicker count is at 3, pause for a moment then resume
@@ -215,6 +261,7 @@ public class GameManager : MonoBehaviour
 
     void WinGame()
     {
+        audioManager.Play("Victory Jingle");
         won = true;
         //globalLight.color = new Color();
         timeWon = time;
@@ -223,6 +270,7 @@ public class GameManager : MonoBehaviour
 
     void EndGame()
     {
+        audioManager.Play("Loss Jingle");
         Debug.Log("Animation here. You died tho");
     }
 }
