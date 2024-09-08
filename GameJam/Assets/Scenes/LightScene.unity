@@ -984,6 +984,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: b328aa303ea384848aa78a448dc8b86a, type: 3}
   - {fileID: 21300000, guid: cd03dc380cfbe054d9600294637020ab, type: 3}
   - {fileID: 21300000, guid: 1e15ef9010c62844994090b77463fdc1, type: 3}
+  isScaring: 0
 --- !u!4 &431560568
 Transform:
   m_ObjectHideFlags: 0
@@ -1680,7 +1681,7 @@ GameObject:
   - component: {fileID: 615252982}
   - component: {fileID: 615252981}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: GhostObj
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
