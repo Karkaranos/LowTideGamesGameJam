@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
 
     #endregion
     [SerializeField] public int expectedFrameRate = 60;
-    [SerializeField] int score;
+    [SerializeField] public int score;
     [SerializeField] private int scoreNeededToWin;
     [SerializeField] int maxHealth;
     private int health;

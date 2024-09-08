@@ -31,6 +31,7 @@ public class Apparation
 
     public IEnumerator StartApparation()
     {
+        ApparationMono am = new ApparationMono();
         if (newFadeIn)
         {
             yield return new WaitForSeconds(timeUntilStart);
@@ -134,7 +135,6 @@ public class Apparation
         {
             isApparating = false;
             hasApparated = true;
-            ApparationMono am = new ApparationMono();
             Painting p = am.GetPainting(apparation);
             p.NumApparationsComplete++;
             if(p.NumApparationsComplete + p.NumApparationsCaught >=3)
@@ -143,7 +143,7 @@ public class Apparation
                 am.TriggerPaintingDrag(p);
             }
         }
-
+        am.IncreaseApparationCount();
     }
 
     public void Caught()

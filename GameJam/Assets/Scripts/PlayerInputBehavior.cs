@@ -353,7 +353,7 @@ public class PlayerInputBehavior : MonoBehaviour
             if (hit.transform.gameObject.tag == "Painting")
             {
                 Painting p = FindObjectOfType<PaintingManager>().RetrievePaintingInstance(hit.transform.gameObject);
-                if (p.NumApparationsCaught + p.DamagePointsDealt < p.NumApparationsComplete  && p.NumApparationsComplete > 0 && !p.FullSpookTriggered && !FindObjectOfType<GameManager>().isScaring)
+                if (p.NumApparationsCaught + p.DamagePointsDealt < p.NumApparationsComplete  && FindObjectOfType<PaintingManager>().TotalApparations > 0 &&  !p.FullSpookTriggered && !FindObjectOfType<GameManager>().isScaring)
                 {
                     StartCoroutine(FindObjectOfType<GameManager>().TakeDamage(p));
                     if(p.NumApparationsCaught + p.NumApparationsComplete >=p.Apparations.Length)
