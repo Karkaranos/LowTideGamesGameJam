@@ -251,11 +251,11 @@ public class PlayerInputBehavior : MonoBehaviour
             lastClickTime = time;
             if (hit.collider != null)
             {
-                print(hit.transform.gameObject.name);
+                //print(hit.transform.gameObject.name);
                 if (hit.transform.gameObject.tag == "Apparation")
                 {
                     audioManager.Play("Extract Ghost");
-                    print("Entered");
+                    //print("Entered");
                     Apparation aRef = FindObjectOfType<PaintingManager>().RetrieveApparationInstance(hit.transform.gameObject.name, hit.transform.gameObject);
                     if (aRef != null && aRef.IsApparating && !aRef.HasBeenCaught)
                     {
@@ -345,15 +345,16 @@ public class PlayerInputBehavior : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(mPosVector), Vector3.zero);
         if (hit.collider != null)
         {
-            print(hit.transform.gameObject.name);
+            //print(hit.transform.gameObject.name);
             if (hit.transform.gameObject.tag == "Painting")
             {
                 Painting p = FindObjectOfType<PaintingManager>().RetrievePaintingInstance(hit.transform.gameObject);
-                if (p.NumApparationsCaught < p.NumApparationsComplete && !p.FullSpookTriggered)
+                if (p.NumApparationsCaught + p.DamagePointsDealt <= p.NumApparationsComplete  && p.NumApparationsComplete > 0 && !p.FullSpookTriggered)
                 {
                     StartCoroutine(FindObjectOfType<GameManager>().TakeDamage(p));
                     if(p.NumApparationsCaught + p.NumApparationsComplete >=p.Apparations.Length)
                     {
+                        //print("Roar");
                         p.FullSpookTriggered = true;
                     }
                 }

@@ -5,11 +5,13 @@ using UnityEngine;
 public class PaintingManager : MonoBehaviour
 {
     [SerializeField] Painting[] paintings;
-    [SerializeField, ReadOnly] int currPaintingNum;
+    [SerializeField, /*ReadOnly*/] int currPaintingNum;
 
     public bool PaintingCameraOverride = false;
+    int totalApparations = 0;
 
     public Painting[] Paintings { get => paintings; set => paintings = value; }
+    public int TotalApparations { get => totalApparations; set => totalApparations = value; }
 
 
     // Start is called before the first frame update
@@ -60,6 +62,8 @@ public class PaintingManager : MonoBehaviour
         {
             if(p.PaintingObj.Equals(g))
             {
+
+                //print("Aquired painting " + p.PaintingName);
                 return p;
             }
         }
@@ -72,6 +76,7 @@ public class PaintingManager : MonoBehaviour
         {
             if(paintings[i] == p)
             {
+                //print("Aquired painting index for " + p.PaintingName);
                 return i;
             }
         }
@@ -80,7 +85,9 @@ public class PaintingManager : MonoBehaviour
 
     public void AttackPlayer(Painting p)
     {
+        //print("Attack player");
         int index = GetPaintingIndex(p);
+        TotalApparations++;
         FindObjectOfType<PlayerInputBehavior>().CameraMovementOverride(index);
     }
 }
