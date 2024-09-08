@@ -335,6 +335,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d470c25f3e91ea847afa7639bb725c41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  winState: {fileID: 0}
   CreditsCanvas: {fileID: 46874023}
   MainMenuCanvas: {fileID: 1966153117}
   TutorialCanvas: {fileID: 1693257377}
@@ -4141,8 +4142,11 @@ MonoBehaviour:
 
     Caelie Joyner - Artist
 
-    Lucy
-    Robbins - Prop Artist'
+
+    Special
+    Thanks To:
+
+    Lucy Robbins - Prop Artist'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 884b027dfd8ac5e4cab57703763a2b76, type: 2}
   m_sharedMaterial: {fileID: 1231311892535109283, guid: 884b027dfd8ac5e4cab57703763a2b76, type: 2}
