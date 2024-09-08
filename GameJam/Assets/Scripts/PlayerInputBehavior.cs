@@ -335,11 +335,10 @@ public class PlayerInputBehavior : MonoBehaviour
             print(hit.transform.gameObject.name);
             if (hit.transform.gameObject.tag == "Painting")
             {
-                Painting p = FindObjectOfType<PaintingManager>().RetrievePaintingInstance(hit.transform.gameObject.name);
+                Painting p = FindObjectOfType<PaintingManager>().RetrievePaintingInstance(hit.transform.gameObject);
                 if (p.NumApparationsCaught < p.NumApparationsComplete)
                 {
-                    FindObjectOfType<GameManager>().TakeDamage(p);
-                    print("Taking damage!");
+                    StartCoroutine(FindObjectOfType<GameManager>().TakeDamage(p));
                 }
             }
         }

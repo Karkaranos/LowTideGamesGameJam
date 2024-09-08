@@ -101,6 +101,7 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator TakeDamage(Painting painting)
     {
+        print("Roar!");
         SpriteRenderer sr = uncaughtApparationObj.GetComponent<SpriteRenderer>();
         if(painting.Type == Painting.PaintingType.LANDSCAPE)
         {
@@ -119,6 +120,7 @@ public class GameManager : MonoBehaviour
         {
             EndGame();
         }
+        print("New health: " + health);
         StartCoroutine(CameraShake());
         health--;
         yield return new WaitForSeconds(timeBeforeApparationFades);

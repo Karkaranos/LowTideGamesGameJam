@@ -54,11 +54,11 @@ public class PaintingManager : MonoBehaviour
         return null;
     }
 
-    public Painting RetrievePaintingInstance(string s)
+    public Painting RetrievePaintingInstance(GameObject g)
     {
         foreach (Painting p in Paintings)
         {
-            if(p.PaintingName.Equals(s))
+            if(p.PaintingObj.Equals(g))
             {
                 return p;
             }

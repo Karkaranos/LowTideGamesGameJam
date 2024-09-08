@@ -132,11 +132,12 @@ public class Apparation
             ApparationMono am = new ApparationMono();
             Painting p = am.GetPainting(apparation);
             p.NumApparationsComplete++;
-            if(p.NumApparationsComplete >=3)
+            if(p.NumApparationsComplete + p.NumApparationsCaught >=3)
             {
                 am.TriggerPaintingDrag(p);
             }
         }
+
     }
 
     public void Caught()
