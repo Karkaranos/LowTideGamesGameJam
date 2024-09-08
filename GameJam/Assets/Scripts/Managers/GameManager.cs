@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject uncaughtApparationObj;
     [SerializeField] private Sprite landscapeApparation;
     [SerializeField] private Sprite portraitApparation;
-    [SerializeField, Tooltip("UI Canvas Image for damage")] Image damageImage;
+    //[SerializeField, Tooltip("UI Canvas Image for damage")] Image damageImage;
     [SerializeField] private Sprite[] damageVisuals;
 
     [Header("Time References")]
@@ -46,8 +46,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Camera Controls")]
      public bool CamIsShaking = false;
-    [SerializeField, Range(0, 10), Tooltip("Camera shake intensity")] private int shakeIntensity;
-    [SerializeField, Range(0, 10), Tooltip("Camera shake speed")] private int shakeSpeed;
+    [SerializeField, Range(0, 5), Tooltip("Camera shake speed")] private float shakeIntensity;
     [SerializeField] private Camera mainCam;
     private int numTimerSteps = 100;
 
@@ -103,6 +102,7 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator TakeDamage(Painting painting)
     {
+        yield return new WaitForSeconds(1f);
         print("Roar!");
         SpriteRenderer sr = uncaughtApparationObj.GetComponent<SpriteRenderer>();
         if(painting.Type == Painting.PaintingType.LANDSCAPE)
@@ -141,12 +141,12 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(timeBeforeCamShake);
         CamIsShaking = true;
         //damageImage.sprite = damageVisuals[(maxHealth - health)];
-
+        Vector3 camPos = mainCam.transform.position;
         float timer = 0;
         while (timer < camShakeTime)
         {
-            mainCam.transform.position = new Vector3(Mathf.PerlinNoise(0, Time.time * shakeSpeed) * 2 - 1,
-                    Mathf.PerlinNoise(1, Time.time * shakeSpeed) * 2 - 1,
+            mainCam.transform.position = new Vector3((Mathf.PerlinNoise(0, Time.time * shakeIntensity) * 2 - 1) + camPos.x,
+                    Mathf.PerlinNoise(1, Time.time * shakeIntensity) * 2 - 1,
                     -10);
             timer += Time.deltaTime;
             yield return new WaitForSeconds(Time.deltaTime);
