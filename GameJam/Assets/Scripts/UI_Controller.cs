@@ -8,7 +8,7 @@ using System;
 public class UI_Controller : MonoBehaviour
 {
     AudioManager audioManager;
-
+    [SerializeField] WinState winState;
     public GameObject CreditsCanvas;
     public GameObject MainMenuCanvas;
     public GameObject TutorialCanvas;
@@ -56,6 +56,15 @@ public class UI_Controller : MonoBehaviour
                 Gallery.interactable = false;
             }
             else Gallery.interactable = true;
+
+            if (winState.hasGameBeenWon)
+            {
+                //TODO - Enable Gallery
+            }
+            else
+            {
+                //TODO - Disable Gallery
+            }
         }
     }
 
