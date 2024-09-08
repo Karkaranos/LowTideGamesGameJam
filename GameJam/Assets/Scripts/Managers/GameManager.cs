@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] public int expectedFrameRate = 60;
     [SerializeField] public int score;
     [SerializeField] private int scoreNeededToWin;
+    [SerializeField] private float timeRequiredToSurvive;
     [SerializeField] int maxHealth;
     private int health;
 
@@ -93,8 +94,14 @@ public class GameManager : MonoBehaviour
     private bool hasTriggered = false;
 
     public bool isScaring = false;
+
+    private float fps;
+    private float seconds;
+    private float frames;
+
     private void Start()
     {
+        fps = 1f / Time.fixedDeltaTime;
         audioManager = AudioManager.Instance;
         flickerFrame = 0;
         flickerPause = 0;
@@ -197,6 +204,16 @@ public class GameManager : MonoBehaviour
     {
         time += Time.fixedDeltaTime;
         soundTimer += Time.fixedDeltaTime;
+        frames++;
+
+        if (frames >= fps)
+        {
+            frames = 0;
+            seconds++;
+
+            if (seconds >= timeRequiredToSurvive)
+                WinGame();
+        }
 
         //Sound
         //For every point you get, increase the frequency of potentially getting creepy extra
@@ -306,6 +323,7 @@ public class GameManager : MonoBehaviour
             FindObjectOfType<Constants>().IsGalleryClickable = true;
         //globalLight.color = new Color();
         timeWon = time;
+        SceneManager.LoadScene("MainMenu");
     }
 
     void EndGame()

@@ -959,7 +959,8 @@ MonoBehaviour:
   expectedFrameRate: 60
   score: 0
   scoreNeededToWin: 10
-  maxHealth: 3
+  timeRequiredToSurvive: 120
+  maxHealth: 1
   uncaughtApparationObj: {fileID: 615252980}
   landscapeApparation: {fileID: 21300000, guid: c4b3528960deb604fa8293b67da3f4f9, type: 3}
   portraitApparation: {fileID: 21300000, guid: ae3728cce5575784cacfdb824d466f87, type: 3}
@@ -985,9 +986,9 @@ MonoBehaviour:
   flickerPauseTime: 20
   negativeRandomModifier: 0.5
   positiveRandomModifier: 0.41
-  frequencyOfCreepyExtra: 0
-  timeToWaitToChanceSound: 0
-  collectionModifier: 0
+  frequencyOfCreepyExtra: 20
+  timeToWaitToChanceSound: 30
+  collectionModifier: 4
   sanityMeter: {fileID: 457776480}
   sanitySprites:
   - {fileID: 21300000, guid: b328aa303ea384848aa78a448dc8b86a, type: 3}
