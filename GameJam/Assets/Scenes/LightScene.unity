@@ -424,6 +424,7 @@ MonoBehaviour:
       hasBeenCaught: 0
       newFadeIn: 0
       crossfade: 0
+      lit: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
     - apparationObject: {fileID: 1254227937}
       timeUntilStart: 30
       apparatingCompletionTime: 10
@@ -432,6 +433,7 @@ MonoBehaviour:
       hasBeenCaught: 0
       newFadeIn: 1
       crossfade: 1
+      lit: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
     - apparationObject: {fileID: 593708172}
       timeUntilStart: 50
       apparatingCompletionTime: 30
@@ -440,6 +442,7 @@ MonoBehaviour:
       hasBeenCaught: 0
       newFadeIn: 1
       crossfade: 0
+      lit: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
     FullSpookTriggered: 0
   - PaintingName: House
     type: 0
@@ -453,6 +456,7 @@ MonoBehaviour:
       hasBeenCaught: 0
       newFadeIn: 1
       crossfade: 0
+      lit: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
     - apparationObject: {fileID: 1906490549}
       timeUntilStart: 60
       apparatingCompletionTime: 20
@@ -461,14 +465,16 @@ MonoBehaviour:
       hasBeenCaught: 0
       newFadeIn: 1
       crossfade: 0
+      lit: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
     - apparationObject: {fileID: 178587874}
-      timeUntilStart: 130
-      apparatingCompletionTime: 20
+      timeUntilStart: 82
+      apparatingCompletionTime: 15
       currentApparationProgress: 0
       apparation: {fileID: 21300000, guid: c312f78e858d21c48bf8e271e14a7271, type: 3}
       hasBeenCaught: 0
       newFadeIn: 1
       crossfade: 1
+      lit: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
     FullSpookTriggered: 0
   - PaintingName: Lady
     type: 1
@@ -482,6 +488,7 @@ MonoBehaviour:
       hasBeenCaught: 0
       newFadeIn: 1
       crossfade: 0
+      lit: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
     - apparationObject: {fileID: 64694498}
       timeUntilStart: 50
       apparatingCompletionTime: 30
@@ -490,6 +497,7 @@ MonoBehaviour:
       hasBeenCaught: 0
       newFadeIn: 1
       crossfade: 0
+      lit: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
     - apparationObject: {fileID: 1241993504}
       timeUntilStart: 90
       apparatingCompletionTime: 23
@@ -498,6 +506,7 @@ MonoBehaviour:
       hasBeenCaught: 0
       newFadeIn: 1
       crossfade: 0
+      lit: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
     FullSpookTriggered: 0
   - PaintingName: Lobby
     type: 0
@@ -511,6 +520,7 @@ MonoBehaviour:
       hasBeenCaught: 0
       newFadeIn: 1
       crossfade: 0
+      lit: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
     FullSpookTriggered: 0
   currPaintingNum: 0
   PaintingCameraOverride: 0
@@ -946,10 +956,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0f94af4d71e979408b3a5eb4fa3e3df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  winState: {fileID: 0}
+  winState: {fileID: 11400000, guid: c86e0bf62eef3ea4691bbb5d65260d7e, type: 2}
   expectedFrameRate: 60
   score: 0
-  scoreNeededToWin: 8
+  scoreNeededToWin: 10
   maxHealth: 3
   uncaughtApparationObj: {fileID: 615252980}
   landscapeApparation: {fileID: 21300000, guid: c4b3528960deb604fa8293b67da3f4f9, type: 3}
@@ -967,8 +977,8 @@ MonoBehaviour:
   mainCam: {fileID: 921612998}
   globalLight: {fileID: 2009500423}
   flashLight: {fileID: 1913793018}
-  globalLightIncreaseRate: 0.01
-  delayforNextDecrease: 20
+  globalLightIncreaseRate: 0.02
+  delayforNextDecrease: 1
   flickerLength: 5
   maxFlickers: 3
   lightFlickerReduction: 0.3
