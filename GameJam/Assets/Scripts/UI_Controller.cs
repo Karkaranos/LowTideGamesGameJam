@@ -3,12 +3,10 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.InputSystem;
-using System;
 
 public class UI_Controller : MonoBehaviour
 {
     AudioManager audioManager;
-    [SerializeField] WinState winState;
     public GameObject CreditsCanvas;
     public GameObject MainMenuCanvas;
     public GameObject TutorialCanvas;
@@ -53,17 +51,17 @@ public class UI_Controller : MonoBehaviour
 
             if (!FindObjectOfType<Constants>().IsGalleryClickable)
             {
+                print("POYO");
                 Gallery.interactable = false;
-            }
-            else Gallery.interactable = true;
-
-            if (winState.hasGameBeenWon)
-            {
-                //TODO - Enable Gallery
+                Gallery.GetComponent<Image>().enabled = false;
+                Gallery.GetComponentInChildren<TextMeshProUGUI>().color = new Color32(117, 117, 117, 255);
             }
             else
             {
-                //TODO - Disable Gallery
+                print("OYOP");
+                Gallery.interactable = true;
+                Gallery.GetComponent<Image>().enabled = true;
+                Gallery.GetComponentInChildren<TMP_Text>().color = new Color32(255, 255, 255, 255);
             }
         }
     }

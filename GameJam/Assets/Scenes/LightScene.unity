@@ -946,7 +946,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0f94af4d71e979408b3a5eb4fa3e3df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  winState: {fileID: 0}
+  winState: {fileID: 11400000, guid: c86e0bf62eef3ea4691bbb5d65260d7e, type: 2}
   expectedFrameRate: 60
   score: 0
   scoreNeededToWin: 8

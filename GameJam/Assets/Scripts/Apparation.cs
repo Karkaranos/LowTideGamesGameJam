@@ -136,6 +136,7 @@ public class Apparation
             p.NumApparationsComplete++;
             if(p.NumApparationsComplete + p.NumApparationsCaught >=3)
             {
+                Debug.Log("TEST");
                 am.TriggerPaintingDrag(p);
             }
         }

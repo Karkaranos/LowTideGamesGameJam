@@ -25,7 +25,6 @@ public class GameManager : MonoBehaviour
     }
 
     #endregion
-    [SerializeField] WinState winState;
     [SerializeField] public int expectedFrameRate = 60;
     [SerializeField] int score;
     [SerializeField] private int scoreNeededToWin;
@@ -133,6 +132,7 @@ public class GameManager : MonoBehaviour
         Color c = new Color(1, 1, 1, 1.0f);
         sr.color = c;
         int healthLost = Mathf.Clamp((painting.NumApparationsComplete - painting.NumApparationsCaught - painting.DamagePointsDealt), 0, 5);
+        print("HEALTH LOST: " + healthLost);
         health -=healthLost;
         if(healthLost > 0)
         {
@@ -280,7 +280,6 @@ public class GameManager : MonoBehaviour
     void WinGame()
     {
         audioManager.Play("Victory Jingle");
-        winState.hasGameBeenWon = true;
         won = true;
         FindObjectOfType<Constants>().IsGalleryClickable = true;
         //globalLight.color = new Color();
