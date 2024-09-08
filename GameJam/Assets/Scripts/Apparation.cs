@@ -141,6 +141,9 @@ public class Apparation
 
     public void Caught()
     {
+        ApparationMono am = new ApparationMono();
+        Painting p = am.GetPainting(apparation);
+        p.NumApparationsCaught++;
         isApparating = false;
         hasBeenCaught = true;
     }
@@ -148,15 +151,3 @@ public class Apparation
 
 }
 
-public class ApparationMono : MonoBehaviour
-{
-    public Painting GetPainting(Sprite s)
-    {
-        return FindObjectOfType<PaintingManager>().RetrievePaintingInstance(s);
-    }
-
-    public void TriggerPaintingDrag(Painting p)
-    {
-        FindObjectOfType<PaintingManager>().AttackPlayer(p);
-    }
-}

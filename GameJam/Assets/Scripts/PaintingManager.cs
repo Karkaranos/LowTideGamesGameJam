@@ -54,6 +54,18 @@ public class PaintingManager : MonoBehaviour
         return null;
     }
 
+    public Painting RetrievePaintingInstance(string s)
+    {
+        foreach (Painting p in Paintings)
+        {
+            if(p.PaintingName.Equals(s))
+            {
+                return p;
+            }
+        }
+        return null;
+    }
+
     private int GetPaintingIndex(Painting p)
     {
         for(int i=0; i<paintings.Length; i++)
@@ -68,9 +80,8 @@ public class PaintingManager : MonoBehaviour
 
     public void AttackPlayer(Painting p)
     {
-        Debug.Log("DO SOMETHING " + p.PaintingName);
         int index = GetPaintingIndex(p);
-        Debug.Log(p.PaintingName + " is at index " + index);
+        FindObjectOfType<PlayerInputBehavior>().CameraMovementOverride(index);
     }
 
 }
