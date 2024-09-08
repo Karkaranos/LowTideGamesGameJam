@@ -462,8 +462,8 @@ MonoBehaviour:
       newFadeIn: 1
       crossfade: 0
     - apparationObject: {fileID: 178587874}
-      timeUntilStart: 130
-      apparatingCompletionTime: 20
+      timeUntilStart: 82
+      apparatingCompletionTime: 15
       currentApparationProgress: 0
       apparation: {fileID: 21300000, guid: c312f78e858d21c48bf8e271e14a7271, type: 3}
       hasBeenCaught: 0
@@ -946,7 +946,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0f94af4d71e979408b3a5eb4fa3e3df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  winState: {fileID: 0}
+  winState: {fileID: 11400000, guid: c86e0bf62eef3ea4691bbb5d65260d7e, type: 2}
   expectedFrameRate: 60
   score: 0
   scoreNeededToWin: 8
@@ -967,8 +967,8 @@ MonoBehaviour:
   mainCam: {fileID: 921612998}
   globalLight: {fileID: 2009500423}
   flashLight: {fileID: 1913793018}
-  globalLightIncreaseRate: 0.01
-  delayforNextDecrease: 20
+  globalLightIncreaseRate: 0.02
+  delayforNextDecrease: 1
   flickerLength: 5
   maxFlickers: 3
   lightFlickerReduction: 0.3

@@ -120,43 +120,46 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator TakeDamage(Painting painting)
     {
-        isScaring = true;
-        //yield return new WaitForSeconds(1f);
-        audioManager.Play("Take Damage");
-        SpriteRenderer sr = uncaughtApparationObj.GetComponent<SpriteRenderer>();
-        if(painting.Type == Painting.PaintingType.LANDSCAPE)
+        if(!won)
         {
-            sr.sprite = landscapeApparation;
-        }
-        else
-        {
-            sr.sprite = portraitApparation;
-        }
-        sr.gameObject.transform.position = painting.PaintingObj.transform.position;
-        Color c = new Color(1, 1, 1, 1.0f);
-        sr.color = c;
-        int healthLost = Mathf.Clamp((painting.NumApparationsComplete - painting.NumApparationsCaught - painting.DamagePointsDealt), 0, 5);
-        health -=healthLost;
-        if(healthLost > 0)
-        {
-            //print("New health: " + health + " after taking " + (painting.NumApparationsComplete - painting.NumApparationsCaught - painting.DamagePointsDealt) + " points of damage");
-            painting.DamagePointsDealt += painting.NumApparationsComplete - painting.NumApparationsCaught;
-            if(health > 0)
+            isScaring = true;
+            //yield return new WaitForSeconds(1f);
+            audioManager.Play("Take Damage");
+            SpriteRenderer sr = uncaughtApparationObj.GetComponent<SpriteRenderer>();
+            if (painting.Type == Painting.PaintingType.LANDSCAPE)
             {
-                sanityMeter.sprite = sanitySprites[health - 1];
+                sr.sprite = landscapeApparation;
             }
-            StartCoroutine(CameraShake());
-            yield return new WaitForSeconds(timeBeforeApparationFades);
-            for (int i = 0; i < numTimerSteps; i++)
+            else
             {
-                c.a -= (1 / apparationFadeTime) * (apparationFadeTime / numTimerSteps);
-                sr.color = c;
-                yield return new WaitForSeconds(apparationFadeTime / numTimerSteps);
+                sr.sprite = portraitApparation;
             }
-            sr.color = new Color(1, 1, 1, 0);
-            sr.gameObject.transform.position = new Vector3(0, 10, 0);
+            sr.gameObject.transform.position = painting.PaintingObj.transform.position;
+            Color c = new Color(1, 1, 1, 1.0f);
+            sr.color = c;
+            int healthLost = Mathf.Clamp((painting.NumApparationsComplete - painting.NumApparationsCaught - painting.DamagePointsDealt), 0, 5);
+            health -= healthLost;
+            if (healthLost > 0)
+            {
+                //print("New health: " + health + " after taking " + (painting.NumApparationsComplete - painting.NumApparationsCaught - painting.DamagePointsDealt) + " points of damage");
+                painting.DamagePointsDealt += painting.NumApparationsComplete - painting.NumApparationsCaught;
+                if (health > 0)
+                {
+                    sanityMeter.sprite = sanitySprites[health - 1];
+                }
+                StartCoroutine(CameraShake());
+                yield return new WaitForSeconds(timeBeforeApparationFades);
+                for (int i = 0; i < numTimerSteps; i++)
+                {
+                    c.a -= (1 / apparationFadeTime) * (apparationFadeTime / numTimerSteps);
+                    sr.color = c;
+                    yield return new WaitForSeconds(apparationFadeTime / numTimerSteps);
+                }
+                sr.color = new Color(1, 1, 1, 0);
+                sr.gameObject.transform.position = new Vector3(0, 10, 0);
+            }
+            isScaring = false;
         }
-        isScaring = false;
     }
 
     IEnumerator CameraShake()
@@ -227,6 +230,8 @@ public class GameManager : MonoBehaviour
         //Victory End Flickering
         if (won)
         {
+            print("jdskhgd");
+
             if (time <= flickerLength + timeWon)
             {
                 //If flicker count is at 3, pause for a moment then resume
@@ -266,6 +271,7 @@ public class GameManager : MonoBehaviour
             else
             {
                 flashLight.enabled = false;
+                SceneManager.LoadScene("MainMenu");
             }
 
 
