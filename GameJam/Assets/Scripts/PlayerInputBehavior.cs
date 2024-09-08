@@ -40,6 +40,7 @@ public class PlayerInputBehavior : MonoBehaviour
 
     GameManager gameManager;
     AudioManager audioManager;
+    Animator animator;
     private InputAction moveCamera;
 
     //These affect nothing. Leave them alone. 
@@ -74,6 +75,7 @@ public class PlayerInputBehavior : MonoBehaviour
         //Gets game manager
         gameManager = GameManager.Instance;
         audioManager = AudioManager.Instance;
+        animator = gameObject.GetComponent<Animator>();
 
         //Binds actions to keys
         playerInput.currentActionMap.Enable();
@@ -242,6 +244,8 @@ public class PlayerInputBehavior : MonoBehaviour
         //Cannot attack if cooldown is active or if player has not clicked yet (only relevant at beginning of the game)
         if (time >= lastClickTime + spearItCooldDown || lastClickTime == 0)
         {
+            animator.Play("Hit");
+            animator.SetBool("SpearHit", true);
             audioManager.Play("Stab Spear");
             flickerCounter = 0;
             flickerPause = 0;
