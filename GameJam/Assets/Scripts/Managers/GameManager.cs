@@ -302,7 +302,8 @@ public class GameManager : MonoBehaviour
     {
         audioManager.Play("Victory Jingle");
         won = true;
-        FindObjectOfType<Constants>().IsGalleryClickable = true;
+        if (FindObjectOfType<Constants>() != null)
+            FindObjectOfType<Constants>().IsGalleryClickable = true;
         //globalLight.color = new Color();
         timeWon = time;
     }
