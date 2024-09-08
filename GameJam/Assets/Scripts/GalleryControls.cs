@@ -85,7 +85,8 @@ public class GalleryControls : MonoBehaviour
             //If Move Camera Right input is detected and camera is not on right most painting, increase painting index
             if (moveCamera.ReadValue<float>() > 0 && currentPaintingIndex < paintingPositions.Length - 1)
             {
-                currentPaintingIndex++;
+                if (!isCamInAltPaintings || (isCamInAltPaintings && currentPaintingIndex < 3))
+                    currentPaintingIndex++;
             }
 
             //If Move Camera Left input is detected and camera is not on left most painting, decrease painting index
@@ -97,16 +98,19 @@ public class GalleryControls : MonoBehaviour
 
         if (isCameraMovingBetweenAlts)
         {
-            isCameraMovingBetweenAlts = false;
-            isCamInMotion = true;
+            if (currentPaintingIndex < 4)
+            {
+                isCameraMovingBetweenAlts = false;
+                isCamInMotion = true;
 
-            if (switchBetweenAlts.ReadValue<float>() > 0 && isCamInAltPaintings)
-            {
-                isCamInAltPaintings = false;
-            }
-            else if (switchBetweenAlts.ReadValue<float>() < 0 && !isCamInAltPaintings)
-            {
-                isCamInAltPaintings = true;
+                if (switchBetweenAlts.ReadValue<float>() > 0 && isCamInAltPaintings)
+                {
+                    isCamInAltPaintings = false;
+                }
+                else if (switchBetweenAlts.ReadValue<float>() < 0 && !isCamInAltPaintings)
+                {
+                    isCamInAltPaintings = true;
+                }
             }
         }
 
