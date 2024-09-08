@@ -36,6 +36,7 @@ public class Apparation
             GameObject newSprite = new GameObject();
             newSprite.transform.parent = ApparationObject.transform;
             newSprite.transform.localPosition = Vector3.zero;
+            newSprite.transform.localScale = new Vector3(1, 1, 1);
             sr = newSprite.AddComponent<SpriteRenderer>();
             sr.sortingOrder = 5;
             Color c = new Color(1, 1, 1, 0);
@@ -86,6 +87,7 @@ public class Apparation
             bc2d.size = apparationObject.GetComponent<BoxCollider2D>().size;
             newSprite.transform.parent = ApparationObject.transform;
             newSprite.transform.localPosition = Vector3.zero;
+            newSprite.transform.localScale = new Vector3(1, 1, 1);
             sr = newSprite.AddComponent<SpriteRenderer>();
             sr.sortingOrder = 5;
             Color c = new Color(1, 1, 1, 1);
