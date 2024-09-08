@@ -240,7 +240,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -370,7 +370,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: ebe6a679123fd6546adf647dcf422523, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -475,7 +475,7 @@ MonoBehaviour:
     paintingObj: {fileID: 664896544}
     apparations:
     - apparationObject: {fileID: 1293201974}
-      timeUntilStart: 60
+      timeUntilStart: 30
       apparatingCompletionTime: 20
       currentApparationProgress: 0
       apparation: {fileID: 21300000, guid: 9aa8d5191e6ea454990ade272cb3631e, type: 3}
@@ -483,7 +483,7 @@ MonoBehaviour:
       newFadeIn: 1
       crossfade: 0
     - apparationObject: {fileID: 64694498}
-      timeUntilStart: 10
+      timeUntilStart: 50
       apparatingCompletionTime: 30
       currentApparationProgress: 0
       apparation: {fileID: 21300000, guid: 36afe489c48b7a04b83a11f7eb82ebbb, type: 3}
@@ -491,7 +491,7 @@ MonoBehaviour:
       newFadeIn: 1
       crossfade: 0
     - apparationObject: {fileID: 1241993504}
-      timeUntilStart: 30
+      timeUntilStart: 90
       apparatingCompletionTime: 23
       currentApparationProgress: 0
       apparation: {fileID: 21300000, guid: d08a5707fcc1dc445bbce327fa558476, type: 3}
@@ -504,7 +504,7 @@ MonoBehaviour:
     paintingObj: {fileID: 270393875}
     apparations:
     - apparationObject: {fileID: 1112370036}
-      timeUntilStart: 90
+      timeUntilStart: 100
       apparatingCompletionTime: 10
       currentApparationProgress: 0
       apparation: {fileID: 21300000, guid: 6ff78cfec0c7ba440a6d313b27481074, type: 3}
@@ -859,7 +859,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   expectedFrameRate: 60
   score: 0
-  scoreNeededToWin: 10
+  scoreNeededToWin: 8
   maxHealth: 3
   uncaughtApparationObj: {fileID: 615252980}
   landscapeApparation: {fileID: 21300000, guid: e4c390d5b9434e5439e24a628c6ab776, type: 3}
@@ -867,10 +867,10 @@ MonoBehaviour:
   damageVisuals: []
   timeBeforeApparationFades: 2
   apparationFadeTime: 3
-  timeBeforeCamShake: 3
+  timeBeforeCamShake: 1.5
   camShakeTime: 2
   CamIsShaking: 0
-  shakeIntensity: 5
+  shakeIntensity: 3.28
   mainCam: {fileID: 921612998}
   globalLight: {fileID: 2009500423}
   flashLight: {fileID: 1913793018}
@@ -2395,7 +2395,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -2823,7 +2823,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -3118,7 +3118,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -3849,7 +3849,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -3979,7 +3979,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
