@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -112,8 +113,8 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator TakeDamage(Painting painting)
     {
-        yield return new WaitForSeconds(1f);
-        print("Roar!");
+        //yield return new WaitForSeconds(1f);
+        print("Get Attacked!");
         audioManager.Play("Take Damage");
         SpriteRenderer sr = uncaughtApparationObj.GetComponent<SpriteRenderer>();
         if(painting.Type == Painting.PaintingType.LANDSCAPE)
@@ -127,7 +128,8 @@ public class GameManager : MonoBehaviour
         sr.gameObject.transform.position = painting.PaintingObj.transform.position;
         Color c = new Color(1, 1, 1, 1.0f);
         sr.color = c;
-        health-=Mathf.Clamp((painting.NumApparationsComplete - painting.NumApparationsCaught - painting.DamagePointsDealt), 0, 10);
+        health-=Mathf.Clamp((painting.NumApparationsComplete - painting.NumApparationsCaught - painting.DamagePointsDealt), 0, 5);
+        print("New health: " + health + " after taking " + (painting.NumApparationsComplete - painting.NumApparationsCaught - painting.DamagePointsDealt) + " points of damage");
         painting.DamagePointsDealt += painting.NumApparationsComplete - painting.NumApparationsCaught;
         if (health <= 0)
         {
@@ -135,9 +137,7 @@ public class GameManager : MonoBehaviour
             audioManager.Play("Death");
             EndGame();
         }
-        print("New health: " + health);
         StartCoroutine(CameraShake());
-        health--;
         yield return new WaitForSeconds(timeBeforeApparationFades);
         for(int i=0; i<numTimerSteps; i++)
         {
@@ -277,5 +277,6 @@ public class GameManager : MonoBehaviour
     {
         audioManager.Play("Loss Jingle");
         Debug.Log("Animation here. You died tho");
+        SceneManager.LoadScene("DeathScene");
     }
 }
