@@ -65,6 +65,8 @@ public class PlayerInputBehavior : MonoBehaviour
     private int flickerCounter;
     public GameObject spawnCirc;
 
+    public bool IsPaused { get => isPaused; set => isPaused = value; }
+
     #endregion
     // Start is called before the first frame update
     void Start()
@@ -112,13 +114,16 @@ public class PlayerInputBehavior : MonoBehaviour
     public void FixedUpdate()
     {
         time += Time.fixedDeltaTime;
-        HandleLightMovement();
-        if(!FindObjectOfType<GameManager>().CamIsShaking && !FindObjectOfType<PaintingManager>().PaintingCameraOverride)
+        if (!IsPaused)
         {
-            HandleCameraMovement();
+            HandleLightMovement();
+            if (!FindObjectOfType<GameManager>().CamIsShaking && !FindObjectOfType<PaintingManager>().PaintingCameraOverride)
+            {
+                HandleCameraMovement();
+            }
+            HandleLightFlicker();
         }
-        HandleLightFlicker();
-        mPosVector = mPos.ReadValue<Vector2>();
+            mPosVector = mPos.ReadValue<Vector2>();
     }
 
     private void OnDisable()
@@ -256,7 +261,7 @@ public class PlayerInputBehavior : MonoBehaviour
                     {
                         StopCoroutine(aRef.StartApparation());
                         aRef.Caught();
-                        Instantiate(punctureGameObject, aRef.Sr.gameObject.transform.position, Quaternion.identity);
+                        Instantiate(punctureGameObject, mousePosition, Quaternion.identity);
                         //Destroy(aRef.Sr.gameObject);   //Returns apparation to normal
                         FindObjectOfType<GameManager>().IncreaseScore();
                         //Stab animation
@@ -267,8 +272,6 @@ public class PlayerInputBehavior : MonoBehaviour
                     }
                 }
             }
-
-            Instantiate(punctureGameObject, mousePosition, Quaternion.identity);
             //TODO
         }
     }
@@ -299,16 +302,14 @@ public class PlayerInputBehavior : MonoBehaviour
 
     private void Pause_performed(InputAction.CallbackContext obj)
     {
-        if(!isPaused)
+        if(!IsPaused)
         {
-            isPaused = true;
+            IsPaused = true;
             Time.timeScale = 0;
+            FindObjectOfType<UI_Controller>().Pause.SetActive(true);
         }
-        else
-        {
-            isPaused = false;
-            Time.timeScale = 1;
-        }
+        
+       
         
     }
 

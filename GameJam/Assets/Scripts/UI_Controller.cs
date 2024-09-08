@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -9,6 +7,8 @@ using System;
 
 public class UI_Controller : MonoBehaviour
 {
+    AudioManager audioManager;
+
     public GameObject CreditsCanvas;
     public GameObject MainMenuCanvas;
     public GameObject TutorialCanvas;
@@ -22,25 +22,48 @@ public class UI_Controller : MonoBehaviour
     public TMP_Text Title;
     public TMP_Text Body;
     private int CurrentPage;
+    public GameObject Pause;
+    public Button Gallery;
 
     public PlayerInput playerInput;
     private InputAction navigateForward;
     private InputAction navigateBackwards;
     public GameObject BeginButton;
 
+    public void Resume()
+    {
+        Pause.SetActive(false);
+        Time.timeScale = 1.0f;
+        FindObjectOfType<PlayerInputBehavior>().IsPaused = false;
+    }
+
+
     private void Start()
     {
-        playerInput.currentActionMap.Enable();
-        navigateForward = playerInput.currentActionMap.FindAction("Progress");
-        navigateBackwards = playerInput.currentActionMap.FindAction("MoveBack");
-        navigateBackwards.performed += NavigateBackwards_performed;
-        navigateForward.performed += NavigateForward_performed;
+        audioManager = AudioManager.Instance;
+
+        if (SceneManager.GetActiveScene().name.Contains("Menu"))
+        {
+            audioManager.Play("Menu Music");
+            playerInput.currentActionMap.Enable();
+            navigateForward = playerInput.currentActionMap.FindAction("Progress");
+            navigateBackwards = playerInput.currentActionMap.FindAction("MoveBack");
+            navigateBackwards.performed += NavigateBackwards_performed;
+            navigateForward.performed += NavigateForward_performed;
+
+            if (!FindObjectOfType<Constants>().IsGalleryClickable)
+            {
+                Gallery.interactable = false;
+            }
+            else Gallery.interactable = true;
+        }
     }
 
     private void NavigateForward_performed(InputAction.CallbackContext obj)
     {
         if(CurrentPage < TutorialPages.Length - 1)
         {
+            audioManager.Play("UI Click");
             CurrentPage = CurrentPage + 1;
             DisplayPage();
             AButton.SetActive(true);
@@ -61,7 +84,8 @@ public class UI_Controller : MonoBehaviour
 
     public void StartGame()
     {
-
+        audioManager.Stop("Menu Music");
+        SceneManager.LoadScene("LightScene");
     }
     private void DisplayPage()
     {
@@ -103,6 +127,7 @@ public class UI_Controller : MonoBehaviour
 
     public void CreditButtonPress() 
     {
+        audioManager.Play("UI Click");
         CreditsCanvas.SetActive(true);
         MainMenuCanvas.SetActive(false);
         TutorialCanvas.SetActive(false);
@@ -110,18 +135,44 @@ public class UI_Controller : MonoBehaviour
 
     public void BackToMainMenu()
     {
+        audioManager.Play("UI Click");
         CreditsCanvas.SetActive(false);
         MainMenuCanvas.SetActive(true);
         TutorialCanvas.SetActive(false);
     }
 
     public void StartGameTutorial()
-    { 
-    TutorialCanvas.SetActive(true);
-    MainMenuCanvas.SetActive(false);
-    CreditsCanvas.SetActive(false);
+    {
+        audioManager.Play("UI Click");
+        TutorialCanvas.SetActive(true);
+        MainMenuCanvas.SetActive(false);
+        CreditsCanvas.SetActive(false);
 
     CurrentPage = 0;
     DisplayPage();
+    }
+
+    public void GoToGallery()
+    {
+        audioManager.Play("UI Click");
+        SceneManager.LoadScene("GalleryScene");
+    }
+
+    public void LeaveGallery()
+    {
+        audioManager.Play("UI Click");
+        SceneManager.LoadScene("MainMenu");
+    }
+
+    public void Quit()
+    {
+        audioManager.Play("UI Click");
+        Application.Quit();
+    }
+
+    public void ExitGame()
+    {
+        audioManager.Play("UI Click");
+        SceneManager.LoadScene("MainMenu");
     }
 }
