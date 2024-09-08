@@ -1,10 +1,7 @@
 using System.Collections;
 using UnityEngine;
-using UnityEditor;
 using UnityEngine.InputSystem;
-using UnityEngine.UIElements;
 using UnityEngine.Rendering.Universal;
-using Unity.VisualScripting;
 
 public class PlayerInputBehavior : MonoBehaviour
 {
@@ -27,12 +24,12 @@ public class PlayerInputBehavior : MonoBehaviour
     [SerializeField] private float maxMouseSpeed;
 
     [Header("Flashlight Flickering")]
+    [SerializeField] private int maxFlickers;
     [SerializeField] private float lightFlickerReduction;
     [SerializeField] private int framesBetweenFlicker;
     [SerializeField] private int flickerPauseTime;
     [SerializeField] private float negativeRandomModifier;
     [SerializeField] private float positiveRandomModifier;
-    private float currentCooldown;
 
     [Header("Camera Variables")]
     [Tooltip("Uses normal indexes. First painting is at index 1, second painting is at index 2, etc.")]
@@ -180,12 +177,11 @@ public class PlayerInputBehavior : MonoBehaviour
     private void HandleLightFlicker()
     {
         //If Spear-It attack is on cooldown
-        if (currentCooldown > 0 && canFlicker)
+        if (time <= lastClickTime + spearItCooldDown && lastClickTime != 0)
         {
             //If flicker count is at 3, pause for a moment then resume
             if (flickerCounter < maxFlickers)
             {
-                print("Flicker");
                 //If light is not normal, make it normal if set amount of time has passed
                 if (flashlight.intensity != originalIntensity && flickerFrame >= framesBetweenFlicker)
                 {
@@ -212,21 +208,18 @@ public class PlayerInputBehavior : MonoBehaviour
                 {
                     flickerCounter = 0;
                     flickerPause = 0;
-                    canFlicker = false;
                 }
             }
-            currentCooldown -= Time.deltaTime;
         } else
         {
             flashlight.intensity = originalIntensity;
-            canFlicker = false;
         }
     }
 
     private void Click_performed(InputAction.CallbackContext obj)
     {
         //Cannot attack if cooldown is active or if player has not clicked yet (only relevant at beginning of the game)
-        if (currentCooldown <= 0 )
+        if (time >= lastClickTime + spearItCooldDown || lastClickTime == 0)
         {
             canFlicker = true;
             currentCooldown = spearItCooldDown;
@@ -235,6 +228,7 @@ public class PlayerInputBehavior : MonoBehaviour
             RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(mPosVector), Vector3.zero);
             //Debug.DrawRay(mousePosition, Vector3.zero);
             //print(mPosVector);
+            lastClickTime = time;
             if (hit.collider != null)
             {
                 print(hit.transform.gameObject.name);
