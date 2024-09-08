@@ -13,7 +13,7 @@ public class GalleryControls : MonoBehaviour
     [SerializeField] private GameObject[] paintingPositions;
     [SerializeField] private GameObject[] altPaintingPositions;
 
-    GameManager gameManager;
+    //GameManager gameManager;
     AudioManager audioManager;
 
     private InputAction moveCamera;
@@ -30,7 +30,6 @@ public class GalleryControls : MonoBehaviour
     void Start()
     {
         //Gets game manager
-        gameManager = GameManager.Instance;
         audioManager = AudioManager.Instance;
 
         //Binds actions to keys
@@ -54,10 +53,7 @@ public class GalleryControls : MonoBehaviour
 
     public void FixedUpdate()
     {
-        if (!FindObjectOfType<GameManager>().CamIsShaking && !FindObjectOfType<PaintingManager>().PaintingCameraOverride)
-        {
-            HandleCameraMovement();
-        }
+        HandleCameraMovement();
     }
 
     /// <summary>
@@ -114,7 +110,7 @@ public class GalleryControls : MonoBehaviour
         {
             //Moves camera to current painting index
             mainCamera.transform.position = Vector3.MoveTowards(mainCamera.transform.position,
-                paintingPositions[currentPaintingIndex].transform.position, cameraAccelerationSpeed * Time.deltaTime * gameManager.expectedFrameRate);
+                paintingPositions[currentPaintingIndex].transform.position, cameraAccelerationSpeed * Time.deltaTime * 60);
 
 
             if (mainCamera.transform.position == paintingPositions[currentPaintingIndex].transform.position)
@@ -126,7 +122,7 @@ public class GalleryControls : MonoBehaviour
             if (currentPaintingIndex < 4)
             {
                 mainCamera.transform.position = Vector3.MoveTowards(mainCamera.transform.position,
-                    altPaintingPositions[currentPaintingIndex].transform.position, cameraAccelerationSpeed * Time.deltaTime * gameManager.expectedFrameRate);
+                    altPaintingPositions[currentPaintingIndex].transform.position, cameraAccelerationSpeed * Time.deltaTime * 60);
 
 
                 if (mainCamera.transform.position == altPaintingPositions[currentPaintingIndex].transform.position)
@@ -140,7 +136,7 @@ public class GalleryControls : MonoBehaviour
     {
         currentPaintingIndex = index;
         mainCamera.transform.position = Vector3.MoveTowards(mainCamera.transform.position,
-           paintingPositions[index].transform.position, cameraAccelerationSpeed * Time.deltaTime * gameManager.expectedFrameRate);
+           paintingPositions[index].transform.position, cameraAccelerationSpeed * Time.deltaTime * 60);
     }
 
     /// <summary>

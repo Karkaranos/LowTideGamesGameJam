@@ -160,7 +160,6 @@ public class UI_Controller : MonoBehaviour
     {
         audioManager.Play("UI Click");
         Application.Quit();
-        Application.OpenURL("about:blank");
     }
 
     public void ExitGame()

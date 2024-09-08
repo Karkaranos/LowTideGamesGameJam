@@ -871,82 +871,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &199031655
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 199031657}
-  - component: {fileID: 199031656}
-  m_Layer: 0
-  m_Name: GameManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &199031656
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 199031655}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b0f94af4d71e979408b3a5eb4fa3e3df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  expectedFrameRate: 60
-  score: 0
-  scoreNeededToWin: 0
-  maxHealth: 0
-  uncaughtApparationObj: {fileID: 0}
-  landscapeApparation: {fileID: 0}
-  portraitApparation: {fileID: 0}
-  damageVisuals: []
-  timeBeforeApparationFades: 0
-  apparationFadeTime: 0
-  timeBeforeCamShake: 0
-  camShakeTime: 0
-  CamIsShaking: 0
-  shakeIntensity: 0
-  mainCam: {fileID: 0}
-  globalLight: {fileID: 973290719}
-  flashLight: {fileID: 1970120907}
-  globalLightIncreaseRate: 0
-  delayforNextDecrease: 0
-  flickerLength: 0
-  maxFlickers: 0
-  lightFlickerReduction: 0
-  framesBetweenFlicker: 0
-  flickerPauseTime: 0
-  negativeRandomModifier: 0
-  positiveRandomModifier: 0
-  frequencyOfCreepyExtra: 0
-  timeToWaitToChanceSound: 0
-  collectionModifier: 0
-  sanityMeter: {fileID: 0}
-  sanitySprites: []
-  isScaring: 0
---- !u!4 &199031657
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 199031655}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -36.187733, y: -20.451097, z: 0.5606107}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1842718606}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &270807005
 GameObject:
   m_ObjectHideFlags: 0
@@ -8092,7 +8016,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 199031657}
   - {fileID: 710347693}
   - {fileID: 2073767616}
   m_Father: {fileID: 0}
