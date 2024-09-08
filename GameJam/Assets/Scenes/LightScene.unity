@@ -2709,7 +2709,7 @@ MonoBehaviour:
   - clip: {fileID: 8300000, guid: abf6569c1c2c2c54a9a243cfe0baadfb, type: 3}
     name: Switch Paintings
     volume: 1
-    pitch: 0
+    pitch: 1
     loop: 0
     panStereo: 0
     spacialBlend: 0
@@ -2719,7 +2719,7 @@ MonoBehaviour:
   - clip: {fileID: 8300000, guid: abf6569c1c2c2c54a9a243cfe0baadfb, type: 3}
     name: Flashlight Flicker
     volume: 1
-    pitch: 0
+    pitch: 1
     loop: 0
     panStereo: 0
     spacialBlend: 0
@@ -2729,7 +2729,7 @@ MonoBehaviour:
   - clip: {fileID: 8300000, guid: abf6569c1c2c2c54a9a243cfe0baadfb, type: 3}
     name: Stab Spear
     volume: 1
-    pitch: 0
+    pitch: 1
     loop: 0
     panStereo: 0
     spacialBlend: 0
@@ -2739,7 +2739,7 @@ MonoBehaviour:
   - clip: {fileID: 8300000, guid: abf6569c1c2c2c54a9a243cfe0baadfb, type: 3}
     name: Extract Ghost
     volume: 1
-    pitch: 0
+    pitch: 1
     loop: 0
     panStereo: 0
     spacialBlend: 0
@@ -2749,7 +2749,7 @@ MonoBehaviour:
   - clip: {fileID: 8300000, guid: abf6569c1c2c2c54a9a243cfe0baadfb, type: 3}
     name: Take Damage
     volume: 1
-    pitch: 0
+    pitch: 1
     loop: 0
     panStereo: 0
     spacialBlend: 0
@@ -2759,27 +2759,27 @@ MonoBehaviour:
   - clip: {fileID: 8300000, guid: abf6569c1c2c2c54a9a243cfe0baadfb, type: 3}
     name: Death
     volume: 1
-    pitch: 0
+    pitch: 1
     loop: 0
     panStereo: 0
     spacialBlend: 0
     minDistance: 0
     maxDistance: 0
     source: {fileID: 0}
-  - clip: {fileID: 8300000, guid: abf6569c1c2c2c54a9a243cfe0baadfb, type: 3}
+  - clip: {fileID: 8300000, guid: ff561c348ffac5e428c07e36e61bb05d, type: 3}
     name: Creepy Ambience
     volume: 1
-    pitch: 0
+    pitch: 1
     loop: 1
     panStereo: 0
     spacialBlend: 0
     minDistance: 0
     maxDistance: 0
     source: {fileID: 0}
-  - clip: {fileID: 8300000, guid: abf6569c1c2c2c54a9a243cfe0baadfb, type: 3}
+  - clip: {fileID: 8300000, guid: ff561c348ffac5e428c07e36e61bb05d, type: 3}
     name: Menu Music
     volume: 1
-    pitch: 0.1
+    pitch: 1
     loop: 1
     panStereo: 0
     spacialBlend: 0
@@ -2789,7 +2789,7 @@ MonoBehaviour:
   - clip: {fileID: 8300000, guid: abf6569c1c2c2c54a9a243cfe0baadfb, type: 3}
     name: UI Click
     volume: 1
-    pitch: 0.1
+    pitch: 1
     loop: 0
     panStereo: 0
     spacialBlend: 0
@@ -2799,7 +2799,7 @@ MonoBehaviour:
   - clip: {fileID: 8300000, guid: abf6569c1c2c2c54a9a243cfe0baadfb, type: 3}
     name: Victory Jingle
     volume: 1
-    pitch: 0.1
+    pitch: 1
     loop: 0
     panStereo: 0
     spacialBlend: 0
@@ -2809,7 +2809,7 @@ MonoBehaviour:
   - clip: {fileID: 8300000, guid: abf6569c1c2c2c54a9a243cfe0baadfb, type: 3}
     name: Loss Jingle
     volume: 1
-    pitch: 0.1
+    pitch: 1
     loop: 0
     panStereo: 0
     spacialBlend: 0
@@ -2819,7 +2819,7 @@ MonoBehaviour:
   - clip: {fileID: 8300000, guid: abf6569c1c2c2c54a9a243cfe0baadfb, type: 3}
     name: Loss Jingle
     volume: 1
-    pitch: 0.1
+    pitch: 1
     loop: 0
     panStereo: 0
     spacialBlend: 0
@@ -2829,7 +2829,7 @@ MonoBehaviour:
   - clip: {fileID: 8300000, guid: abf6569c1c2c2c54a9a243cfe0baadfb, type: 3}
     name: Creepy Extra 1
     volume: 1
-    pitch: 0.1
+    pitch: 1
     loop: 0
     panStereo: 0
     spacialBlend: 1
@@ -2839,7 +2839,7 @@ MonoBehaviour:
   - clip: {fileID: 8300000, guid: abf6569c1c2c2c54a9a243cfe0baadfb, type: 3}
     name: Creepy Extra 2
     volume: 1
-    pitch: 0.1
+    pitch: 1
     loop: 0
     panStereo: 0
     spacialBlend: 1
@@ -2849,7 +2849,7 @@ MonoBehaviour:
   - clip: {fileID: 8300000, guid: abf6569c1c2c2c54a9a243cfe0baadfb, type: 3}
     name: Creepy Extra 3
     volume: 1
-    pitch: 0.1
+    pitch: 1
     loop: 0
     panStereo: 0
     spacialBlend: 1
@@ -2859,7 +2859,7 @@ MonoBehaviour:
   - clip: {fileID: 8300000, guid: abf6569c1c2c2c54a9a243cfe0baadfb, type: 3}
     name: Creepy Extra 4
     volume: 1
-    pitch: 0.1
+    pitch: 1
     loop: 0
     panStereo: 0
     spacialBlend: 1

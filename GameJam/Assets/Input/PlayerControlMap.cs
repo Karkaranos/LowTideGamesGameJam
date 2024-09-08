@@ -80,6 +80,15 @@ public partial class @PlayerControlMap: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""SwitchPaintingInGallery"",
+                    ""type"": ""Value"",
+                    ""id"": ""f904388d-29fc-4749-9dc6-2108533f54c7"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -203,6 +212,72 @@ public partial class @PlayerControlMap: IInputActionCollection2, IDisposable
                     ""action"": ""MoveCamera"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""W/S"",
+                    ""id"": ""70b3f828-784d-422b-a14e-633f23354530"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchPaintingInGallery"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""78ca5609-b263-44e9-9483-e7ce7f4c07dd"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchPaintingInGallery"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""a5643d02-4422-476a-84ad-1f1f3b96c457"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchPaintingInGallery"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""ArrowKeys"",
+                    ""id"": ""9c31f3be-fe62-42ff-958e-928cb92353ad"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchPaintingInGallery"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""f9f283a0-fb91-43cc-b4ae-2ac2ad816fa8"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchPaintingInGallery"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""5fdfeebf-6a61-406d-87b0-a46d8c4c6896"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchPaintingInGallery"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         },
@@ -287,6 +362,7 @@ public partial class @PlayerControlMap: IInputActionCollection2, IDisposable
         m_PlayerControls_Click = m_PlayerControls.FindAction("Click", throwIfNotFound: true);
         m_PlayerControls_MousePos = m_PlayerControls.FindAction("MousePos", throwIfNotFound: true);
         m_PlayerControls_MoveCamera = m_PlayerControls.FindAction("MoveCamera", throwIfNotFound: true);
+        m_PlayerControls_SwitchPaintingInGallery = m_PlayerControls.FindAction("SwitchPaintingInGallery", throwIfNotFound: true);
         // Menus
         m_Menus = asset.FindActionMap("Menus", throwIfNotFound: true);
         m_Menus_Progress = m_Menus.FindAction("Progress", throwIfNotFound: true);
@@ -358,6 +434,7 @@ public partial class @PlayerControlMap: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerControls_Click;
     private readonly InputAction m_PlayerControls_MousePos;
     private readonly InputAction m_PlayerControls_MoveCamera;
+    private readonly InputAction m_PlayerControls_SwitchPaintingInGallery;
     public struct PlayerControlsActions
     {
         private @PlayerControlMap m_Wrapper;
@@ -368,6 +445,7 @@ public partial class @PlayerControlMap: IInputActionCollection2, IDisposable
         public InputAction @Click => m_Wrapper.m_PlayerControls_Click;
         public InputAction @MousePos => m_Wrapper.m_PlayerControls_MousePos;
         public InputAction @MoveCamera => m_Wrapper.m_PlayerControls_MoveCamera;
+        public InputAction @SwitchPaintingInGallery => m_Wrapper.m_PlayerControls_SwitchPaintingInGallery;
         public InputActionMap Get() { return m_Wrapper.m_PlayerControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -395,6 +473,9 @@ public partial class @PlayerControlMap: IInputActionCollection2, IDisposable
             @MoveCamera.started += instance.OnMoveCamera;
             @MoveCamera.performed += instance.OnMoveCamera;
             @MoveCamera.canceled += instance.OnMoveCamera;
+            @SwitchPaintingInGallery.started += instance.OnSwitchPaintingInGallery;
+            @SwitchPaintingInGallery.performed += instance.OnSwitchPaintingInGallery;
+            @SwitchPaintingInGallery.canceled += instance.OnSwitchPaintingInGallery;
         }
 
         private void UnregisterCallbacks(IPlayerControlsActions instance)
@@ -417,6 +498,9 @@ public partial class @PlayerControlMap: IInputActionCollection2, IDisposable
             @MoveCamera.started -= instance.OnMoveCamera;
             @MoveCamera.performed -= instance.OnMoveCamera;
             @MoveCamera.canceled -= instance.OnMoveCamera;
+            @SwitchPaintingInGallery.started -= instance.OnSwitchPaintingInGallery;
+            @SwitchPaintingInGallery.performed -= instance.OnSwitchPaintingInGallery;
+            @SwitchPaintingInGallery.canceled -= instance.OnSwitchPaintingInGallery;
         }
 
         public void RemoveCallbacks(IPlayerControlsActions instance)
@@ -496,6 +580,7 @@ public partial class @PlayerControlMap: IInputActionCollection2, IDisposable
         void OnClick(InputAction.CallbackContext context);
         void OnMousePos(InputAction.CallbackContext context);
         void OnMoveCamera(InputAction.CallbackContext context);
+        void OnSwitchPaintingInGallery(InputAction.CallbackContext context);
     }
     public interface IMenusActions
     {
