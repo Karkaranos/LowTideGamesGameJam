@@ -111,7 +111,7 @@ public class GameManager : MonoBehaviour
     public void IncreaseScore()
     {
         score++;
-        if (score >= scoreNeededToWin)
+        if (score >= scoreNeededToWin - (maxHealth-health))
         {
             audioManager.Stop("Creepy Ambience");
             WinGame();

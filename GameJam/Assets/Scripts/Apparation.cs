@@ -17,6 +17,7 @@ public class Apparation
     bool hasApparated = false;
     bool isApparating = false;
     private int steps = 100;
+    [SerializeField] private Material lit;
     public bool HasBeenCaught { get => hasBeenCaught; set => hasBeenCaught = value; }
     public bool IsApparating { get => isApparating; }
     public float TimeUntilStart { get => timeUntilStart;}
@@ -38,6 +39,7 @@ public class Apparation
             newSprite.transform.localPosition = Vector3.zero;
             newSprite.transform.localScale = new Vector3(1, 1, 1);
             sr = newSprite.AddComponent<SpriteRenderer>();
+            sr.material = lit;
             sr.sortingOrder = 5;
             Color c = new Color(1, 1, 1, 0);
             Sr.color = c;
@@ -89,6 +91,7 @@ public class Apparation
             newSprite.transform.localPosition = Vector3.zero;
             newSprite.transform.localScale = new Vector3(1, 1, 1);
             sr = newSprite.AddComponent<SpriteRenderer>();
+            sr.material = lit;
             sr.sortingOrder = 5;
             Color c = new Color(1, 1, 1, 1);
             Sr.color = c;
