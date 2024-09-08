@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Apparation
+  - Painting
   layers:
   - Default
   - TransparentFX

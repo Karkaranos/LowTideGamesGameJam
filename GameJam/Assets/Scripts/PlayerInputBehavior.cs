@@ -111,7 +111,7 @@ public class PlayerInputBehavior : MonoBehaviour
     {
         time += Time.fixedDeltaTime;
         HandleLightMovement();
-        if(!FindObjectOfType<GameManager>().CamIsShaking)
+        if(!FindObjectOfType<GameManager>().CamIsShaking && !FindObjectOfType<PaintingManager>().PaintingCameraOverride)
         {
             HandleCameraMovement();
         }
@@ -133,6 +133,7 @@ public class PlayerInputBehavior : MonoBehaviour
     {
         //Gets mouse position
         mousePosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+        CheckForFinishedApparations();
 
         //Moves light to mouse position
         lightObject.transform.position = Vector2.MoveTowards(lightObject.transform.position, mousePosition, maxMouseSpeed);
@@ -167,6 +168,13 @@ public class PlayerInputBehavior : MonoBehaviour
         //Moves camera to current painting index
         mainCamera.transform.position = Vector3.MoveTowards(mainCamera.transform.position,
             paintingPositions[currentPaintingIndex].transform.position, cameraAccelerationSpeed * Time.deltaTime * gameManager.expectedFrameRate);
+    }
+
+    public void CameraMovementOverride(int index)
+    {
+        currentPaintingIndex = index;
+        mainCamera.transform.position = Vector3.MoveTowards(mainCamera.transform.position,
+           paintingPositions[index].transform.position, cameraAccelerationSpeed * Time.deltaTime * gameManager.expectedFrameRate);
     }
 
     /// <summary>
@@ -237,7 +245,7 @@ public class PlayerInputBehavior : MonoBehaviour
                 if (hit.transform.gameObject.tag == "Apparation")
                 {
                     print("Entered");
-                    Apparation aRef = FindObjectOfType<PaintingManager>().RetrieveApparationInstance(hit.transform.gameObject.name);
+                    Apparation aRef = FindObjectOfType<PaintingManager>().RetrieveApparationInstance(hit.transform.gameObject.name, hit.transform.gameObject);
                     if (aRef != null && aRef.IsApparating && !aRef.HasBeenCaught)
                     {
                         StopCoroutine(aRef.StartApparation());
@@ -322,6 +330,23 @@ public class PlayerInputBehavior : MonoBehaviour
         for (int i = 0; i < arrayLength; i++)
         {
             Gizmos.DrawWireCube(paintingPositions[i].transform.position, new Vector2(width, height));
+        }
+    }
+
+    private void CheckForFinishedApparations()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(mPosVector), Vector3.zero);
+        if (hit.collider != null)
+        {
+            print(hit.transform.gameObject.name);
+            if (hit.transform.gameObject.tag == "Painting")
+            {
+                Painting p = FindObjectOfType<PaintingManager>().RetrievePaintingInstance(hit.transform.gameObject);
+                if (p.NumApparationsCaught < p.NumApparationsComplete)
+                {
+                    StartCoroutine(FindObjectOfType<GameManager>().TakeDamage(p));
+                }
+            }
         }
     }
 }

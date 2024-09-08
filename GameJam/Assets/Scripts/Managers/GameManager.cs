@@ -103,6 +103,7 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator TakeDamage(Painting painting)
     {
+        print("Roar!");
         SpriteRenderer sr = uncaughtApparationObj.GetComponent<SpriteRenderer>();
         if(painting.Type == Painting.PaintingType.LANDSCAPE)
         {
@@ -115,7 +116,15 @@ public class GameManager : MonoBehaviour
         sr.gameObject.transform.position = painting.PaintingObj.transform.position;
         Color c = new Color(1, 1, 1, 1.0f);
         sr.color = c;
+        health-=Mathf.Clamp((painting.NumApparationsComplete - painting.NumApparationsCaught - painting.DamagePointsDealt), 0, 10);
+        painting.DamagePointsDealt += painting.NumApparationsComplete - painting.NumApparationsCaught;
+        if (health <= 0)
+        {
+            EndGame();
+        }
+        print("New health: " + health);
         StartCoroutine(CameraShake());
+        health--;
         yield return new WaitForSeconds(timeBeforeApparationFades);
         for(int i=0; i<numTimerSteps; i++)
         {
@@ -130,11 +139,6 @@ public class GameManager : MonoBehaviour
     IEnumerator CameraShake()
     {
         yield return new WaitForSeconds(timeBeforeCamShake);
-        health--;
-        if(health <= 0)
-        {
-            EndGame();
-        }
         CamIsShaking = true;
         //damageImage.sprite = damageVisuals[(maxHealth - health)];
 
