@@ -107,13 +107,17 @@ public class GameManager : MonoBehaviour
     {
         score++;
         if (score >= scoreNeededToWin)
+        {
+            audioManager.Stop("Creepy Ambience");
             WinGame();
+        }
     }
 
     public IEnumerator TakeDamage(Painting painting)
     {
         yield return new WaitForSeconds(1f);
         print("Roar!");
+        audioManager.Play("Take Damage");
         SpriteRenderer sr = uncaughtApparationObj.GetComponent<SpriteRenderer>();
         if(painting.Type == Painting.PaintingType.LANDSCAPE)
         {
@@ -130,6 +134,8 @@ public class GameManager : MonoBehaviour
         painting.DamagePointsDealt += painting.NumApparationsComplete - painting.NumApparationsCaught;
         if (health <= 0)
         {
+            audioManager.Stop("Creepy Ambience");
+            audioManager.Play("Death");
             EndGame();
         }
         print("New health: " + health);
