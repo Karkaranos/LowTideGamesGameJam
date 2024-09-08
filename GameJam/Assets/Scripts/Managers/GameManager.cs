@@ -132,7 +132,7 @@ public class GameManager : MonoBehaviour
         health -=healthLost;
         if(healthLost > 0)
         {
-            print("New health: " + health + " after taking " + (painting.NumApparationsComplete - painting.NumApparationsCaught - painting.DamagePointsDealt) + " points of damage");
+            //print("New health: " + health + " after taking " + (painting.NumApparationsComplete - painting.NumApparationsCaught - painting.DamagePointsDealt) + " points of damage");
             painting.DamagePointsDealt += painting.NumApparationsComplete - painting.NumApparationsCaught;
             StartCoroutine(CameraShake());
             yield return new WaitForSeconds(timeBeforeApparationFades);
@@ -205,7 +205,7 @@ public class GameManager : MonoBehaviour
                         audioManager.Play("Creepy Extra 4");
                         break;
                     default:
-                        print("ERROR: FAILED TO GET RANDOM SOUND");
+                        //print("ERROR: FAILED TO GET RANDOM SOUND");
                         break;
                 }
             }
@@ -281,7 +281,7 @@ public class GameManager : MonoBehaviour
     void EndGame()
     {
         audioManager.Play("Loss Jingle");
-        Debug.Log("Animation here. You died tho");
+        //Debug.Log("Animation here. You died tho");
         SceneManager.LoadScene("DeathScene");
     }
 }

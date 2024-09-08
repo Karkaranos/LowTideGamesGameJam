@@ -82,7 +82,7 @@ public class AudioManager : MonoBehaviour
         }
         s.source = obj.GetComponent<AudioSource>();
         Destroy(s.source);
-        print("Removed" + name + "sound from " + obj.name);
+        //print("Removed" + name + "sound from " + obj.name);
     }
 
     public void Play(string name)
@@ -106,7 +106,7 @@ public class AudioManager : MonoBehaviour
         }
         s.source.Play();
         s.source.volume = vol;
-        print(s.name + " is playing at volume level " + s.source.volume);
+        //print(s.name + " is playing at volume level " + s.source.volume);
     }
 
     public void UpdateVolume(string name, float vol)
@@ -118,7 +118,7 @@ public class AudioManager : MonoBehaviour
             return;
         }
         s.source.volume = vol;
-        print(s.name + " is playing at volume level " + s.source.volume);
+        //print(s.name + " is playing at volume level " + s.source.volume);
     }
 
     public void AddSound(string soundName, GameObject obj)
@@ -142,7 +142,7 @@ public class AudioManager : MonoBehaviour
         s.source.maxDistance = s.maxDistance;
         s.source.rolloffMode = AudioRolloffMode.Linear;
 
-        print("sound '" + soundName + "' added to " + obj.name);
+        //print("sound '" + soundName + "' added to " + obj.name);
     }
 
     public void PlayAddedSound(string soundName, GameObject obj)
@@ -217,7 +217,7 @@ public class AudioManager : MonoBehaviour
             Debug.LogWarning(name + ": audio not found");
             return 0;
         }
-        print(s.source.clip.length);
+        //print(s.source.clip.length);
         return s.source.clip.length;
     }
 
