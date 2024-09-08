@@ -335,7 +335,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d470c25f3e91ea847afa7639bb725c41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  winState: {fileID: 11400000, guid: c86e0bf62eef3ea4691bbb5d65260d7e, type: 2}
   CreditsCanvas: {fileID: 46874023}
   MainMenuCanvas: {fileID: 1966153117}
   TutorialCanvas: {fileID: 1693257377}
@@ -726,8 +725,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4294572537
+  m_fontColor: {r: 0.9764706, g: 0.9764706, b: 0.9764706, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1104,15 +1103,15 @@ RectTransform:
   m_GameObject: {fileID: 529759244}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1966153121}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 80, y: -80}
-  m_SizeDelta: {x: 651.9741, y: 323.4623}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -920, y: 557}
+  m_SizeDelta: {x: 430.37, y: 323.46}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &529759246
 MonoBehaviour:
@@ -1130,13 +1129,13 @@ MonoBehaviour:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
+  m_Maskable: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 97d3d126f397d824fb0509cf9ffc4bb0, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -1717,8 +1716,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 224, y: -173}
-  m_SizeDelta: {x: 137.0394, y: 62.2697}
+  m_AnchoredPosition: {x: 224, y: -172.03}
+  m_SizeDelta: {x: 137.04, y: 48.23}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &598109396
 MonoBehaviour:
@@ -1789,7 +1788,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.9764706, g: 0.9764706, b: 0.9764706, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3484,7 +3483,7 @@ Transform:
   m_GameObject: {fileID: 1601699218}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 41.039997, y: -54, z: -9827.999}
+  m_LocalPosition: {x: 132, y: -54, z: -9827.999}
   m_LocalScale: {x: 108, y: 108, z: 108}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4142,8 +4141,11 @@ MonoBehaviour:
 
     Caelie Joyner - Artist
 
-    Lucy
-    Robbins - Prop Artist'
+
+    Special
+    Thanks To:
+
+    Lucy Robbins - Prop Artist'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 884b027dfd8ac5e4cab57703763a2b76, type: 2}
   m_sharedMaterial: {fileID: 1231311892535109283, guid: 884b027dfd8ac5e4cab57703763a2b76, type: 2}
