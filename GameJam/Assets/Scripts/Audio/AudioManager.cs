@@ -18,6 +18,24 @@ using UnityEngine.Audio;
 
 public class AudioManager : MonoBehaviour
 {
+    #region Singleton
+    private static AudioManager instance;
+
+    public static AudioManager Instance
+    {
+        get
+        {
+            if (instance == null)
+                instance = FindObjectOfType(typeof(AudioManager)) as AudioManager;
+            return instance;
+        }
+        set
+        {
+            instance = value;
+        }
+    }
+    #endregion
+
     public Sound[] Sounds;
     public AudioMixerGroup masterMixer;
     public float musicVolume;
