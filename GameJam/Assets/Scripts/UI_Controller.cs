@@ -23,6 +23,7 @@ public class UI_Controller : MonoBehaviour
     public TMP_Text Body;
     private int CurrentPage;
     public GameObject Pause;
+    public Button Gallery;
 
     public PlayerInput playerInput;
     private InputAction navigateForward;
@@ -33,14 +34,15 @@ public class UI_Controller : MonoBehaviour
     {
         Pause.SetActive(false);
         Time.timeScale = 1.0f;
+        FindObjectOfType<PlayerInputBehavior>().IsPaused = false;
     }
 
 
     private void Start()
     {
         audioManager = AudioManager.Instance;
-        
-        if(SceneManager.GetActiveScene().name.Contains("Menu"))
+
+        if (SceneManager.GetActiveScene().name.Contains("Menu"))
         {
             audioManager.Play("Menu Music");
             playerInput.currentActionMap.Enable();
@@ -48,6 +50,12 @@ public class UI_Controller : MonoBehaviour
             navigateBackwards = playerInput.currentActionMap.FindAction("MoveBack");
             navigateBackwards.performed += NavigateBackwards_performed;
             navigateForward.performed += NavigateForward_performed;
+
+            if (!FindObjectOfType<Constants>().IsGalleryClickable)
+            {
+                Gallery.interactable = false;
+            }
+            else Gallery.interactable = true;
         }
     }
 
