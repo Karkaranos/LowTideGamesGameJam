@@ -62,7 +62,6 @@ public class PlayerInputBehavior : MonoBehaviour
     private int flickerFrame;
     private int flickerPause;
     private int flickerCounter;
-    private bool canFlicker = false;
     public GameObject spawnCirc;
 
     #endregion
@@ -220,7 +219,6 @@ public class PlayerInputBehavior : MonoBehaviour
         //Cannot attack if cooldown is active or if player has not clicked yet (only relevant at beginning of the game)
         if (time >= lastClickTime + spearItCooldDown || lastClickTime == 0)
         {
-            canFlicker = true;
             flickerCounter = 0;
             flickerPause = 0;
             RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(mPosVector), Vector3.zero);
