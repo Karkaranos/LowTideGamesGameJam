@@ -77,6 +77,7 @@ public class GameManager : MonoBehaviour
 
     private float time;
     private float timeWon;
+    public bool won {  get; private set; }
     private void Start()
     {
         transitionToDay = false;
@@ -85,6 +86,7 @@ public class GameManager : MonoBehaviour
         flickerCounter = 0;
         time = 0;
         timeWon = 0;
+        won = false;
         originalIntensity = flashLight.intensity;
         health = maxHealth;
         transitionFrames = 0;
@@ -209,6 +211,8 @@ public class GameManager : MonoBehaviour
 
     void WinGame()
     {
+        won = true;
+        //globalLight.color = new Color();
         timeWon = time;
         transitionToDay = true;
     }

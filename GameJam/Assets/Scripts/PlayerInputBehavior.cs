@@ -174,43 +174,49 @@ public class PlayerInputBehavior : MonoBehaviour
     /// </summary>
     private void HandleLightFlicker()
     {
-        //If Spear-It attack is on cooldown
-        if (time <= lastClickTime + spearItCooldDown && lastClickTime != 0)
+        if (!gameManager.won)
         {
-            //If flicker count is at 3, pause for a moment then resume
-            if (flickerCounter < maxFlickers)
+            //If Spear-It attack is on cooldown
+            if (time <= lastClickTime + spearItCooldDown && lastClickTime != 0)
             {
-                //If light is not normal, make it normal if set amount of time has passed
-                if (flashlight.intensity != originalIntensity && flickerFrame >= framesBetweenFlicker)
+                //If flicker count is at 3, pause for a moment then resume
+                if (flickerCounter < maxFlickers)
                 {
-                    flashlight.intensity = originalIntensity;
-                    flickerFrame = 0;
-                }
-                //If light is normal, make it not normal if set amount of time has passed
-                else if (flashlight.intensity == originalIntensity && flickerFrame >= framesBetweenFlicker)
-                {
-                    float lightIntensity = Random.Range(lightFlickerReduction - negativeRandomModifier, lightFlickerReduction + positiveRandomModifier);
-                    flashlight.intensity = lightIntensity;
-                    flickerFrame = 0;
-                    flickerCounter++;
+                    //If light is not normal, make it normal if set amount of time has passed
+                    if (flashlight.intensity != originalIntensity && flickerFrame >= framesBetweenFlicker)
+                    {
+                        flashlight.intensity = originalIntensity;
+                        flickerFrame = 0;
+                    }
+                    //If light is normal, make it not normal if set amount of time has passed
+                    else if (flashlight.intensity == originalIntensity && flickerFrame >= framesBetweenFlicker)
+                    {
+                        float lightIntensity = Random.Range(lightFlickerReduction - negativeRandomModifier, lightFlickerReduction + positiveRandomModifier);
+                        flashlight.intensity = lightIntensity;
+                        flickerFrame = 0;
+                        flickerCounter++;
+                    }
+                    else
+                        flickerFrame++;
                 }
                 else
-                    flickerFrame++;
-            } else
-            {
-                flashlight.intensity = originalIntensity;
-                if (flickerPause < flickerPauseTime)
                 {
-                    flickerPause++;
-                } else
-                {
-                    flickerCounter = 0;
-                    flickerPause = 0;
+                    flashlight.intensity = originalIntensity;
+                    if (flickerPause < flickerPauseTime)
+                    {
+                        flickerPause++;
+                    }
+                    else
+                    {
+                        flickerCounter = 0;
+                        flickerPause = 0;
+                    }
                 }
             }
-        } else
-        {
-            flashlight.intensity = originalIntensity;
+            else
+            {
+                flashlight.intensity = originalIntensity;
+            }
         }
     }
 
