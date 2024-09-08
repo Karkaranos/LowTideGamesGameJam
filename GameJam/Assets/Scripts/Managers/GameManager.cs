@@ -115,7 +115,6 @@ public class GameManager : MonoBehaviour
     public IEnumerator TakeDamage(Painting painting)
     {
         //yield return new WaitForSeconds(1f);
-        print("Get Attacked!");
         audioManager.Play("Take Damage");
         SpriteRenderer sr = uncaughtApparationObj.GetComponent<SpriteRenderer>();
         if(painting.Type == Painting.PaintingType.LANDSCAPE)
@@ -129,25 +128,23 @@ public class GameManager : MonoBehaviour
         sr.gameObject.transform.position = painting.PaintingObj.transform.position;
         Color c = new Color(1, 1, 1, 1.0f);
         sr.color = c;
-        health-=Mathf.Clamp((painting.NumApparationsComplete - painting.NumApparationsCaught - painting.DamagePointsDealt), 0, 5);
-        print("New health: " + health + " after taking " + (painting.NumApparationsComplete - painting.NumApparationsCaught - painting.DamagePointsDealt) + " points of damage");
-        painting.DamagePointsDealt += painting.NumApparationsComplete - painting.NumApparationsCaught;
-        if (health <= 0)
+        int healthLost = Mathf.Clamp((painting.NumApparationsComplete - painting.NumApparationsCaught - painting.DamagePointsDealt), 0, 5);
+        health -=healthLost;
+        if(healthLost > 0)
         {
-            audioManager.Stop("Creepy Ambience");
-            audioManager.Play("Death");
-            EndGame();
+            print("New health: " + health + " after taking " + (painting.NumApparationsComplete - painting.NumApparationsCaught - painting.DamagePointsDealt) + " points of damage");
+            painting.DamagePointsDealt += painting.NumApparationsComplete - painting.NumApparationsCaught;
+            StartCoroutine(CameraShake());
+            yield return new WaitForSeconds(timeBeforeApparationFades);
+            for (int i = 0; i < numTimerSteps; i++)
+            {
+                c.a -= (1 / apparationFadeTime) * (apparationFadeTime / numTimerSteps);
+                sr.color = c;
+                yield return new WaitForSeconds(apparationFadeTime / numTimerSteps);
+            }
+            sr.color = new Color(1, 1, 1, 0);
+            sr.gameObject.transform.position = new Vector3(0, 10, 0);
         }
-        StartCoroutine(CameraShake());
-        yield return new WaitForSeconds(timeBeforeApparationFades);
-        for(int i=0; i<numTimerSteps; i++)
-        {
-            c.a -= (1 / apparationFadeTime) * (apparationFadeTime / numTimerSteps);
-            sr.color = c;
-            yield return new WaitForSeconds(apparationFadeTime / numTimerSteps);
-        }
-        sr.color = new Color(1, 1, 1, 0);
-        sr.gameObject.transform.position = new Vector3(0, 10, 0);
     }
 
     IEnumerator CameraShake()
@@ -165,6 +162,12 @@ public class GameManager : MonoBehaviour
                     -10);
             timer += Time.deltaTime;
             yield return new WaitForSeconds(Time.deltaTime);
+        }
+        if (health <= 0)
+        {
+            audioManager.Stop("Creepy Ambience");
+            audioManager.Play("Death");
+            EndGame();
         }
         CamIsShaking = false;
 

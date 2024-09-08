@@ -240,7 +240,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -370,7 +370,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: ebe6a679123fd6546adf647dcf422523, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -446,7 +446,7 @@ MonoBehaviour:
     paintingObj: {fileID: 904081351}
     apparations:
     - apparationObject: {fileID: 1888280384}
-      timeUntilStart: 30
+      timeUntilStart: 7
       apparatingCompletionTime: 20
       currentApparationProgress: 0
       apparation: {fileID: 21300000, guid: 0d0323bd9c459c94085e355decd40472, type: 3}
@@ -475,7 +475,7 @@ MonoBehaviour:
     paintingObj: {fileID: 664896544}
     apparations:
     - apparationObject: {fileID: 1293201974}
-      timeUntilStart: 60
+      timeUntilStart: 30
       apparatingCompletionTime: 20
       currentApparationProgress: 0
       apparation: {fileID: 21300000, guid: 9aa8d5191e6ea454990ade272cb3631e, type: 3}
@@ -483,7 +483,7 @@ MonoBehaviour:
       newFadeIn: 1
       crossfade: 0
     - apparationObject: {fileID: 64694498}
-      timeUntilStart: 10
+      timeUntilStart: 50
       apparatingCompletionTime: 30
       currentApparationProgress: 0
       apparation: {fileID: 21300000, guid: 36afe489c48b7a04b83a11f7eb82ebbb, type: 3}
@@ -491,7 +491,7 @@ MonoBehaviour:
       newFadeIn: 1
       crossfade: 0
     - apparationObject: {fileID: 1241993504}
-      timeUntilStart: 30
+      timeUntilStart: 90
       apparatingCompletionTime: 23
       currentApparationProgress: 0
       apparation: {fileID: 21300000, guid: d08a5707fcc1dc445bbce327fa558476, type: 3}
@@ -504,7 +504,7 @@ MonoBehaviour:
     paintingObj: {fileID: 270393875}
     apparations:
     - apparationObject: {fileID: 1112370036}
-      timeUntilStart: 90
+      timeUntilStart: 100
       apparatingCompletionTime: 10
       currentApparationProgress: 0
       apparation: {fileID: 21300000, guid: 6ff78cfec0c7ba440a6d313b27481074, type: 3}
@@ -731,7 +731,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.4177704, y: 0.12869406}
+  m_Offset: {x: -0.36994362, y: -0.1423142}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -742,7 +742,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 19.18322, y: 10.89733}
+  m_Size: {x: 17.74847, y: 10.355314}
   m_EdgeRadius: 0
 --- !u!1 &324903607
 GameObject:
@@ -947,7 +947,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   expectedFrameRate: 60
   score: 0
-  scoreNeededToWin: 10
+  scoreNeededToWin: 8
   maxHealth: 3
   uncaughtApparationObj: {fileID: 615252980}
   landscapeApparation: {fileID: 21300000, guid: e4c390d5b9434e5439e24a628c6ab776, type: 3}
@@ -958,10 +958,10 @@ MonoBehaviour:
   - {fileID: 1464156441}
   timeBeforeApparationFades: 2
   apparationFadeTime: 3
-  timeBeforeCamShake: 3
+  timeBeforeCamShake: 1.5
   camShakeTime: 2
   CamIsShaking: 0
-  shakeIntensity: 5
+  shakeIntensity: 3.28
   mainCam: {fileID: 921612998}
   globalLight: {fileID: 2009500423}
   flashLight: {fileID: 1913793018}
@@ -1895,7 +1895,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.32173586, y: -0.16086674}
+  m_Offset: {x: 0.095277786, y: -0.16086674}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -1906,7 +1906,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 22.479729, y: 13.296465}
+  m_Size: {x: 20.064152, y: 13.296465}
   m_EdgeRadius: 0
 --- !u!1 &904081351
 GameObject:
@@ -2028,7 +2028,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.6214304, y: 0.084261894}
+  m_Offset: {x: -0.5437851, y: 0.084261894}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -2039,7 +2039,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 17.67613, y: 10.039337}
+  m_Size: {x: 16.045624, y: 10.039337}
   m_EdgeRadius: 0
 --- !u!1 &921612996
 GameObject:
@@ -2486,7 +2486,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -3018,7 +3018,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -3313,7 +3313,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -3492,7 +3492,7 @@ MonoBehaviour:
   - clip: {fileID: 8300000, guid: abf6569c1c2c2c54a9a243cfe0baadfb, type: 3}
     name: Switch Paintings
     volume: 1
-    pitch: 0
+    pitch: 1
     loop: 0
     panStereo: 0
     spacialBlend: 0
@@ -3502,7 +3502,7 @@ MonoBehaviour:
   - clip: {fileID: 8300000, guid: abf6569c1c2c2c54a9a243cfe0baadfb, type: 3}
     name: Flashlight Flicker
     volume: 1
-    pitch: 0
+    pitch: 1
     loop: 0
     panStereo: 0
     spacialBlend: 0
@@ -3512,7 +3512,7 @@ MonoBehaviour:
   - clip: {fileID: 8300000, guid: abf6569c1c2c2c54a9a243cfe0baadfb, type: 3}
     name: Stab Spear
     volume: 1
-    pitch: 0
+    pitch: 1
     loop: 0
     panStereo: 0
     spacialBlend: 0
@@ -3522,7 +3522,7 @@ MonoBehaviour:
   - clip: {fileID: 8300000, guid: abf6569c1c2c2c54a9a243cfe0baadfb, type: 3}
     name: Extract Ghost
     volume: 1
-    pitch: 0
+    pitch: 1
     loop: 0
     panStereo: 0
     spacialBlend: 0
@@ -3532,7 +3532,7 @@ MonoBehaviour:
   - clip: {fileID: 8300000, guid: abf6569c1c2c2c54a9a243cfe0baadfb, type: 3}
     name: Take Damage
     volume: 1
-    pitch: 0
+    pitch: 1
     loop: 0
     panStereo: 0
     spacialBlend: 0
@@ -3542,27 +3542,27 @@ MonoBehaviour:
   - clip: {fileID: 8300000, guid: abf6569c1c2c2c54a9a243cfe0baadfb, type: 3}
     name: Death
     volume: 1
-    pitch: 0
+    pitch: 1
     loop: 0
     panStereo: 0
     spacialBlend: 0
     minDistance: 0
     maxDistance: 0
     source: {fileID: 0}
-  - clip: {fileID: 8300000, guid: abf6569c1c2c2c54a9a243cfe0baadfb, type: 3}
+  - clip: {fileID: 8300000, guid: ff561c348ffac5e428c07e36e61bb05d, type: 3}
     name: Creepy Ambience
     volume: 1
-    pitch: 0
+    pitch: 1
     loop: 1
     panStereo: 0
     spacialBlend: 0
     minDistance: 0
     maxDistance: 0
     source: {fileID: 0}
-  - clip: {fileID: 8300000, guid: abf6569c1c2c2c54a9a243cfe0baadfb, type: 3}
+  - clip: {fileID: 8300000, guid: ff561c348ffac5e428c07e36e61bb05d, type: 3}
     name: Menu Music
     volume: 1
-    pitch: 0.1
+    pitch: 1
     loop: 1
     panStereo: 0
     spacialBlend: 0
@@ -3572,7 +3572,7 @@ MonoBehaviour:
   - clip: {fileID: 8300000, guid: abf6569c1c2c2c54a9a243cfe0baadfb, type: 3}
     name: UI Click
     volume: 1
-    pitch: 0.1
+    pitch: 1
     loop: 0
     panStereo: 0
     spacialBlend: 0
@@ -3582,7 +3582,7 @@ MonoBehaviour:
   - clip: {fileID: 8300000, guid: abf6569c1c2c2c54a9a243cfe0baadfb, type: 3}
     name: Victory Jingle
     volume: 1
-    pitch: 0.1
+    pitch: 1
     loop: 0
     panStereo: 0
     spacialBlend: 0
@@ -3592,7 +3592,7 @@ MonoBehaviour:
   - clip: {fileID: 8300000, guid: abf6569c1c2c2c54a9a243cfe0baadfb, type: 3}
     name: Loss Jingle
     volume: 1
-    pitch: 0.1
+    pitch: 1
     loop: 0
     panStereo: 0
     spacialBlend: 0
@@ -3602,7 +3602,7 @@ MonoBehaviour:
   - clip: {fileID: 8300000, guid: abf6569c1c2c2c54a9a243cfe0baadfb, type: 3}
     name: Loss Jingle
     volume: 1
-    pitch: 0.1
+    pitch: 1
     loop: 0
     panStereo: 0
     spacialBlend: 0
@@ -3612,7 +3612,7 @@ MonoBehaviour:
   - clip: {fileID: 8300000, guid: abf6569c1c2c2c54a9a243cfe0baadfb, type: 3}
     name: Creepy Extra 1
     volume: 1
-    pitch: 0.1
+    pitch: 1
     loop: 0
     panStereo: 0
     spacialBlend: 1
@@ -3622,7 +3622,7 @@ MonoBehaviour:
   - clip: {fileID: 8300000, guid: abf6569c1c2c2c54a9a243cfe0baadfb, type: 3}
     name: Creepy Extra 2
     volume: 1
-    pitch: 0.1
+    pitch: 1
     loop: 0
     panStereo: 0
     spacialBlend: 1
@@ -3632,7 +3632,7 @@ MonoBehaviour:
   - clip: {fileID: 8300000, guid: abf6569c1c2c2c54a9a243cfe0baadfb, type: 3}
     name: Creepy Extra 3
     volume: 1
-    pitch: 0.1
+    pitch: 1
     loop: 0
     panStereo: 0
     spacialBlend: 1
@@ -3642,7 +3642,7 @@ MonoBehaviour:
   - clip: {fileID: 8300000, guid: abf6569c1c2c2c54a9a243cfe0baadfb, type: 3}
     name: Creepy Extra 4
     volume: 1
-    pitch: 0.1
+    pitch: 1
     loop: 0
     panStereo: 0
     spacialBlend: 1
@@ -4220,7 +4220,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -4350,7 +4350,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
