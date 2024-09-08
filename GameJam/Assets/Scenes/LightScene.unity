@@ -2749,8 +2749,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -38, y: -42}
+  m_AnchoredPosition: {x: -0.099998474, y: 0}
+  m_SizeDelta: {x: -59.5723, y: -42}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1203121991
 MonoBehaviour:
@@ -2772,7 +2772,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Quit
+  m_text: Exit
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: db246c025e4c2e5488c26c944348a435, type: 2}
   m_sharedMaterial: {fileID: 2473606732928926293, guid: db246c025e4c2e5488c26c944348a435, type: 2}
@@ -5075,7 +5075,7 @@ GameObject:
   - component: {fileID: 2142612070}
   - component: {fileID: 2142612069}
   m_Layer: 5
-  m_Name: Quit_Button
+  m_Name: Exit_Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
