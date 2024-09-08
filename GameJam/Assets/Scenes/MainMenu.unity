@@ -335,7 +335,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d470c25f3e91ea847afa7639bb725c41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  winState: {fileID: 0}
   CreditsCanvas: {fileID: 46874023}
   MainMenuCanvas: {fileID: 1966153117}
   TutorialCanvas: {fileID: 1693257377}
@@ -1130,7 +1129,7 @@ MonoBehaviour:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
+  m_Maskable: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1717,8 +1716,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 224, y: -173}
-  m_SizeDelta: {x: 137.0394, y: 62.2697}
+  m_AnchoredPosition: {x: 224, y: -172.03}
+  m_SizeDelta: {x: 137.04, y: 48.23}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &598109396
 MonoBehaviour:
@@ -4052,12 +4051,12 @@ RectTransform:
   m_Children:
   - {fileID: 1518058768}
   - {fileID: 527126489}
+  - {fileID: 529759245}
   - {fileID: 1599791213}
   - {fileID: 598109395}
   - {fileID: 516718095}
   - {fileID: 1815799780}
   - {fileID: 1601699219}
-  - {fileID: 529759245}
   - {fileID: 540798912}
   - {fileID: 1388077767}
   m_Father: {fileID: 0}
