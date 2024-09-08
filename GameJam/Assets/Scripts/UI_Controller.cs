@@ -9,6 +9,8 @@ using System;
 
 public class UI_Controller : MonoBehaviour
 {
+    AudioManager audioManager;
+
     public GameObject CreditsCanvas;
     public GameObject MainMenuCanvas;
     public GameObject TutorialCanvas;
@@ -30,6 +32,8 @@ public class UI_Controller : MonoBehaviour
 
     private void Start()
     {
+        audioManager = AudioManager.Instance;
+        audioManager.Play("Menu Music");
         playerInput.currentActionMap.Enable();
         navigateForward = playerInput.currentActionMap.FindAction("Progress");
         navigateBackwards = playerInput.currentActionMap.FindAction("MoveBack");
@@ -41,6 +45,7 @@ public class UI_Controller : MonoBehaviour
     {
         if(CurrentPage < TutorialPages.Length - 1)
         {
+            audioManager.Play("UI Click");
             CurrentPage = CurrentPage + 1;
             DisplayPage();
             AButton.SetActive(true);
@@ -61,7 +66,8 @@ public class UI_Controller : MonoBehaviour
 
     public void StartGame()
     {
-
+        audioManager.Stop("Menu Music");
+        SceneManager.LoadScene("LightScene");
     }
     private void DisplayPage()
     {
@@ -103,6 +109,7 @@ public class UI_Controller : MonoBehaviour
 
     public void CreditButtonPress() 
     {
+        audioManager.Play("UI Click");
         CreditsCanvas.SetActive(true);
         MainMenuCanvas.SetActive(false);
         TutorialCanvas.SetActive(false);
@@ -123,5 +130,17 @@ public class UI_Controller : MonoBehaviour
 
     CurrentPage = 0;
     DisplayPage();
+    }
+
+    public void GoToGallery()
+    {
+        audioManager.Play("UI Click");
+        SceneManager.LoadScene("GalleryScene");
+    }
+
+    public void Quit()
+    {
+        audioManager.Play("UI Click");
+        Application.Quit();
     }
 }
