@@ -37,7 +37,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Sprite landscapeApparation;
     [SerializeField] private Sprite portraitApparation;
     //[SerializeField, Tooltip("UI Canvas Image for damage")] Image damageImage;
-    [SerializeField] private Sprite[] damageVisuals;
+    [SerializeField] private GameObject[] damageVisuals;
+    private int dmgTracker;
 
     [Header("Time References")]
     [SerializeField, Tooltip("How long the uncaught apparation is visible for before it fades, in seconds")] private float timeBeforeApparationFades;
@@ -114,7 +115,6 @@ public class GameManager : MonoBehaviour
     public IEnumerator TakeDamage(Painting painting)
     {
         //yield return new WaitForSeconds(1f);
-        print("Get Attacked!");
         audioManager.Play("Take Damage");
         SpriteRenderer sr = uncaughtApparationObj.GetComponent<SpriteRenderer>();
         if(painting.Type == Painting.PaintingType.LANDSCAPE)
@@ -128,25 +128,23 @@ public class GameManager : MonoBehaviour
         sr.gameObject.transform.position = painting.PaintingObj.transform.position;
         Color c = new Color(1, 1, 1, 1.0f);
         sr.color = c;
-        health-=Mathf.Clamp((painting.NumApparationsComplete - painting.NumApparationsCaught - painting.DamagePointsDealt), 0, 5);
-        print("New health: " + health + " after taking " + (painting.NumApparationsComplete - painting.NumApparationsCaught - painting.DamagePointsDealt) + " points of damage");
-        painting.DamagePointsDealt += painting.NumApparationsComplete - painting.NumApparationsCaught;
-        if (health <= 0)
+        int healthLost = Mathf.Clamp((painting.NumApparationsComplete - painting.NumApparationsCaught - painting.DamagePointsDealt), 0, 5);
+        health -=healthLost;
+        if(healthLost > 0)
         {
-            audioManager.Stop("Creepy Ambience");
-            audioManager.Play("Death");
-            EndGame();
+            //print("New health: " + health + " after taking " + (painting.NumApparationsComplete - painting.NumApparationsCaught - painting.DamagePointsDealt) + " points of damage");
+            painting.DamagePointsDealt += painting.NumApparationsComplete - painting.NumApparationsCaught;
+            StartCoroutine(CameraShake());
+            yield return new WaitForSeconds(timeBeforeApparationFades);
+            for (int i = 0; i < numTimerSteps; i++)
+            {
+                c.a -= (1 / apparationFadeTime) * (apparationFadeTime / numTimerSteps);
+                sr.color = c;
+                yield return new WaitForSeconds(apparationFadeTime / numTimerSteps);
+            }
+            sr.color = new Color(1, 1, 1, 0);
+            sr.gameObject.transform.position = new Vector3(0, 10, 0);
         }
-        StartCoroutine(CameraShake());
-        yield return new WaitForSeconds(timeBeforeApparationFades);
-        for(int i=0; i<numTimerSteps; i++)
-        {
-            c.a -= (1 / apparationFadeTime) * (apparationFadeTime / numTimerSteps);
-            sr.color = c;
-            yield return new WaitForSeconds(apparationFadeTime / numTimerSteps);
-        }
-        sr.color = new Color(1, 1, 1, 0);
-        sr.gameObject.transform.position = new Vector3(0, 10, 0);
     }
 
     IEnumerator CameraShake()
@@ -154,6 +152,7 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(timeBeforeCamShake);
         CamIsShaking = true;
         //damageImage.sprite = damageVisuals[(maxHealth - health)];
+        damageVisuals[dmgTracker++].SetActive(true);
         Vector3 camPos = mainCam.transform.position;
         float timer = 0;
         while (timer < camShakeTime)
@@ -163,6 +162,12 @@ public class GameManager : MonoBehaviour
                     -10);
             timer += Time.deltaTime;
             yield return new WaitForSeconds(Time.deltaTime);
+        }
+        if (health <= 0)
+        {
+            audioManager.Stop("Creepy Ambience");
+            audioManager.Play("Death");
+            EndGame();
         }
         CamIsShaking = false;
 
@@ -200,7 +205,7 @@ public class GameManager : MonoBehaviour
                         audioManager.Play("Creepy Extra 4");
                         break;
                     default:
-                        print("ERROR: FAILED TO GET RANDOM SOUND");
+                        //print("ERROR: FAILED TO GET RANDOM SOUND");
                         break;
                 }
             }
@@ -277,7 +282,7 @@ public class GameManager : MonoBehaviour
     void EndGame()
     {
         audioManager.Play("Loss Jingle");
-        Debug.Log("Animation here. You died tho");
+        //Debug.Log("Animation here. You died tho");
         SceneManager.LoadScene("DeathScene");
     }
 }
