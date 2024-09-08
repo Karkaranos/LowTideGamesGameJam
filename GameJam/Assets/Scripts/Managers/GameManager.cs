@@ -110,7 +110,7 @@ public class GameManager : MonoBehaviour
     public void IncreaseScore()
     {
         score++;
-        if (score >= scoreNeededToWin - (maxHealth-health))
+        if (score >= scoreNeededToWin)
         {
             audioManager.Stop("Creepy Ambience");
             WinGame();
@@ -138,6 +138,11 @@ public class GameManager : MonoBehaviour
             sr.color = c;
             int healthLost = Mathf.Clamp((painting.NumApparationsComplete - painting.NumApparationsCaught - painting.DamagePointsDealt), 0, 5);
             health -= healthLost;
+            scoreNeededToWin -= healthLost;
+            if(scoreNeededToWin < 7)
+            {
+                scoreNeededToWin = 7;
+            }
             if (healthLost > 0)
             {
                 //print("New health: " + health + " after taking " + (painting.NumApparationsComplete - painting.NumApparationsCaught - painting.DamagePointsDealt) + " points of damage");
