@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.Rendering.Universal;
 
 public class GameManager : MonoBehaviour
 {
@@ -26,6 +27,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] public int expectedFrameRate = 60;
     [SerializeField] int score;
+    [SerializeField] private int scoreNeededToWin;
     [SerializeField] int maxHealth;
     private int health;
 
@@ -49,14 +51,52 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Camera mainCam;
     private int numTimerSteps = 100;
 
+    [Header("Lighting")]
+    [SerializeField] private Light2D globalLight;
+    [SerializeField] private Light2D flashLight;
+    [SerializeField] private float globalLightIncreaseRate;
+    [SerializeField] private float delayforNextDecrease;
+
+    [Header("Flashlight Flickering")]
+    [SerializeField] private float flickerLength;
+    [SerializeField] private int maxFlickers;
+    [SerializeField] private float lightFlickerReduction;
+    [SerializeField] private int framesBetweenFlicker;
+    [SerializeField] private int flickerPauseTime;
+    [SerializeField] private float negativeRandomModifier;
+    [SerializeField] private float positiveRandomModifier;
+
+    private bool transitionToDay;
+    private int transitionFrames;
+
+    //Flicker Variables
+    private float originalIntensity;
+    private int flickerFrame;
+    private int flickerPause;
+    private int flickerCounter;
+
+    private float time;
+    private float timeWon;
     private void Start()
     {
+        transitionToDay = false;
+        flickerFrame = 0;
+        flickerPause = 0;
+        flickerCounter = 0;
+        time = 0;
+        timeWon = 0;
+        originalIntensity = flashLight.intensity;
         health = maxHealth;
+        transitionFrames = 0;
+        score = 9;
+        IncreaseScore();
         
     }
     public void IncreaseScore()
     {
         score++;
+        if (score >= scoreNeededToWin)
+            WinGame();
     }
 
     public IEnumerator TakeDamage(Painting painting)
@@ -107,6 +147,70 @@ public class GameManager : MonoBehaviour
         }
         CamIsShaking = false;
 
+    }
+
+    private void FixedUpdate()
+    {
+        time += Time.fixedDeltaTime;
+
+        if (time <= flickerLength + timeWon)
+        {
+            //If flicker count is at 3, pause for a moment then resume
+            if (flickerCounter < maxFlickers)
+            {
+                //If light is not normal, make it normal if set amount of time has passed
+                if (flashLight.intensity != originalIntensity && flickerFrame >= framesBetweenFlicker)
+                {
+                    flashLight.intensity = originalIntensity;
+                    flickerFrame = 0;
+                }
+                //If light is normal, make it not normal if set amount of time has passed
+                else if (flashLight.intensity == originalIntensity && flickerFrame >= framesBetweenFlicker)
+                {
+                    float lightIntensity = Random.Range(lightFlickerReduction - negativeRandomModifier, lightFlickerReduction + positiveRandomModifier);
+                    flashLight.intensity = lightIntensity;
+                    flickerFrame = 0;
+                    flickerCounter++;
+                }
+                else
+                    flickerFrame++;
+            }
+            else
+            {
+                flashLight.intensity = originalIntensity;
+                if (flickerPause < flickerPauseTime)
+                {
+                    flickerPause++;
+                }
+                else
+                {
+                    flickerCounter = 0;
+                    flickerPause = 0;
+                }
+            }
+        }
+        else
+        {
+            flashLight.enabled = false;
+        }
+
+        //Transitions darkness to brightness
+        if (transitionToDay)
+        {
+            if (transitionFrames >= delayforNextDecrease && globalLight.intensity < 1)
+            {
+                globalLight.intensity += globalLightIncreaseRate;
+                transitionFrames = 0;
+            }
+            else
+                transitionFrames++;
+        }
+    }
+
+    void WinGame()
+    {
+        timeWon = time;
+        transitionToDay = true;
     }
 
     void EndGame()
