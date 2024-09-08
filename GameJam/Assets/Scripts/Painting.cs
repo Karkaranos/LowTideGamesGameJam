@@ -9,13 +9,14 @@ public class Painting
     [SerializeField] PaintingType type;
     [SerializeField] GameObject paintingObj;
     [SerializeField] Apparation[] apparations;
+    private int numApparationsComplete;
     public enum PaintingType
     {
             LANDSCAPE, PORTRAIT
     };
-    int completeApparationCount;
 
     public Apparation[] Apparations { get => apparations;}
     public PaintingType Type { get => type;}
     public GameObject PaintingObj { get => paintingObj;}
+    public int NumApparationsComplete { get => numApparationsComplete; set => numApparationsComplete = value; }
 }

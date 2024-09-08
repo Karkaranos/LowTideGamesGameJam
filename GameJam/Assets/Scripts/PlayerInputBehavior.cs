@@ -233,7 +233,7 @@ public class PlayerInputBehavior : MonoBehaviour
                 if (hit.transform.gameObject.tag == "Apparation")
                 {
                     print("Entered");
-                    Apparation aRef = FindObjectOfType<PaintingManager>().RetrieveApparationInstance(hit.transform.gameObject.name);
+                    Apparation aRef = FindObjectOfType<PaintingManager>().RetrieveApparationInstance(hit.transform.gameObject.name, hit.transform.gameObject);
                     if (aRef != null && aRef.IsApparating && !aRef.HasBeenCaught)
                     {
                         StopCoroutine(aRef.StartApparation());
