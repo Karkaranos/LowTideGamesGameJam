@@ -63,7 +63,6 @@ public class PlayerInputBehavior : MonoBehaviour
     private int flickerPause;
     private int flickerCounter;
     private bool canFlicker = false;
-    [SerializeField] private int maxFlickers;
     public GameObject spawnCirc;
 
     #endregion
@@ -222,7 +221,6 @@ public class PlayerInputBehavior : MonoBehaviour
         if (time >= lastClickTime + spearItCooldDown || lastClickTime == 0)
         {
             canFlicker = true;
-            currentCooldown = spearItCooldDown;
             flickerCounter = 0;
             flickerPause = 0;
             RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(mPosVector), Vector3.zero);
