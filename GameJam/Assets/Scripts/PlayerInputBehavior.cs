@@ -65,6 +65,8 @@ public class PlayerInputBehavior : MonoBehaviour
     private int flickerCounter;
     public GameObject spawnCirc;
 
+    public bool IsPaused { get => isPaused; set => isPaused = value; }
+
     #endregion
     // Start is called before the first frame update
     void Start()
@@ -112,13 +114,16 @@ public class PlayerInputBehavior : MonoBehaviour
     public void FixedUpdate()
     {
         time += Time.fixedDeltaTime;
-        HandleLightMovement();
-        if(!FindObjectOfType<GameManager>().CamIsShaking && !FindObjectOfType<PaintingManager>().PaintingCameraOverride)
+        if (!IsPaused)
         {
-            HandleCameraMovement();
+            HandleLightMovement();
+            if (!FindObjectOfType<GameManager>().CamIsShaking && !FindObjectOfType<PaintingManager>().PaintingCameraOverride)
+            {
+                HandleCameraMovement();
+            }
+            HandleLightFlicker();
         }
-        HandleLightFlicker();
-        mPosVector = mPos.ReadValue<Vector2>();
+            mPosVector = mPos.ReadValue<Vector2>();
     }
 
     private void OnDisable()
@@ -246,11 +251,11 @@ public class PlayerInputBehavior : MonoBehaviour
             lastClickTime = time;
             if (hit.collider != null)
             {
-                print(hit.transform.gameObject.name);
+                //print(hit.transform.gameObject.name);
                 if (hit.transform.gameObject.tag == "Apparation")
                 {
                     audioManager.Play("Extract Ghost");
-                    print("Entered");
+                    //print("Entered");
                     Apparation aRef = FindObjectOfType<PaintingManager>().RetrieveApparationInstance(hit.transform.gameObject.name, hit.transform.gameObject);
                     if (aRef != null && aRef.IsApparating && !aRef.HasBeenCaught)
                     {
@@ -297,16 +302,14 @@ public class PlayerInputBehavior : MonoBehaviour
 
     private void Pause_performed(InputAction.CallbackContext obj)
     {
-        if(!isPaused)
+        if(!IsPaused)
         {
-            isPaused = true;
+            IsPaused = true;
             Time.timeScale = 0;
+            FindObjectOfType<UI_Controller>().Pause.SetActive(true);
         }
-        else
-        {
-            isPaused = false;
-            Time.timeScale = 1;
-        }
+        
+       
         
     }
 
@@ -342,15 +345,16 @@ public class PlayerInputBehavior : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(mPosVector), Vector3.zero);
         if (hit.collider != null)
         {
-            print(hit.transform.gameObject.name);
+            //print(hit.transform.gameObject.name);
             if (hit.transform.gameObject.tag == "Painting")
             {
                 Painting p = FindObjectOfType<PaintingManager>().RetrievePaintingInstance(hit.transform.gameObject);
-                if (p.NumApparationsCaught < p.NumApparationsComplete && !p.FullSpookTriggered)
+                if (p.NumApparationsCaught + p.DamagePointsDealt < p.NumApparationsComplete && !p.FullSpookTriggered)
                 {
                     StartCoroutine(FindObjectOfType<GameManager>().TakeDamage(p));
                     if(p.NumApparationsCaught + p.NumApparationsComplete >=p.Apparations.Length)
                     {
+                        print("Roar");
                         p.FullSpookTriggered = true;
                     }
                 }
