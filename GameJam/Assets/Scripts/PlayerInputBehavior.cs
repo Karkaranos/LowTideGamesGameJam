@@ -345,7 +345,7 @@ public class PlayerInputBehavior : MonoBehaviour
                 if (p.NumApparationsCaught < p.NumApparationsComplete && !p.FullSpookTriggered)
                 {
                     StartCoroutine(FindObjectOfType<GameManager>().TakeDamage(p));
-                    if(p.NumApparationsCaught + p.NumApparationsComplete >=3)
+                    if(p.NumApparationsCaught + p.NumApparationsComplete >=p.Apparations.Length)
                     {
                         p.FullSpookTriggered = true;
                     }
