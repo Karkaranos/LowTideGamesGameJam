@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PaintingManager : MonoBehaviour
@@ -87,7 +85,6 @@ public class PaintingManager : MonoBehaviour
     {
         //print("Attack player");
         int index = GetPaintingIndex(p);
-        TotalApparations++;
         FindObjectOfType<PlayerInputBehavior>().CameraMovementOverride(index);
     }
 }

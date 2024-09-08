@@ -40,6 +40,7 @@ public class PlayerInputBehavior : MonoBehaviour
 
     GameManager gameManager;
     AudioManager audioManager;
+    Animator animator;
     private InputAction moveCamera;
 
     //These affect nothing. Leave them alone. 
@@ -74,6 +75,7 @@ public class PlayerInputBehavior : MonoBehaviour
         //Gets game manager
         gameManager = GameManager.Instance;
         audioManager = AudioManager.Instance;
+        animator = gameObject.GetComponent<Animator>();
 
         //Binds actions to keys
         playerInput.currentActionMap.Enable();
@@ -242,6 +244,8 @@ public class PlayerInputBehavior : MonoBehaviour
         //Cannot attack if cooldown is active or if player has not clicked yet (only relevant at beginning of the game)
         if (time >= lastClickTime + spearItCooldDown || lastClickTime == 0)
         {
+            animator.Play("Hit");
+            animator.SetBool("SpearHit", true);
             audioManager.Play("Stab Spear");
             flickerCounter = 0;
             flickerPause = 0;
@@ -349,7 +353,7 @@ public class PlayerInputBehavior : MonoBehaviour
             if (hit.transform.gameObject.tag == "Painting")
             {
                 Painting p = FindObjectOfType<PaintingManager>().RetrievePaintingInstance(hit.transform.gameObject);
-                if (p.NumApparationsCaught + p.DamagePointsDealt <= p.NumApparationsComplete  && p.NumApparationsComplete > 0 && !p.FullSpookTriggered)
+                if (p.NumApparationsCaught + p.DamagePointsDealt < p.NumApparationsComplete  && FindObjectOfType<PaintingManager>().TotalApparations > 0 &&  !p.FullSpookTriggered && !FindObjectOfType<GameManager>().isScaring)
                 {
                     StartCoroutine(FindObjectOfType<GameManager>().TakeDamage(p));
                     if(p.NumApparationsCaught + p.NumApparationsComplete >=p.Apparations.Length)

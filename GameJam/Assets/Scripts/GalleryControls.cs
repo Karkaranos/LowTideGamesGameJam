@@ -1,13 +1,10 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Rendering.Universal;
 
 public class GalleryControls : MonoBehaviour
 {
     #region Variables
     [SerializeField] PlayerInput playerInput;
-
     [Header("Camera Variables")]
     [Tooltip("Uses normal indexes. First painting is at index 1, second painting is at index 2, etc.")]
     [SerializeField] private int startingPaintingIndex;
@@ -63,11 +60,6 @@ public class GalleryControls : MonoBehaviour
         }
     }
 
-    private void OnDisable()
-    {
-        moveCamera.started -= MoveCamera_Started;
-    }
-
     /// <summary>
     /// Handles the camera movement via specified inputs
     /// </summary>
@@ -115,6 +107,7 @@ public class GalleryControls : MonoBehaviour
         }
 
         //Plays Painting Move Audio
+        print(audioManager);
         audioManager.Play("Switch Paintings");
 
         if (!isCamInAltPaintings)

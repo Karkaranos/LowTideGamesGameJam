@@ -13,4 +13,11 @@ public class ApparationMono : MonoBehaviour
     {
         FindObjectOfType<PaintingManager>().AttackPlayer(p);
     }
+
+    public void IncreaseApparationCount()
+    {
+        FindObjectOfType<PaintingManager>().TotalApparations++;
+        int i = FindObjectOfType<PaintingManager>().TotalApparations;
+        print(i);
+    }
 }
