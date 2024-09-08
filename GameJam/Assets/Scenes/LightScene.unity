@@ -187,7 +187,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -2.4827328, y: -3.5741005}
+  m_Offset: {x: -2.4827328, y: -3.4781015}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -198,7 +198,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.3183722, y: 1.6672161}
+  m_Size: {x: 2.3183722, y: 1.8592143}
   m_EdgeRadius: 0
 --- !u!212 &64694501
 SpriteRenderer:
@@ -446,24 +446,24 @@ MonoBehaviour:
     paintingObj: {fileID: 904081351}
     apparations:
     - apparationObject: {fileID: 1888280384}
-      timeUntilStart: 1
-      apparatingCompletionTime: 3
+      timeUntilStart: 30
+      apparatingCompletionTime: 20
       currentApparationProgress: 0
       apparation: {fileID: 21300000, guid: 0d0323bd9c459c94085e355decd40472, type: 3}
       hasBeenCaught: 0
       newFadeIn: 1
       crossfade: 0
     - apparationObject: {fileID: 1906490549}
-      timeUntilStart: 2
-      apparatingCompletionTime: 5
+      timeUntilStart: 60
+      apparatingCompletionTime: 20
       currentApparationProgress: 0
       apparation: {fileID: 21300000, guid: 642cc670515e145459776a9aa0efab46, type: 3}
       hasBeenCaught: 0
       newFadeIn: 1
       crossfade: 0
     - apparationObject: {fileID: 178587874}
-      timeUntilStart: 5
-      apparatingCompletionTime: 2
+      timeUntilStart: 130
+      apparatingCompletionTime: 20
       currentApparationProgress: 0
       apparation: {fileID: 21300000, guid: c312f78e858d21c48bf8e271e14a7271, type: 3}
       hasBeenCaught: 0
@@ -475,16 +475,16 @@ MonoBehaviour:
     paintingObj: {fileID: 664896544}
     apparations:
     - apparationObject: {fileID: 1293201974}
-      timeUntilStart: 4
-      apparatingCompletionTime: 3
+      timeUntilStart: 60
+      apparatingCompletionTime: 20
       currentApparationProgress: 0
       apparation: {fileID: 21300000, guid: 9aa8d5191e6ea454990ade272cb3631e, type: 3}
       hasBeenCaught: 0
       newFadeIn: 1
       crossfade: 0
     - apparationObject: {fileID: 64694498}
-      timeUntilStart: 15
-      apparatingCompletionTime: 7
+      timeUntilStart: 10
+      apparatingCompletionTime: 30
       currentApparationProgress: 0
       apparation: {fileID: 21300000, guid: 36afe489c48b7a04b83a11f7eb82ebbb, type: 3}
       hasBeenCaught: 0
@@ -505,7 +505,7 @@ MonoBehaviour:
     apparations:
     - apparationObject: {fileID: 1112370036}
       timeUntilStart: 90
-      apparatingCompletionTime: 1
+      apparatingCompletionTime: 10
       currentApparationProgress: 0
       apparation: {fileID: 21300000, guid: 6ff78cfec0c7ba440a6d313b27481074, type: 3}
       hasBeenCaught: 0
@@ -859,7 +859,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   expectedFrameRate: 60
   score: 0
-  scoreNeededToWin: 0
+  scoreNeededToWin: 10
   maxHealth: 3
   uncaughtApparationObj: {fileID: 615252980}
   landscapeApparation: {fileID: 21300000, guid: e4c390d5b9434e5439e24a628c6ab776, type: 3}
@@ -994,68 +994,15 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 494061371}
-  - component: {fileID: 494061370}
   - component: {fileID: 494061372}
   - component: {fileID: 494061373}
   m_Layer: 0
-  m_Name: Player Placeholder
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!212 &494061370
-SpriteRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 494061369}
-  m_Enabled: 1
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 0
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 4294967295
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 0
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 1
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
-  m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
-  m_AdaptiveModeThreshold: 0.5
-  m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
 --- !u!4 &494061371
 Transform:
   m_ObjectHideFlags: 0
@@ -2082,7 +2029,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.16215324, y: 0.047692657}
+  m_Offset: {x: 0.051900864, y: -0.3678763}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -2093,7 +2040,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.6756935, y: 0.9046147}
+  m_Size: {x: 4.356449, y: 4.992455}
   m_EdgeRadius: 0
 --- !u!1 &1117341133
 GameObject:
@@ -2618,7 +2565,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -2.014251, y: 0}
+  m_Offset: {x: -1.997309, y: 0.12423402}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -2629,7 +2576,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.92675436, y: 1}
+  m_Size: {x: 1.1413407, y: 1.2484676}
   m_EdgeRadius: 0
 --- !u!212 &1293201977
 SpriteRenderer:
@@ -3147,7 +3094,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.7857294, y: -0.09546256}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -3158,7 +3105,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 2.5714588, y: 1.3231032}
   m_EdgeRadius: 0
 --- !u!212 &1888280387
 SpriteRenderer:
@@ -3277,7 +3224,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -1.7860594, y: -1.4387703}
+  m_Offset: {x: -1.9537964, y: -1.4387703}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -3288,7 +3235,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.3969021, y: 2.034781}
+  m_Size: {x: 1.7323761, y: 2.034781}
   m_EdgeRadius: 0
 --- !u!212 &1906490552
 SpriteRenderer:

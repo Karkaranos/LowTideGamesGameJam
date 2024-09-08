@@ -83,5 +83,4 @@ public class PaintingManager : MonoBehaviour
         int index = GetPaintingIndex(p);
         FindObjectOfType<PlayerInputBehavior>().CameraMovementOverride(index);
     }
-
 }
