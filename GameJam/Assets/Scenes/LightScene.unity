@@ -387,6 +387,7 @@ MonoBehaviour:
       hasBeenCaught: 0
       newFadeIn: 1
       crossfade: 0
+    FullSpookTriggered: 0
   - PaintingName: House
     type: 0
     paintingObj: {fileID: 904081351}
@@ -415,6 +416,7 @@ MonoBehaviour:
       hasBeenCaught: 0
       newFadeIn: 1
       crossfade: 1
+    FullSpookTriggered: 0
   - PaintingName: 
     type: 0
     paintingObj: {fileID: 664896544}
@@ -443,6 +445,7 @@ MonoBehaviour:
       hasBeenCaught: 0
       newFadeIn: 0
       crossfade: 0
+    FullSpookTriggered: 0
   - PaintingName: 
     type: 0
     paintingObj: {fileID: 270393875}
@@ -471,6 +474,7 @@ MonoBehaviour:
       hasBeenCaught: 0
       newFadeIn: 0
       crossfade: 0
+    FullSpookTriggered: 0
   currPaintingNum: 0
   PaintingCameraOverride: 0
 --- !u!4 &203786983
@@ -862,7 +866,7 @@ MonoBehaviour:
   timeBeforeCamShake: 3
   camShakeTime: 2
   CamIsShaking: 0
-  shakeIntensity: 2.04
+  shakeIntensity: 5
   mainCam: {fileID: 921612998}
   globalLight: {fileID: 2009500423}
   flashLight: {fileID: 1913793018}
