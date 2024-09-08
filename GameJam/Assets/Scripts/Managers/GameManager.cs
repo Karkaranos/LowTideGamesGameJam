@@ -90,6 +90,7 @@ public class GameManager : MonoBehaviour
     public bool won {  get; private set; }
 
     AudioManager audioManager;
+    private bool hasTriggered = false;
 
     public bool isScaring = false;
     private void Start()
@@ -230,6 +231,12 @@ public class GameManager : MonoBehaviour
             }
         }
 
+        if (score >= scoreNeededToWin && !hasTriggered)
+        {
+            hasTriggered = true;
+            audioManager.Stop("Creepy Ambience");
+            WinGame();
+        }
 
         //Victory End Flickering
         if (won)
@@ -303,7 +310,6 @@ public class GameManager : MonoBehaviour
     void EndGame()
     {
         audioManager.Play("Loss Jingle");
-        //Debug.Log("Animation here. You died tho");
         SceneManager.LoadScene("DeathScene");
     }
 }
