@@ -13,6 +13,7 @@ public class Apparation
     [SerializeField, Tooltip("The sprite it changes to")] Sprite apparation;
     [SerializeField, ReadOnly] bool hasBeenCaught;
     [SerializeField, Tooltip("True if apparation is larger than original or same size; false if apparation is smaller than original")] bool newFadeIn = true;
+    [SerializeField, Tooltip("True if old fades out as new fades in")] bool crossfade = false;
     bool hasApparated = false;
     bool isApparating = false;
     private int steps = 100;
@@ -41,6 +42,7 @@ public class Apparation
             Sr.color = c;
             Sr.sprite = apparation;
             isApparating = true;
+            Color cc = new Color(1, 1, 1, 1);
             newSprite.tag = "Apparation";
             newSprite.AddComponent<BoxCollider2D>();
             for (int i = 0; i < steps; i++)
@@ -58,11 +60,17 @@ public class Apparation
                     }
                     currentApparationProgress = i + 1;
                     yield return new WaitForSeconds(apparatingCompletionTime / steps);
+                    if(crossfade)
+                    {
+                        cc.a -= (1 / apparatingCompletionTime) * (apparatingCompletionTime / steps);
+                        apparationObject.GetComponent<SpriteRenderer>().color = cc;
+                    }
                 }
                 else
                 {
                     c.a = 0;
                     sr.color = c;
+                    apparationObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
                 }
 
             }
@@ -80,6 +88,7 @@ public class Apparation
             Sr.color = c;
             Sr.sprite = apparation;
 
+            Color cc = new Color(1, 1, 1, 0);
             yield return new WaitForSeconds(timeUntilStart);
             isApparating = true;
             for (int i = 0; i < steps; i++)
@@ -97,11 +106,18 @@ public class Apparation
                     }
                     currentApparationProgress = i + 1;
                     yield return new WaitForSeconds(apparatingCompletionTime / steps);
+                    if (crossfade)
+                    {
+                        cc.a += (1 / apparatingCompletionTime) * (apparatingCompletionTime / steps);
+                        apparationObject.GetComponent<SpriteRenderer>().color = cc;
+                    }
                 }
                 else
                 {
                     c.a = 1;
                     sr.color = c;
+
+                    apparationObject.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0);
                 }
             }
         }
