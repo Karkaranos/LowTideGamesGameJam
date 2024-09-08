@@ -15,7 +15,7 @@ public class PlayerInputBehavior : MonoBehaviour
     [SerializeField] float spearItCooldDown;
 
     [Header("Sprites")]
-    [SerializeField] GameObject punctureGameObject;
+    [SerializeField] ParticleSystem punctureEffect;
     [SerializeField] private Sprite tf2Coconut;
 
     [Header("Flashlight Variable")]
@@ -75,7 +75,7 @@ public class PlayerInputBehavior : MonoBehaviour
         //Gets game manager
         gameManager = GameManager.Instance;
         audioManager = AudioManager.Instance;
-        animator = gameObject.GetComponent<Animator>();
+        //animator = gameObject.GetComponent<Animator>();
 
         //Binds actions to keys
         playerInput.currentActionMap.Enable();
@@ -244,8 +244,7 @@ public class PlayerInputBehavior : MonoBehaviour
         //Cannot attack if cooldown is active or if player has not clicked yet (only relevant at beginning of the game)
         if (time >= lastClickTime + spearItCooldDown || lastClickTime == 0)
         {
-            animator.Play("Hit");
-            animator.SetBool("SpearHit", true);
+            //animator.SetBool("SpearHit", true);
             audioManager.Play("Stab Spear");
             flickerCounter = 0;
             flickerPause = 0;
@@ -265,7 +264,7 @@ public class PlayerInputBehavior : MonoBehaviour
                     {
                         StopCoroutine(aRef.StartApparation());
                         aRef.Caught();
-                        Instantiate(punctureGameObject, mousePosition, Quaternion.identity);
+                        Instantiate(punctureEffect, mousePosition, Quaternion.identity);
                         //Destroy(aRef.Sr.gameObject);   //Returns apparation to normal
                         FindObjectOfType<GameManager>().IncreaseScore();
                         //Stab animation
