@@ -25,7 +25,6 @@ public class GameManager : MonoBehaviour
     }
 
     #endregion
-    [SerializeField] WinState winState;
     [SerializeField] public int expectedFrameRate = 60;
     [SerializeField] int score;
     [SerializeField] private int scoreNeededToWin;
@@ -290,7 +289,6 @@ public class GameManager : MonoBehaviour
     void WinGame()
     {
         audioManager.Play("Victory Jingle");
-        winState.hasGameBeenWon = true;
         won = true;
         FindObjectOfType<Constants>().IsGalleryClickable = true;
         //globalLight.color = new Color();
