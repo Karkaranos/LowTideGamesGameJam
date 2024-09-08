@@ -51,14 +51,12 @@ public class UI_Controller : MonoBehaviour
 
             if (!FindObjectOfType<Constants>().IsGalleryClickable)
             {
-                print("POYO");
                 Gallery.interactable = false;
                 Gallery.GetComponent<Image>().enabled = false;
                 Gallery.GetComponentInChildren<TextMeshProUGUI>().color = new Color32(117, 117, 117, 255);
             }
             else
             {
-                print("OYOP");
                 Gallery.interactable = true;
                 Gallery.GetComponent<Image>().enabled = true;
                 Gallery.GetComponentInChildren<TMP_Text>().color = new Color32(255, 255, 255, 255);
