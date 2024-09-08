@@ -73,6 +73,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int timeToWaitToChanceSound;
     [SerializeField] private int collectionModifier;
 
+    [Header("UI")]
+    [SerializeField] private Image sanityMeter;
+    [SerializeField] private Sprite[] sanitySprites;
+
     private int transitionFrames;
 
     //Flicker Variables
@@ -134,6 +138,10 @@ public class GameManager : MonoBehaviour
         {
             //print("New health: " + health + " after taking " + (painting.NumApparationsComplete - painting.NumApparationsCaught - painting.DamagePointsDealt) + " points of damage");
             painting.DamagePointsDealt += painting.NumApparationsComplete - painting.NumApparationsCaught;
+            if(health > 0)
+            {
+                sanityMeter.sprite = sanitySprites[health - 1];
+            }
             StartCoroutine(CameraShake());
             yield return new WaitForSeconds(timeBeforeApparationFades);
             for (int i = 0; i < numTimerSteps; i++)
