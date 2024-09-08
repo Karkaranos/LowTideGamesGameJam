@@ -105,6 +105,17 @@ public partial class @PlayerControlMap: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""48fcd1b4-f002-4f29-9a58-e42685311a84"",
+                    ""path"": ""<Keyboard>/p"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""cf17707c-d0ff-4fcf-be7d-3326789878ff"",
                     ""path"": ""<Keyboard>/c"",
                     ""interactions"": """",
